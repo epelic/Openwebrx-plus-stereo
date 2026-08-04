@@ -273,8 +273,9 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 /* MM4.8 responsive RF/waterfall and native section collapse. */
 #webrx-canvas-background,#webrx-canvas-container{width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}
 #webrx-canvas-container canvas{width:100%!important;max-width:100%!important}
+.openwebrx-spectrum-container{position:relative!important;z-index:20!important;background:#061009!important}
 .openwebrx-spectrum-container.expanded{height:var(--mm-rf-spectrum-height)!important;max-height:none!important;opacity:1!important;border-bottom:1px solid var(--mm-green2)!important;background:#061009!important}
-#openwebrx-spectrum-canvas{display:block!important;width:100%!important;height:100%!important;filter:none!important}
+#openwebrx-spectrum-canvas{position:relative!important;z-index:21!important;display:block!important;width:100%!important;height:100%!important;filter:none!important;background:#061009!important}
 #openwebrx-panel-receiver>.openwebrx-section.closed{height:0!important;max-height:0!important;min-height:0!important;margin:0!important;padding:0!important;opacity:0!important;overflow:hidden!important;pointer-events:none!important}
 #openwebrx-panel-receiver>.openwebrx-section:not(.closed){height:auto!important;max-height:none!important;opacity:1!important;overflow:visible!important}
 #mm-spectrum-slot,.openwebrx-waterfall-container,#webrx-canvas-background{min-height:0!important}

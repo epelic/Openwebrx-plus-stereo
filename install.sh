@@ -72,18 +72,26 @@ TARGET="$(readlink -f "$TARGET")"
 grep -q 'openwebrx_init' "$TARGET/index.html" || die "$TARGET does not look like an OpenWebRX+ web directory"
 
 BACKEND_TARGET=""
+ANALOG_TARGET=""
 if ((INSTALL_BACKEND)); then
     BACKEND_TARGET="$(find /usr/lib/python3/dist-packages /usr/local/lib/python3/dist-packages \
         -type f -path '*/csdr/module/toolbox.py' -print -quit 2>/dev/null || true)"
     [[ -n "$BACKEND_TARGET" ]] || die "csdr/module/toolbox.py not found; use --no-backend for UI-only installation"
     BACKEND_TARGET="$(readlink -f "$BACKEND_TARGET")"
+    ANALOG_TARGET="$(find /usr/lib/python3/dist-packages /usr/local/lib/python3/dist-packages \
+        -type f -path '*/csdr/chain/analog.py' -print -quit 2>/dev/null || true)"
+    [[ -n "$ANALOG_TARGET" ]] || die "csdr/chain/analog.py not found; FM stereo cannot be installed"
+    ANALOG_TARGET="$(readlink -f "$ANALOG_TARGET")"
 fi
 
 STAMP="$(date +%Y%m%d-%H%M%S)"
 BACKUP_DIR="/var/backups/openwebrx-plus-stereo/$STAMP"
 
 log "OpenWebRX+ web directory: $TARGET"
-if ((INSTALL_BACKEND)); then log "DAB csdr module: $BACKEND_TARGET"; fi
+if ((INSTALL_BACKEND)); then
+    log "DAB csdr module: $BACKEND_TARGET"
+    log "FM stereo chain: $ANALOG_TARGET"
+fi
 log "Backup directory: $BACKUP_DIR"
 
 if ((DRY_RUN)); then
@@ -117,7 +125,9 @@ SOURCE_DIR="$(find "$WORK_DIR" -mindepth 1 -maxdepth 1 -type d -name 'Openwebrx-
 [[ -f "$SOURCE_DIR/lib/AudioProcessor.js" && -f "$SOURCE_DIR/js/mm4.js" ]] || die "required UI files are missing"
 if ((INSTALL_BACKEND)); then
     [[ -f "$SOURCE_DIR/backend/csdr/module/toolbox.py" ]] || die "DAB backend file is missing"
+    [[ -f "$SOURCE_DIR/backend/csdr/chain/analog.py" ]] || die "FM stereo backend file is missing"
     python3 -m py_compile "$SOURCE_DIR/backend/csdr/module/toolbox.py"
+    python3 -m py_compile "$SOURCE_DIR/backend/csdr/chain/analog.py"
 fi
 
 mkdir -p "$BACKUP_DIR"
@@ -125,6 +135,7 @@ cp -a "$TARGET" "$BACKUP_DIR/htdocs"
 if ((INSTALL_BACKEND)); then
     mkdir -p "$BACKUP_DIR/backend"
     cp -a "$BACKEND_TARGET" "$BACKUP_DIR/backend/toolbox.py"
+    cp -a "$ANALOG_TARGET" "$BACKUP_DIR/backend/analog.py"
 fi
 
 SERVICE_EXISTS=0
@@ -142,8 +153,9 @@ tar -C "$SOURCE_DIR" \
     -cf - . | tar --no-same-owner -C "$TARGET" -xf -
 
 if ((INSTALL_BACKEND)); then
-    log "installing DAB stereo csdr module"
+    log "installing DAB and FM stereo csdr modules"
     install -m 0644 "$SOURCE_DIR/backend/csdr/module/toolbox.py" "$BACKEND_TARGET"
+    install -m 0644 "$SOURCE_DIR/backend/csdr/chain/analog.py" "$ANALOG_TARGET"
 fi
 
 [[ -s "$TARGET/index.html" && -s "$TARGET/lib/AudioProcessor.js" ]] || die "post-installation file check failed"

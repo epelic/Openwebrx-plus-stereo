@@ -256,18 +256,20 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 
 #openwebrx-panel-receiver #fs-toggle-btn{position:static!important;inset:auto!important;float:none!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;width:42px!important;height:24px!important;margin:8px 10px 10px!important;padding:0 6px!important;color:#dce8df!important;background:#17201a!important;border:1px solid var(--mm-green2)!important;border-radius:3px!important;line-height:22px!important}
 
-/* Extended DAB service monitor and reserved MOT slideshow area. */
-#openwebrx-panel-metadata-dab .dab-container{display:grid!important;grid-template-columns:minmax(260px,1.2fr) minmax(220px,.8fr)!important;gap:12px!important;width:100%!important;padding:10px!important;box-sizing:border-box!important}
+/* Extended DAB service monitor and online station logo area. */
+#openwebrx-panel-metadata-dab .dab-container{display:grid!important;grid-template-columns:minmax(0,1.2fr) minmax(140px,.8fr)!important;gap:10px!important;width:100%!important;padding:10px!important;box-sizing:border-box!important}
 #openwebrx-panel-metadata-dab .dab-info-column{display:flex!important;flex-direction:column!important;gap:5px!important;min-width:0!important}
 #openwebrx-panel-metadata-dab .dab-programme-slot select{width:100%!important;max-width:none!important}
 #openwebrx-panel-metadata-dab .dab-technical-grid{display:grid!important;grid-template-columns:max-content minmax(0,1fr)!important;gap:4px 10px!important;margin-top:7px!important;padding-top:8px!important;border-top:1px solid #294b34!important;font-size:10px!important}
 #openwebrx-panel-metadata-dab .dab-technical-grid span{color:#789481!important;text-transform:uppercase!important;letter-spacing:.35px!important}
 #openwebrx-panel-metadata-dab .dab-technical-grid b{color:#c9ead0!important;font-weight:500!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
-#openwebrx-panel-metadata-dab .dab-mot-column{display:flex!important;flex-direction:column!important;min-width:0!important;border:1px solid #2f593a!important;background:#061009!important}
-#openwebrx-panel-metadata-dab .dab-mot-title{padding:6px 8px!important;border-bottom:1px solid #2f593a!important;color:var(--mm-green)!important;font-size:9px!important;letter-spacing:.8px!important}
-#openwebrx-panel-metadata-dab .dab-mot-frame{position:relative!important;display:flex!important;align-items:center!important;justify-content:center!important;min-height:180px!important;overflow:hidden!important}
-#openwebrx-panel-metadata-dab .dab-mot-image{display:none;max-width:100%!important;max-height:260px!important;object-fit:contain!important}
-#openwebrx-panel-metadata-dab .dab-mot-status{color:#597160!important;font-size:10px!important;text-transform:uppercase!important;letter-spacing:.5px!important}
+#openwebrx-panel-metadata-dab .dab-logo-column{display:flex!important;flex-direction:column!important;min-width:0!important;border:1px solid #2f593a!important;background:#061009!important}
+#openwebrx-panel-metadata-dab .dab-logo-title{padding:6px 8px!important;border-bottom:1px solid #2f593a!important;color:var(--mm-green)!important;font-size:9px!important;letter-spacing:.8px!important}
+#openwebrx-panel-metadata-dab .dab-logo-frame{position:relative!important;display:flex!important;align-items:center!important;justify-content:center!important;min-height:160px!important;padding:12px!important;overflow:hidden!important}
+#openwebrx-panel-metadata-dab .dab-logo-link{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;height:100%!important}
+#openwebrx-panel-metadata-dab .dab-logo-image{display:none;max-width:100%!important;max-height:220px!important;object-fit:contain!important;filter:drop-shadow(0 0 10px rgba(112,255,132,.16))}
+#openwebrx-panel-metadata-dab .dab-logo-status{color:#597160!important;font-size:10px!important;text-transform:uppercase!important;letter-spacing:.5px!important}
+#openwebrx-panel-metadata-dab .dab-logo-name{min-height:25px!important;padding:6px 8px!important;border-top:1px solid #203c28!important;color:#c9ead0!important;text-align:center!important;font-size:10px!important;letter-spacing:.35px!important}
 @media(max-width:900px){#openwebrx-panel-metadata-dab .dab-container{grid-template-columns:1fr!important}}
 
 /* MM4.8 responsive RF/waterfall and native section collapse. */

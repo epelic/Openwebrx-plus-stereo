@@ -1,0 +1,97 @@
+@import url("openwebrx-header.css");
+@import url("openwebrx-globals.css");
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.openwebrx-map {
+    flex: 1 1 auto;
+}
+
+h3 {
+    margin: 10px 0;
+    text-align: center;
+}
+
+ul {
+    margin-block-start: 5px;
+    margin-block-end: 5px;
+    padding-inline-start: 25px;
+}
+
+/* don't show the filter in it's initial position */
+.openwebrx-map-legend {
+    display: none;
+    background-color: #fff;
+    padding: 10px;
+    margin: 10px;
+    user-select: none;
+}
+
+/* show it as soon as google maps has moved it to its container */
+.openwebrx-map .openwebrx-map-legend {
+    display: block;
+}
+
+.openwebrx-map-legend ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.openwebrx-map-legend ul li {
+    cursor: pointer;
+}
+
+.openwebrx-map-legend ul li.disabled {
+    opacity: .3;
+    filter: grayscale(70%);
+}
+
+.openwebrx-map-legend li.square .illustration {
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    margin-right: 10px;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.openwebrx-map-legend li.square .feature {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-width: 0;
+    border-style: none;
+    font-size: 24px;
+    text-align: center;
+}
+
+.openwebrx-map-legend select {
+    background-color: #FFF;
+    border-color: #DDD;
+    padding: 5px;
+}
+
+.openwebrx-map-console {
+    overflow: auto;
+    margin: 5px auto;
+    padding: 6px;
+    border-radius: 8px;
+    background-color: #000040;
+    color: #80FF20;
+    width: 92%;
+}
+
+.openwebrx-map-console hr {
+    border: 1px dashed #80FF20;
+}
+
+.openwebrx-map-info td {
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    white-space: nowrap;
+}

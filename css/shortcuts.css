@@ -1,0 +1,79 @@
+/* import keyboard-css for keys in help */
+@import url("keyboard.min.css");
+
+#ks-overlay {
+  position: fixed;
+  top: 1vh;
+  left: calc((100vw - 800px) / 2);
+  max-height: 95vh;
+  width: 800px;
+  color: white;
+  background-color: #000;
+  opacity: 0.8;
+  z-index: 10000;
+  border: 3px solid white;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.ks-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 0.8rem;
+}
+
+.ks-subtitle {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.ks-separator {
+  border-top: 1px dotted white;
+  align-self: stretch;
+  margin: 1rem;
+}
+
+.ks-content {
+  padding: 0 0.75rem;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.ks-item {
+  width: 240px;
+  padding: 0.25rem;
+  border: 1px dashed #444;
+  margin-bottom: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-direction: column;
+  /* flex-direction: row; */
+}
+
+.ks-item-txt {
+  color: silver;
+}
+
+.ks-item-kbd {
+  text-wrap: nowrap;
+  color: silver;
+}
+
+a.kbc-button-xs, button.kbc-button-xs {
+  padding: 0.02rem 0.25rem;
+}
+
+a.kbc-button-sm, button.kbc-button-sm {
+  padding: 0 0.5rem;
+  font-size: .85rem;
+}

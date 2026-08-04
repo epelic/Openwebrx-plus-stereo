@@ -1,0 +1,138 @@
+/*
+
+	This file is part of OpenWebRX,
+	an open-source SDR receiver software with a web UI.
+	Copyright (c) 2013-2015 by Andras Retzler <randras@sdr.hu>
+	Copyright (c) 2019-2021 by Jakob Ketterl <dd5jfk@darc.de>
+	Copyright (c) 2022-2023 by Marat Fayzullin <luarvique@gmail.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* Theme: brown */
+body.theme-brown {
+    --theme-color1: #270700;
+    --theme-color2: #472700;
+    --theme-gradient-color1: #270700;
+    --theme-gradient-color2: #3F1F00;
+}
+
+/* Theme: red */
+body.theme-red {
+    --theme-color1: #270000;
+    --theme-color2: #470000;
+    --theme-gradient-color1: #270000;
+    --theme-gradient-color2: #3F0000;
+}
+
+/* Theme: green */
+body.theme-green {
+    --theme-color1: #001700;
+    --theme-color2: #003700;
+    --theme-gradient-color1: #001700;
+    --theme-gradient-color2: #002F00;
+}
+
+/* Theme: khaki */
+body.theme-khaki {
+    --theme-color1: #171F07;
+    --theme-color2: #373F17;
+    --theme-gradient-color1: #171F07;
+    --theme-gradient-color2: #272F17;
+}
+
+/* Theme: blue */
+body.theme-blue {
+    --theme-color1: #000027;
+    --theme-color2: #000047;
+    --theme-gradient-color1: #000027;
+    --theme-gradient-color2: #00003F;
+}
+
+/* Theme: navy */
+body.theme-navy {
+    --theme-color1: #001727;
+    --theme-color2: #003747;
+    --theme-gradient-color1: #001727;
+    --theme-gradient-color2: #002F3F;
+}
+
+/* Theme: black */
+body.theme-black {
+    --theme-color1: #000000;
+    --theme-color2: #282828;
+    --theme-gradient-color1: #000000;
+    --theme-gradient-color2: #404040;
+}
+
+/* Theme: night */
+body.theme-night {
+    --theme-color1: #6c2ceb;
+    --theme-color2: #1a1f73;
+    --theme-gradient-color1: #6c2ceb;
+    --theme-gradient-color2: #3355e5;
+}
+
+
+/* theme implementation follows */
+body.has-theme #openwebrx-frequency-container {
+    background-color: var(--theme-color2);
+    background-blend-mode: overlay;
+}
+
+body.has-theme .openwebrx-panel,
+body.has-theme .openwebrx-dialog,
+body.has-theme .openwebrx-panel select option,
+body.has-theme .openwebrx-dialog select option {
+    background-color: var(--theme-color2);
+}
+
+body.has-theme .openwebrx-panel select,
+body.has-theme .openwebrx-panel input,
+body.has-theme .openwebrx-dialog select,
+body.has-theme .openwebrx-dialog input {
+    background-color: var(--theme-color1);
+    background: linear-gradient(to bottom, var(--theme-gradient-color1) 0%, var(--theme-gradient-color2) 100%);
+}
+
+body.has-theme .openwebrx-button:hover,
+body.has-theme .openwebrx-demodulator-button.highlighted,
+body.has-theme .openwebrx-button.highlighted {
+    background-color: var(--theme-color1);
+    filter: saturate(200%) brightness(150%);
+}
+body.has-theme .openwebrx-squelch-auto.openwebrx-button.highlighted {
+  /* disable filter to allow background animation on scanner */
+  filter: none;
+}
+
+body.has-theme .openwebrx-button {
+    background-color: var(--theme-color1);
+    background: linear-gradient(to bottom, var(--theme-gradient-color1) 0%, var(--theme-gradient-color2) 100%);
+}
+
+body.has-theme .openwebrx-meta-slot:not(.active) {
+    background-color: var(--theme-color2);
+    filter: brightness(150%);
+    color: white;
+}
+ 
+body.has-theme #openwebrx-digimode-canvas-container {
+    background-color: var(--theme-color1);
+}
+
+body.has-theme #openwebrx-digimode-content-container .gradient {
+    box-shadow: 0px 10px 10px inset var(--theme-color2);
+    background: initial;
+}

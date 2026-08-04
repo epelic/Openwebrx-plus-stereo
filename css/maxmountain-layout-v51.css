@@ -1,0 +1,180 @@
+/* Max Mountain Station — Tactical Console v5
+   Structural UI rewrite: independent command rail, RF deck, decoder dock,
+   audio FFT analyzer and non-overlapping control column. */
+:root{
+  --mm-header:82px;--mm-rail:92px;--mm-side:370px;--mm-gap:10px;
+  --mm-bg:#030604;--mm-panel:#09110c;--mm-panel2:#101b14;
+  --mm-line:#294532;--mm-soft:#15261b;--mm-green:#9dffab;
+  --mm-green2:#3ddd68;--mm-dim:#8da394;--mm-amber:#ffd166;
+  --mm-red:#ff655f;--mm-cyan:#62e5dc;
+}
+*{box-sizing:border-box}
+html,body{margin:0!important;width:100%!important;height:100%!important;min-width:0!important;overflow:hidden!important;background:var(--mm-bg)!important;color:#dce9df!important;font-family:"Roboto Mono",ui-monospace,monospace!important}
+body:before{content:"";position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:.06;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(157,255,171,.08) 4px)}
+#webrx-page-container{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;max-width:none!important;margin:0!important;padding:0!important;overflow:hidden!important;background:radial-gradient(circle at 45% 28%,#132219 0,#070c09 48%,#020403 100%)!important}
+/* HEADER: logo and text are always fully visible */
+.webrx-top-container{position:absolute!important;inset:0 0 auto 0!important;width:100%!important;height:var(--mm-header)!important;min-height:var(--mm-header)!important;z-index:70!important;background:linear-gradient(180deg,#121d16,#080d0a)!important;border-bottom:1px solid var(--mm-line)!important;box-shadow:0 7px 24px rgba(0,0,0,.55)!important;overflow:hidden!important}
+.webrx-top-bar{height:100%!important;width:100%!important;display:flex!important;align-items:center!important;padding:0 18px 0 94px!important;background:none!important;overflow:hidden!important}
+.webrx-top-logo{display:none!important}
+.webrx-rx-avatar{position:absolute!important;left:17px!important;top:12px!important;width:58px!important;height:58px!important;max-width:58px!important;max-height:58px!important;object-fit:contain!important;border-radius:5px!important;border:1px solid var(--mm-green2)!important;background:#050906!important;padding:2px!important;filter:grayscale(1) contrast(1.12) sepia(.25) hue-rotate(70deg)!important;box-shadow:0 0 18px rgba(61,221,104,.22)!important}
+.webrx-rx-texts{position:static!important;min-width:0!important;max-width:calc(100% - 250px)!important;overflow:hidden!important;text-transform:uppercase!important}
+.webrx-rx-title{margin:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;font-size:19px!important;line-height:1.15!important;letter-spacing:2.3px!important;color:var(--mm-green)!important}
+.webrx-rx-desc{margin-top:6px!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;font-size:9px!important;letter-spacing:1px!important;color:var(--mm-dim)!important}
+.webrx-top-bar:after{content:"TACTICAL SDR / ONLINE";margin-left:auto;flex:0 0 auto;padding:8px 11px;border:1px solid #31513b;background:#071009;color:var(--mm-green);font-size:9px;letter-spacing:1.1px}
+.openwebrx-description-container,.openwebrx-rx-details-arrow{display:none!important}
+/* Original button container is moved into the command rail by JS */
+.openwebrx-main-buttons{margin:0!important;padding:0!important;width:100%!important;height:auto!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;overflow:visible!important}
+.openwebrx-main-buttons .button{position:relative!important;display:flex!important;flex:0 0 72px!important;min-width:0!important;width:100%!important;height:72px!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;padding:7px 4px!important;border:0!important;border-bottom:1px solid var(--mm-soft)!important;border-radius:0!important;background:transparent!important;color:var(--mm-dim)!important;font-size:8px!important;line-height:1.25!important;letter-spacing:.55px!important;text-align:center!important;text-transform:uppercase!important;overflow:hidden!important;white-space:normal!important}
+.openwebrx-main-buttons .button:hover{background:#122019!important;color:var(--mm-green)!important;box-shadow:inset 3px 0 var(--mm-green2)!important}
+.openwebrx-main-buttons svg{display:block!important;width:25px!important;height:25px!important;max-width:25px!important;max-height:25px!important;margin:0 0 5px!important;fill:currentColor!important}
+#pstt{display:none!important}
+/* APP SHELL */
+#mm-workspace{position:absolute;top:var(--mm-header);left:0;right:0;bottom:0;display:grid;grid-template-columns:var(--mm-rail) minmax(0,1fr) var(--mm-side);gap:var(--mm-gap);padding:var(--mm-gap);overflow:hidden}
+#mm-command-rail{grid-column:1;min-width:0;min-height:0;display:flex!important;flex-direction:column;border:1px solid var(--mm-line);border-radius:4px;background:linear-gradient(180deg,#0d1710,#050906);overflow:hidden}
+#mm-command-head{flex:0 0 31px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--mm-line);background:#101b14;color:var(--mm-green);font-size:8px;letter-spacing:1.2px}
+#mm-command-scroll{min-height:0;overflow-y:auto;overflow-x:hidden}
+#mm-main-column{grid-column:2;min-width:0;min-height:0;display:grid;grid-template-rows:minmax(330px,1fr) minmax(0,auto);gap:var(--mm-gap);overflow:hidden}
+#mm-spectrum-slot{position:relative;min-width:0;min-height:0;overflow:hidden;border:1px solid var(--mm-line);border-radius:4px;background:#010302;box-shadow:0 15px 38px rgba(0,0,0,.43)}
+#mm-spectrum-slot:before{content:"RF SPECTRUM / WATERFALL";position:absolute;z-index:16;top:0;left:0;right:0;height:26px;padding:7px 10px;background:linear-gradient(90deg,#14231a,#09100c);border-bottom:1px solid var(--mm-line);color:var(--mm-green);font-size:9px;letter-spacing:1.35px;pointer-events:none}
+.openwebrx-waterfall-container{position:absolute!important;inset:26px 0 0!important;width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;margin:0!important;border:0!important;border-radius:0!important;background:#000!important;overflow:hidden!important}
+#openwebrx-frequency-container{top:0!important;height:39%!important;border-bottom:1px solid var(--mm-line)!important}
+#webrx-canvas-background{top:39%!important;bottom:0!important;margin:0!important;background:#000!important}
+#webrx-canvas-container{filter:saturate(.9) contrast(1.07)}
+/* Decoder dock is normal document flow, never overlays RF deck */
+#mm-decoder-dock{position:relative;min-width:0;max-height:34vh;overflow:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:10px;padding:0}
+#mm-decoder-dock.mm-empty{display:none!important}
+#openwebrx-panels-container-left{position:static!important;inset:auto!important;width:100%!important;height:auto!important;max-height:none!important;display:contents!important;overflow:visible!important;pointer-events:auto!important}
+/* Right deck: analyzer is structurally separated from receiver panels */
+#mm-sidebar{grid-column:3;min-width:0;min-height:0;overflow:hidden;border:1px solid var(--mm-line);border-radius:4px;background:linear-gradient(180deg,#0c150f,#050906);display:grid;grid-template-rows:32px 190px minmax(0,1fr)}
+#mm-sidebar-head{display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:#101b14;border-bottom:1px solid var(--mm-line);color:var(--mm-green);font-size:9px;letter-spacing:1.2px;text-transform:uppercase}
+#mm-sidebar-scroll{min-height:0;overflow-y:auto;overflow-x:hidden;padding:9px}
+#openwebrx-panels-container-right{position:static!important;inset:auto!important;width:100%!important;height:auto!important;display:flex!important;flex-direction:column!important;gap:9px!important;overflow:visible!important;padding:0!important;pointer-events:auto!important}
+#openwebrx-panels-container{display:none!important}
+/* AUDIO FFT */
+#mm-audio-analyzer{min-width:0;min-height:0;margin:9px 9px 0;border:1px solid #294633;border-radius:3px;background:#020503;display:grid;grid-template-rows:27px minmax(0,1fr) 25px;overflow:hidden}
+.mm-audio-head{display:flex;align-items:center;justify-content:space-between;padding:0 8px;border-bottom:1px solid #203a29;background:#0d1811;color:var(--mm-cyan);font-size:8px;letter-spacing:1px}
+#mm-audio-status{color:var(--mm-dim)}
+#mm-audio-canvas{display:block;width:100%;height:100%;min-width:0;min-height:0;background:linear-gradient(180deg,#061009,#010302)}
+.mm-audio-foot{display:flex;align-items:center;justify-content:space-between;padding:0 7px;border-top:1px solid #203a29;color:#718979;font-size:7px;letter-spacing:.5px}
+#mm-audio-enable{border:1px solid #34563e;background:#0d1b12;color:var(--mm-green);font:inherit;padding:3px 7px;cursor:pointer}
+#mm-audio-enable:hover{border-color:var(--mm-green2);background:#14251a}
+/* PANELS */
+.openwebrx-panel{position:relative!important;inset:auto!important;float:none!important;width:100%!important;max-width:none!important;margin:0!important;border:1px solid var(--mm-line)!important;border-radius:4px!important;background:linear-gradient(180deg,rgba(17,28,21,.98),rgba(6,11,8,.98))!important;color:#d8e7dc!important;box-shadow:none!important;overflow:visible!important;pointer-events:auto!important}
+.openwebrx-panel:before{content:attr(data-panel-name);display:block;min-height:25px;padding:7px 10px;background:#101a13;border-bottom:1px solid var(--mm-line);color:var(--mm-green);font-size:9px;line-height:1.2;letter-spacing:1.05px;text-transform:uppercase}
+#openwebrx-panel-receiver{display:block!important;order:-100!important}#openwebrx-panel-receiver:before{content:"RECEIVER CONTROL"}#openwebrx-panel-status:before{content:"SYSTEM TELEMETRY"}#openwebrx-panel-log:before{content:"OPERATIONS LOG / CHAT"}
+.openwebrx-panel-line{padding-left:9px!important;padding-right:9px!important}.openwebrx-section-divider{background:#0d1711!important;color:var(--mm-green)!important;border-top:1px solid #1d3023!important;border-bottom:1px solid #1d3023!important;font-size:9px!important;letter-spacing:1px!important;text-transform:uppercase!important;padding:8px 9px!important}
+.webrx-actual-freq{font-size:24px!important;color:var(--mm-amber)!important;letter-spacing:.7px!important;text-shadow:0 0 10px rgba(255,209,102,.2)!important}.webrx-mouse-freq{color:var(--mm-cyan)!important}
+.openwebrx-button{max-width:100%!important;border:1px solid #37533f!important;background:linear-gradient(#18251c,#0d150f)!important;color:#c8dbcc!important;border-radius:3px!important;box-shadow:inset 0 1px rgba(255,255,255,.04)!important;overflow:hidden!important;text-overflow:ellipsis!important}.openwebrx-button:hover{border-color:var(--mm-green2)!important;color:var(--mm-green)!important;background:#17251b!important}
+select,input[type=text],input[type=number],input[type=password]{max-width:100%!important;min-width:0!important;background:#050806!important;border:1px solid #344d3b!important;color:var(--mm-green)!important;border-radius:2px!important;font-family:"Roboto Mono",monospace!important}input[type=range]{max-width:100%!important;accent-color:var(--mm-green2)!important}.openwebrx-modes{display:flex!important;flex-wrap:wrap!important}.openwebrx-modes .openwebrx-button{min-width:42px!important;font-size:9px!important;font-weight:bold!important;letter-spacing:.4px!important}
+/* Decoders / DAB */
+.openwebrx-meta-panel,.openwebrx-message-panel{min-width:0!important;max-width:none!important;height:auto!important;max-height:32vh!important;overflow:auto!important}.openwebrx-meta-panel:before{content:"DIGITAL SIGNAL MONITOR"}#openwebrx-panel-metadata-dab{min-height:205px!important;background:linear-gradient(135deg,#101b14,#061009)!important}#openwebrx-panel-metadata-dab:before{content:"DAB+ ENSEMBLE / SERVICE MONITOR";color:var(--mm-amber)!important}#openwebrx-panel-metadata-drm:before{content:"DRM DIGITAL RADIO MONITOR"}#openwebrx-panel-metadata-dmr:before{content:"DMR DUAL TIMESLOT MONITOR"}.openwebrx-dmr-timeslot-panel{background:#0b120d!important;border:1px solid #2b4432!important;margin:8px!important;border-radius:3px!important}
+/* Signal meter */
+#mm-signal-module{margin:8px 9px 10px;padding:9px;border:1px solid #294331;background:#060a07;border-radius:3px}.mm-sig-head{display:flex;justify-content:space-between;color:var(--mm-dim);font-size:9px;letter-spacing:1px;margin-bottom:7px}.mm-sig-value{color:var(--mm-green)}.mm-sig-track{height:10px;border:1px solid #2e4d38;background:repeating-linear-gradient(90deg,#0d1710 0 9%,#19291e 10%);overflow:hidden}.mm-sig-fill{height:100%;width:18%;background:linear-gradient(90deg,var(--mm-green2),var(--mm-amber) 72%,var(--mm-red));transition:width .18s}.mm-sig-scale{display:flex;justify-content:space-between;margin-top:5px;color:#6f8976;font-size:8px}
+.uikit-panel,.uikit-modal,[data-panel-name="uikit"],[id*="uikit" i],.ui-kit-settings{display:none!important}
+*{scrollbar-width:thin;scrollbar-color:#34513c #080c09}::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:#080c09}::-webkit-scrollbar-thumb{background:#34513c}
+/* Medium screens: command rail becomes a horizontal strip; no button is clipped */
+@media(max-width:1180px){
+  :root{--mm-header:76px;--mm-side:335px}
+  #mm-workspace{grid-template-columns:minmax(0,1fr) var(--mm-side);grid-template-rows:74px minmax(0,1fr)}
+  #mm-command-rail{grid-column:1/3;grid-row:1;display:grid!important;grid-template-columns:90px minmax(0,1fr)}
+  #mm-command-head{height:100%;border:0;border-right:1px solid var(--mm-line)}
+  #mm-command-scroll{overflow-x:auto;overflow-y:hidden}
+  .openwebrx-main-buttons{height:100%!important;flex-direction:row!important;width:max-content!important;min-width:100%!important}
+  .openwebrx-main-buttons .button{flex:0 0 74px!important;width:74px!important;height:72px!important;border:0!important;border-right:1px solid var(--mm-soft)!important}
+  .openwebrx-main-buttons .button:hover{box-shadow:inset 0 -3px var(--mm-green2)!important}
+  #mm-main-column{grid-column:1;grid-row:2}#mm-sidebar{grid-column:2;grid-row:2}
+}
+@media(max-width:820px){
+  :root{--mm-header:68px;--mm-side:100%}
+  .webrx-top-container{height:68px!important;min-height:68px!important}.webrx-top-bar{padding-left:72px!important;padding-right:8px!important}.webrx-rx-avatar{left:10px!important;top:9px!important;width:50px!important;height:50px!important}.webrx-rx-title{font-size:13px!important;letter-spacing:1.4px!important}.webrx-rx-desc{font-size:7px!important}.webrx-top-bar:after{display:none}
+  #mm-workspace{grid-template-columns:1fr;grid-template-rows:68px minmax(280px,1fr) minmax(260px,45vh);padding:7px;gap:7px}
+  #mm-command-rail{grid-column:1;grid-row:1;grid-template-columns:72px minmax(0,1fr)}
+  #mm-main-column{grid-column:1;grid-row:2;grid-template-rows:minmax(280px,1fr) auto}
+  #mm-sidebar{grid-column:1;grid-row:3;grid-template-rows:31px 155px minmax(0,1fr)}
+  #mm-decoder-dock{max-height:27vh;grid-template-columns:1fr}.openwebrx-waterfall-container{inset:23px 0 0!important}#mm-spectrum-slot:before{height:23px;padding:6px 8px}
+}
+
+/* ===== v5.1 HOTFIX: pinned receiver, unclipped header, no floating panel ===== */
+:root{--mm-header:96px;--mm-side:390px}
+.webrx-top-container{height:var(--mm-header)!important;min-height:var(--mm-header)!important;overflow:visible!important}
+.webrx-top-bar{
+  display:grid!important;
+  grid-template-columns:76px minmax(0,1fr) auto!important;
+  column-gap:14px!important;
+  align-items:center!important;
+  padding:10px 16px!important;
+  overflow:visible!important;
+}
+.webrx-rx-avatar{
+  position:static!important;
+  grid-column:1!important;
+  width:72px!important;height:72px!important;
+  max-width:72px!important;max-height:72px!important;
+  object-fit:contain!important;object-position:center!important;
+  padding:3px!important;margin:0!important;
+  overflow:visible!important;
+}
+.webrx-rx-texts{
+  grid-column:2!important;
+  min-width:0!important;max-width:none!important;
+  overflow:visible!important;
+}
+.webrx-rx-title,.webrx-rx-desc{
+  overflow:visible!important;text-overflow:clip!important;white-space:normal!important;
+}
+.webrx-rx-title{font-size:20px!important;line-height:1.15!important}
+.webrx-top-bar:after{grid-column:3!important;margin:0!important;white-space:nowrap!important}
+
+/* The receiver deck is integrated, never floating and never hidden. */
+#mm-sidebar{grid-template-rows:32px minmax(0,1fr)!important}
+#mm-sidebar-scroll{grid-row:2!important;padding:9px!important;overflow:auto!important}
+#openwebrx-panels-container-right{display:flex!important;position:static!important;transform:none!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important}
+#openwebrx-panel-receiver{
+  display:block!important;visibility:visible!important;opacity:1!important;
+  position:relative!important;transform:none!important;inset:auto!important;
+  width:100%!important;max-width:none!important;min-width:0!important;
+  height:auto!important;max-height:none!important;
+  overflow:visible!important;z-index:auto!important;
+}
+#openwebrx-panel-receiver .openwebrx-panel-content,
+#openwebrx-panel-receiver .nano,
+#openwebrx-panel-receiver .nano-content{
+  position:relative!important;inset:auto!important;width:100%!important;height:auto!important;
+  max-height:none!important;overflow:visible!important;
+}
+/* Remove any detached / floating utility panel shell. */
+#mm-sidebar > #mm-audio-analyzer{display:none!important}
+.openwebrx-panel.mm-floating,.openwebrx-panel.floating,[data-floating="true"]{position:relative!important;inset:auto!important;transform:none!important}
+
+/* Inline audio analyzer inside receiver control. */
+#openwebrx-panel-receiver #mm-audio-analyzer{
+  display:grid!important;position:relative!important;inset:auto!important;
+  width:auto!important;height:132px!important;min-height:132px!important;
+  margin:8px 9px 10px!important;z-index:auto!important;
+  box-shadow:none!important;
+}
+
+/* Receiver modes must wrap instead of disappearing or being clipped. */
+#openwebrx-panel-receiver .openwebrx-modes,
+#openwebrx-panel-receiver [class*="mode"]{
+  max-width:100%!important;
+}
+#openwebrx-panel-receiver .openwebrx-modes{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:5px!important;padding:6px 9px!important}
+#openwebrx-panel-receiver .openwebrx-modes .openwebrx-button{display:flex!important;min-width:0!important;width:100%!important;height:auto!important;min-height:32px!important;white-space:normal!important;overflow:visible!important}
+
+@media(max-width:1180px){
+  :root{--mm-header:90px;--mm-side:350px}
+  .webrx-top-bar{grid-template-columns:68px minmax(0,1fr) auto!important;padding:9px 12px!important}
+  .webrx-rx-avatar{width:66px!important;height:66px!important;max-width:66px!important;max-height:66px!important}
+}
+@media(max-width:820px){
+  :root{--mm-header:84px}
+  .webrx-top-container{height:84px!important;min-height:84px!important}
+  .webrx-top-bar{grid-template-columns:58px minmax(0,1fr)!important;padding:8px 10px!important;column-gap:10px!important}
+  .webrx-rx-avatar{width:56px!important;height:56px!important;max-width:56px!important;max-height:56px!important}
+  .webrx-top-bar:after{display:none!important}
+  .webrx-rx-title{font-size:14px!important;letter-spacing:1.2px!important}
+  .webrx-rx-desc{font-size:7px!important}
+  #mm-workspace{top:var(--mm-header)!important}
+  #openwebrx-panel-receiver .openwebrx-modes{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}

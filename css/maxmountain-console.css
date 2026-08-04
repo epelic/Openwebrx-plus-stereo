@@ -1,0 +1,72 @@
+/* Max Mountain Station — Tactical Console v3
+   Structural skin for OpenWebRX+. Keeps core element IDs intact. */
+:root{
+  --mm-bg:#050806;--mm-bg2:#0a100c;--mm-panel:#0c1510;--mm-panel2:#111d16;
+  --mm-line:#314a38;--mm-line2:#18271d;--mm-green:#8cff9a;--mm-green2:#41d867;
+  --mm-dim:#8ba891;--mm-amber:#ffd166;--mm-red:#ff625f;--mm-cyan:#66e4de;
+  --mm-shadow:0 18px 45px rgba(0,0,0,.5);--mm-header:78px;--mm-left:88px;--mm-right:340px;
+}
+*{box-sizing:border-box}
+html,body{margin:0!important;width:100%;height:100%;overflow:hidden;background:var(--mm-bg)!important;color:#dce9df!important;font-family:"Roboto Mono",monospace!important}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99999;opacity:.14;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(134,255,155,.08) 4px);mix-blend-mode:screen}
+#webrx-page-container{position:fixed!important;inset:0!important;display:grid!important;grid-template-columns:var(--mm-left) minmax(0,1fr) var(--mm-right);grid-template-rows:var(--mm-header) minmax(0,1fr);background:radial-gradient(circle at 55% 30%,#122118 0,#070b08 48%,#030503 100%)!important;overflow:hidden!important}
+/* top command deck */
+.webrx-top-container{grid-column:1/4;grid-row:1;position:relative!important;height:var(--mm-header)!important;min-height:0!important;z-index:30!important;background:linear-gradient(180deg,#121b15,#090d0a)!important;border-bottom:1px solid var(--mm-line)!important;box-shadow:0 8px 24px #000!important}
+.webrx-top-bar{height:100%!important;padding:0 18px 0 104px!important;display:flex!important;align-items:center!important;background:none!important}
+.webrx-top-logo{display:none!important}.webrx-rx-avatar{position:absolute!important;left:22px!important;top:14px!important;width:52px!important;height:52px!important;border-radius:6px!important;border:1px solid var(--mm-green2)!important;filter:grayscale(1) contrast(1.2) sepia(.3) hue-rotate(70deg)!important;box-shadow:0 0 18px rgba(65,216,103,.25)!important}
+.webrx-rx-texts{position:static!important;min-width:330px!important;text-transform:uppercase!important}.webrx-rx-title{font-size:18px!important;letter-spacing:2.5px!important;color:var(--mm-green)!important;margin:0!important;text-shadow:0 0 14px rgba(140,255,154,.25)}
+.webrx-rx-desc{font-size:10px!important;letter-spacing:1.1px!important;color:var(--mm-dim)!important;margin-top:5px!important}
+.openwebrx-main-buttons{margin-left:auto!important;height:100%!important;display:flex!important;align-items:stretch!important;gap:0!important}
+.openwebrx-main-buttons .button{min-width:76px!important;height:100%!important;padding:15px 11px 8px!important;border-left:1px solid var(--mm-line2)!important;border-radius:0!important;background:transparent!important;color:var(--mm-dim)!important;font-size:9px!important;letter-spacing:1px!important;text-transform:uppercase!important;text-align:center!important}
+.openwebrx-main-buttons .button:hover{background:#132019!important;color:var(--mm-green)!important;box-shadow:inset 0 -3px var(--mm-green2)!important}
+.openwebrx-main-buttons svg{width:24px!important;height:24px!important;fill:currentColor!important;margin-bottom:4px!important}
+.openwebrx-description-container,.openwebrx-rx-details-arrow{display:none!important}
+/* injected left rail */
+#mm-command-rail{grid-column:1;grid-row:2;z-index:25;background:#090e0a;border-right:1px solid var(--mm-line);display:flex;flex-direction:column;align-items:center;padding:13px 8px;gap:9px;box-shadow:8px 0 28px rgba(0,0,0,.35)}
+.mm-rail-mark{width:58px;padding:8px 2px;border:1px solid var(--mm-line);text-align:center;color:var(--mm-green);font-size:9px;line-height:1.45;letter-spacing:1px}.mm-rail-led{width:8px;height:8px;border-radius:50%;background:var(--mm-green2);box-shadow:0 0 12px var(--mm-green2);display:inline-block;margin-bottom:6px}
+.mm-rail-btn{width:58px;min-height:54px;border:1px solid #23362a;background:linear-gradient(180deg,#101912,#0a0f0b);color:#90a996;font:9px "Roboto Mono";letter-spacing:.8px;text-transform:uppercase;cursor:pointer;border-radius:3px}.mm-rail-btn:hover,.mm-rail-btn.active{border-color:var(--mm-green2);color:var(--mm-green);background:#122018;box-shadow:inset 3px 0 var(--mm-green2)}
+.mm-rail-spacer{flex:1}.mm-utc{writing-mode:vertical-rl;transform:rotate(180deg);color:var(--mm-amber);font-size:10px;letter-spacing:1px}
+/* spectrum becomes main operational viewport */
+.openwebrx-waterfall-container{grid-column:2;grid-row:2;position:relative!important;left:auto!important;top:auto!important;width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;margin:14px!important;border:1px solid var(--mm-line)!important;border-radius:5px!important;background:#020403!important;box-shadow:var(--mm-shadow),inset 0 0 0 1px #101a13!important;overflow:hidden!important}
+.openwebrx-waterfall-container:before{content:"LIVE RF SPECTRUM / WATERFALL";position:absolute;z-index:14;top:0;left:0;right:0;height:24px;padding:6px 10px;background:linear-gradient(90deg,#142319,#0b110d);border-bottom:1px solid var(--mm-line);color:var(--mm-green);font-size:9px;letter-spacing:1.5px;pointer-events:none}
+#openwebrx-frequency-container{top:24px!important;height:38%!important;border-bottom:1px solid var(--mm-line)!important}
+#webrx-canvas-background{top:38%!important;margin-top:24px!important;bottom:0!important;background:#000!important}
+#webrx-canvas-container{filter:saturate(.8) contrast(1.08)}
+/* right console, no longer floating */
+#openwebrx-panels-container{grid-column:3;grid-row:2;position:relative!important;inset:auto!important;width:auto!important;height:auto!important;z-index:20!important;display:block!important;overflow:hidden!important;background:linear-gradient(180deg,#0c120e,#070a08)!important;border-left:1px solid var(--mm-line)!important;padding:14px 12px!important}
+#openwebrx-panels-container-right{position:relative!important;inset:auto!important;width:100%!important;height:100%!important;display:flex!important;flex-direction:column!important;gap:10px!important;overflow-y:auto!important;overflow-x:hidden!important;padding-right:3px!important;pointer-events:auto!important}
+#openwebrx-panels-container-left{position:fixed!important;left:calc(var(--mm-left) + 28px)!important;right:calc(var(--mm-right) + 28px)!important;bottom:28px!important;top:auto!important;width:auto!important;height:auto!important;max-height:48vh!important;z-index:45!important;overflow:auto!important;display:flex!important;align-items:flex-end!important;justify-content:center!important;pointer-events:none!important}
+#openwebrx-panels-container-left>.openwebrx-panel{pointer-events:auto!important;box-shadow:0 20px 70px #000!important}
+.openwebrx-panel{position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;float:none!important;width:100%!important;max-width:none!important;margin:0!important;border:1px solid var(--mm-line)!important;border-radius:4px!important;background:linear-gradient(180deg,rgba(18,29,22,.98),rgba(8,13,10,.98))!important;color:#d8e7dc!important;box-shadow:none!important;overflow:visible!important}
+.openwebrx-panel:before{content:attr(data-panel-name);display:block;height:26px;padding:7px 10px;background:#101a13;border-bottom:1px solid var(--mm-line);color:var(--mm-green);font-size:9px;letter-spacing:1.3px;text-transform:uppercase}
+#openwebrx-panel-receiver{display:block!important;order:-20!important}
+#openwebrx-panel-receiver:before{content:"RECEIVER CONTROL MODULE"}
+#openwebrx-panel-status:before{content:"SYSTEM TELEMETRY"}
+#openwebrx-panel-log:before{content:"OPERATIONS LOG / CHAT"}
+.openwebrx-panel-line{padding-left:10px!important;padding-right:10px!important}
+.openwebrx-section-divider{background:#0d1711!important;color:var(--mm-green)!important;border-top:1px solid #1d3023!important;border-bottom:1px solid #1d3023!important;font-size:9px!important;letter-spacing:1px!important;text-transform:uppercase!important;padding:8px 10px!important}
+.webrx-actual-freq{font-size:26px!important;color:var(--mm-amber)!important;letter-spacing:1px!important;text-shadow:0 0 12px rgba(255,209,102,.25)!important}
+.webrx-mouse-freq{color:var(--mm-cyan)!important}
+.openwebrx-button{border:1px solid #37533f!important;background:linear-gradient(#18251c,#0d150f)!important;color:#c8dbcc!important;border-radius:3px!important;box-shadow:inset 0 1px rgba(255,255,255,.04)!important}
+.openwebrx-button:hover{border-color:var(--mm-green2)!important;color:var(--mm-green)!important;background:#17251b!important}
+select,input[type=text],input[type=number],input[type=password]{background:#050806!important;border:1px solid #344d3b!important;color:var(--mm-green)!important;border-radius:2px!important;font-family:"Roboto Mono"!important}
+input[type=range]{accent-color:var(--mm-green2)!important}
+.openwebrx-modes .openwebrx-button{font-size:9px!important;font-weight:bold!important;letter-spacing:.6px!important}
+/* decoder dashboards */
+.openwebrx-meta-panel{min-width:520px!important;max-width:760px!important;border-color:#3d6248!important}
+.openwebrx-meta-panel:before{content:"DIGITAL SIGNAL INTELLIGENCE"}
+#openwebrx-panel-metadata-dab{min-height:210px!important;background:linear-gradient(135deg,#101b14,#07100a)!important}
+#openwebrx-panel-metadata-dab:before{content:"DAB+ ENSEMBLE / SERVICE MONITOR";color:var(--mm-amber)!important}
+#openwebrx-panel-metadata-dab>*{border-color:#35563e!important}
+#openwebrx-panel-metadata-drm:before{content:"DRM DIGITAL RADIO MONITOR"}
+#openwebrx-panel-metadata-dmr:before{content:"DMR DUAL TIMESLOT MONITOR"}
+.openwebrx-dmr-timeslot-panel{background:#0b120d!important;border:1px solid #2b4432!important;margin:8px!important;border-radius:3px!important}
+/* tactical S meter injected into receiver */
+#mm-signal-module{margin:8px 10px 10px;padding:9px;border:1px solid #294331;background:#060a07;border-radius:3px}
+.mm-sig-head{display:flex;justify-content:space-between;color:var(--mm-dim);font-size:9px;letter-spacing:1px;margin-bottom:7px}.mm-sig-value{color:var(--mm-green)}
+.mm-sig-track{height:10px;border:1px solid #2e4d38;background:repeating-linear-gradient(90deg,#0d1710 0 9%,#19291e 10%);position:relative;overflow:hidden}.mm-sig-fill{height:100%;width:18%;background:linear-gradient(90deg,var(--mm-green2),var(--mm-amber) 72%,var(--mm-red));box-shadow:0 0 10px var(--mm-green2);transition:width .18s}.mm-sig-scale{display:flex;justify-content:space-between;margin-top:5px;color:#6f8976;font-size:8px}
+/* scrollbar */
+*{scrollbar-width:thin;scrollbar-color:#34513c #080c09}::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#080c09}::-webkit-scrollbar-thumb{background:#34513c}
+/* compact screens */
+@media(max-width:1050px){:root{--mm-left:66px;--mm-right:292px}.webrx-rx-texts{min-width:220px!important}.openwebrx-main-buttons .button{min-width:58px!important;font-size:0!important}.openwebrx-main-buttons .button svg{margin-top:8px!important}.mm-rail-btn,.mm-rail-mark{width:48px}.webrx-top-bar{padding-left:86px!important}}
+@media(max-width:760px){:root{--mm-header:64px;--mm-left:0px;--mm-right:0px}#webrx-page-container{display:block!important}.webrx-top-container{height:64px!important}.webrx-top-bar{padding-left:74px!important}.webrx-rx-avatar{left:12px!important;top:10px!important;width:44px!important;height:44px!important}.webrx-rx-title{font-size:13px!important}.webrx-rx-desc{font-size:8px!important}.openwebrx-main-buttons{display:none!important}#mm-command-rail{display:none!important}.openwebrx-waterfall-container{position:absolute!important;inset:64px 0 0 0!important;margin:0!important;border-radius:0!important}.openwebrx-waterfall-container:before{display:none!important}#openwebrx-frequency-container{top:0!important}#openwebrx-panels-container{position:fixed!important;top:64px!important;right:0!important;bottom:0!important;width:min(92vw,340px)!important;transform:translateX(100%);transition:transform .2s;z-index:80!important}body.mm-console-open #openwebrx-panels-container{transform:none}#openwebrx-panels-container-left{left:8px!important;right:8px!important;bottom:8px!important}.openwebrx-meta-panel{min-width:0!important}.mm-mobile-console{display:block!important}}

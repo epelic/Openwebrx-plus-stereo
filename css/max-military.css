@@ -1,0 +1,101 @@
+/* Max Mountain Station — Military SDR Theme */
+:root{--mms-bg:#070a08;--mms-panel:rgba(12,18,14,.94);--mms-panel2:rgba(20,29,22,.92);--mms-green:#7dff7a;--mms-green2:#36c956;--mms-dim:#86a58d;--mms-border:#35533b;--mms-amber:#ffbf47;--mms-red:#ff5a4f;--mms-shadow:0 0 0 1px rgba(125,255,122,.08),0 10px 28px rgba(0,0,0,.45)}
+html,body{background:var(--mms-bg)!important;color:#d7e6d9!important;font-family:"Roboto Mono","DejaVu Sans Mono",monospace!important}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99999;opacity:.12;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 4px)}
+.webrx-top-container{background:#090d0a url(../gfx/max-military-header.svg) center/cover no-repeat!important;border-bottom:1px solid var(--mms-green2);box-shadow:0 0 24px rgba(54,201,86,.18)}
+.webrx-top-bar{height:76px!important;background:linear-gradient(90deg,rgba(3,7,4,.97),rgba(13,24,16,.92),rgba(3,7,4,.97))!important;align-items:center}
+.webrx-top-logo{display:none!important}.webrx-rx-avatar{width:52px!important;height:52px!important;margin:8px 12px!important;padding:3px!important;border:1px solid var(--mms-green2)!important;border-radius:2px!important;background:#071009!important;box-shadow:0 0 15px rgba(125,255,122,.2)}
+.webrx-rx-texts{position:relative}.webrx-rx-texts:before{content:"MAX MOUNTAIN STATION";display:block;margin:0 10px 2px;color:var(--mms-green);font-weight:800;font-size:18px;letter-spacing:2px;text-shadow:0 0 10px rgba(125,255,122,.38)}
+.webrx-rx-title{font-size:0!important}.webrx-rx-title:after{content:"TACTICAL SDR COMMAND CENTER";font-size:10px;color:#a8c8ad;letter-spacing:1.5px}.webrx-rx-desc{color:var(--mms-dim)!important;font-size:9px!important;text-transform:uppercase;letter-spacing:.6px}
+.openwebrx-main-buttons{gap:4px;padding:7px 10px!important}.openwebrx-main-buttons .button{width:58px!important;min-height:54px;padding:3px 2px;border:1px solid #29452f;border-radius:2px;background:linear-gradient(#142019,#0a100c);color:#bbd8c0!important;text-shadow:none!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);transition:.15s}
+.openwebrx-main-buttons .button:hover{background:#193321!important;border-color:var(--mms-green2);color:var(--mms-green)!important;box-shadow:0 0 12px rgba(54,201,86,.2)}.openwebrx-main-buttons .button:active{transform:translateY(1px)}
+.openwebrx-main-buttons .button svg{height:30px!important;filter:none!important;fill:currentColor}.openwebrx-description-container{background:rgba(4,8,5,.86)!important;border-top:1px solid #223b28}.webrx-rx-photo-title{color:var(--mms-green)!important;letter-spacing:1px}.webrx-rx-photo-desc{color:#bfd0c2!important}
+#openwebrx-frequency-container{border-bottom:1px solid #29462f;background:#050806!important}.openwebrx-spectrum-container,#webrx-canvas-background{background:#030604!important}.openwebrx-bandplan-container{opacity:.9}
+#openwebrx-panels-container-left,#openwebrx-panels-container-right{padding:10px!important;gap:8px}.openwebrx-panel{background:linear-gradient(145deg,var(--mms-panel2),var(--mms-panel))!important;border:1px solid var(--mms-border)!important;border-radius:2px!important;color:#d1e1d4!important;box-shadow:var(--mms-shadow)!important;backdrop-filter:blur(6px)}
+.openwebrx-panel:before{content:attr(data-panel-name);display:block;margin:-6px -6px 8px;padding:5px 8px;border-bottom:1px solid #28462f;color:#80c98a;font-size:9px;font-weight:bold;letter-spacing:1.2px;text-transform:uppercase;background:rgba(0,0,0,.2)}
+#openwebrx-panel-receiver{border-color:#4a7652!important}.frequencies{background:#030a05!important;border:1px solid #33563a!important;padding:5px!important}.webrx-actual-freq{color:var(--mms-green)!important;text-shadow:0 0 10px rgba(125,255,122,.35);font-weight:bold!important;letter-spacing:1px}.webrx-mouse-freq{color:var(--mms-amber)!important}
+.openwebrx-button{background:linear-gradient(#1c2c20,#0d160f)!important;border:1px solid #3a5b40!important;border-radius:2px!important;color:#d2e4d5!important;box-shadow:none!important;text-shadow:none!important}.openwebrx-button:hover{background:#21452a!important;border-color:var(--mms-green2)!important;color:var(--mms-green)!important}.openwebrx-button:active{background:#0b170e!important}
+.openwebrx-round-button{border-radius:50%!important;background:rgba(6,14,8,.88)!important}.openwebrx-tune-button{opacity:.78}.openwebrx-tune-button:hover{opacity:1}
+select,input,textarea{background:#080d09!important;color:#d4e4d6!important;border:1px solid #35513a!important;border-radius:1px!important;font-family:inherit!important}select:focus,input:focus,textarea:focus{outline:1px solid var(--mms-green2)!important}
+input[type=range]{--track-background:#34533a!important}input[type=range]::-webkit-slider-thumb{background:var(--mms-green)!important;border-color:#1b3b22!important}
+.openwebrx-progressbar{background:#09100b!important;border:1px solid #2b4631!important}.openwebrx-progressbar .value{background:linear-gradient(90deg,#1c6d2e,var(--mms-green2))!important}
+.nano>.nano-pane{background:#0c160f!important}.nano>.nano-pane>.nano-slider{background:#497b53!important}
+a{color:#83d98e}.openwebrx-panel a:hover{color:var(--mms-green)}
+@media(max-width:991px){.webrx-rx-texts:before{font-size:14px;letter-spacing:1px}.webrx-rx-title:after{font-size:8px}.openwebrx-main-buttons .button{width:48px!important;font-size:8px}.openwebrx-main-buttons .button svg{height:25px!important}}
+@media(max-width:700px){.webrx-rx-avatar{display:none}.webrx-rx-desc{display:none}.webrx-top-bar{height:66px!important}.webrx-rx-texts:before{font-size:12px}.openwebrx-main-buttons{overflow-x:auto}.openwebrx-main-buttons .button{min-width:44px}}
+
+/* ================================================================
+   MAX MOUNTAIN PLUGIN PACK V2 - Military skin for community plugins
+   ================================================================ */
+:root {
+  --mm-radar: #74ff7b;
+  --mm-radar-dim: #2faf45;
+  --mm-panel: rgba(5, 12, 7, .94);
+  --mm-border: rgba(116, 255, 123, .38);
+  --mm-amber: #ffc857;
+}
+
+/* Common plugin panels, dialogs and floating controls */
+[id*="plugin"], [class*="plugin-"], .uikit-panel, .uikit-modal,
+.smeter, #smeter, [class*="smeter"], [id*="smeter"],
+[class*="thumbtune"], [id*="thumbtune"],
+[class*="minimap"], [id*="minimap"] {
+  font-family: "Roboto Mono", monospace !important;
+}
+
+.uikit-panel, .uikit-modal-content, [class*="plugin-panel"],
+[class*="smeter-container"], [id*="smeter-container"] {
+  background: var(--mm-panel) !important;
+  border: 1px solid var(--mm-border) !important;
+  box-shadow: 0 0 18px rgba(50,255,90,.10), inset 0 0 22px rgba(0,0,0,.45) !important;
+  color: #d9ffe0 !important;
+}
+
+.uikit-panel button, .uikit-modal button,
+[class*="thumbtune"] button, [id*="thumbtune"] button,
+[class*="plugin-"] button {
+  background: linear-gradient(#1a271d, #0b120d) !important;
+  border: 1px solid var(--mm-border) !important;
+  color: var(--mm-radar) !important;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  text-shadow: 0 0 7px rgba(116,255,123,.45);
+}
+
+.uikit-panel button:hover, .uikit-modal button:hover,
+[class*="plugin-"] button:hover {
+  border-color: var(--mm-radar) !important;
+  box-shadow: 0 0 10px rgba(116,255,123,.25) !important;
+}
+
+/* S-meter: military instrument appearance */
+.smeter, #smeter, [class*="smeter"], [id*="smeter"] {
+  color: var(--mm-radar) !important;
+  text-shadow: 0 0 7px rgba(116,255,123,.5);
+}
+.smeter canvas, #smeter canvas, [class*="smeter"] canvas {
+  filter: sepia(.25) hue-rotate(65deg) saturate(1.35) contrast(1.08);
+}
+
+/* DAB service / slideshow cards retain functionality, gain tactical styling */
+#dab-panel, .dab-panel, [id*="dab"], [class*="dab-"] {
+  border-color: var(--mm-border) !important;
+}
+#dab-panel img, .dab-panel img, [class*="dab-"] img {
+  border: 1px solid rgba(116,255,123,.30);
+  background: #020603;
+}
+
+/* Search, scanner and precise-tune controls */
+[class*="scanner"], [id*="scanner"],
+[class*="tune-precise"], [id*="tune-precise"],
+[class*="bookmark-search"], [id*="bookmark-search"] {
+  color: #d9ffe0 !important;
+}
+
+/* Plugin toast notifications */
+.uikit-toast, [class*="toast"] {
+  background: rgba(5,12,7,.97) !important;
+  color: var(--mm-radar) !important;
+  border: 1px solid var(--mm-border) !important;
+}

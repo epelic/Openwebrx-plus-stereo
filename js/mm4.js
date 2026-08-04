@@ -48,6 +48,32 @@
     p.style.display='block';p.style.visibility='visible';
     var right=q('#openwebrx-panels-container-right');
     if(right && p.parentNode!==right)right.insertBefore(p,right.firstChild);
+    var toggle=q('[data-toggle-panel="openwebrx-panel-receiver"]');
+    if(toggle&&!toggle.dataset.mmStateSync){
+      toggle.dataset.mmStateSync='1';
+      toggle.addEventListener('click',function(){
+        var t=p.style.transform||'';p.movement=/rotate[XY]\((?:90|270)deg\)/.test(t)?'collapse':'expand';
+        if(toggle.dataset.mmRetry)return;
+        setTimeout(function(){
+          if((p.style.transform||'')===t){toggle.dataset.mmRetry='1';toggle.click();delete toggle.dataset.mmRetry}
+        },80);
+      },true);
+    }
+    if(!p.dataset.mmInitialOpen&&!p.dataset.mmInitialOpening){
+      p.dataset.mmInitialOpening='1';
+      setTimeout(function(){
+        if(p.getBoundingClientRect().height<20&&toggle)toggle.click();
+        delete p.dataset.mmInitialOpening;p.dataset.mmInitialOpen='1';
+      },2500);
+    }
+  }
+
+  function placeNativeSettings(){
+    var top=q('.webrx-top-container');
+    var settings=qa('a.button').find(function(a){return (a.textContent||'').trim()==='Settings'&&/settings(?:$|[?#])/i.test(a.getAttribute('href')||'')});
+    if(!top||!settings)return;
+    settings.classList.add('mm-top-settings');
+    if(settings.parentNode!==top)top.appendChild(settings);
   }
 
   function moveNativeSignalModule(){
@@ -223,8 +249,21 @@
     }
   }
 
+  function addSpectrumHeightControl(){
+    var slot=q('#mm-spectrum-slot'),container=q('.openwebrx-spectrum-container');
+    if(!slot||!container||q('#mm-spectrum-height-control'))return;
+    var control=make('label','mm-spectrum-height-control');
+    control.title='Regola altezza RF spectrum';
+    control.innerHTML='<span>RF</span><input type="range" min="60" max="220" step="4" aria-label="RF spectrum height">';
+    var slider=q('input',control),saved=parseInt(localStorage.getItem('mm-spectrum-height')||'96',10);
+    if(!isFinite(saved))saved=96;
+    saved=Math.max(60,Math.min(220,saved));slider.value=String(saved);
+    function apply(){document.documentElement.style.setProperty('--mm-rf-spectrum-height',slider.value+'px');localStorage.setItem('mm-spectrum-height',slider.value)}
+    slider.addEventListener('input',apply);apply();slot.appendChild(control);
+  }
+
   function clock(){var e=q('#mm-utc-clock');if(e)e.textContent=new Date().toISOString().slice(11,19)+' UTC'}
-  function applySmallFixes(){ensureReceiver();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls();ensureSpectrum()}
+  function applySmallFixes(){ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
   function init(){
     installAudioTap();retitle();document.body.classList.add('mm-console-v4');
     var tries=0,t=setInterval(function(){

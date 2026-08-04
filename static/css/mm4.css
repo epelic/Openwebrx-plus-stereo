@@ -45,8 +45,8 @@ body:before{content:"";position:fixed;inset:0;z-index:99999;pointer-events:none;
 select,input[type=text],input[type=number],input[type=password]{max-width:100%!important;background:#050806!important;border:1px solid #344d3b!important;color:var(--mm-green)!important;border-radius:2px!important;font-family:"Roboto Mono"!important}input[type=range]{accent-color:var(--mm-green2)!important}.openwebrx-modes .openwebrx-button{font-size:9px!important;font-weight:bold!important;letter-spacing:.5px!important}
 /* Decoder panels */
 .openwebrx-meta-panel,.openwebrx-message-panel{min-width:0!important;max-width:none!important;height:auto!important;max-height:32vh!important;overflow:auto!important}.openwebrx-meta-panel:before{content:"DIGITAL SIGNAL MONITOR"}#openwebrx-panel-metadata-dab{min-height:190px!important;background:linear-gradient(135deg,#101b14,#07100a)!important}#openwebrx-panel-metadata-dab:before{content:"DAB+ ENSEMBLE / SERVICE MONITOR";color:var(--mm-amber)!important}#openwebrx-panel-metadata-drm:before{content:"DRM DIGITAL RADIO MONITOR"}#openwebrx-panel-metadata-dmr:before{content:"DMR DUAL TIMESLOT MONITOR"}.openwebrx-dmr-timeslot-panel{background:#0b120d!important;border:1px solid #2b4432!important;margin:8px!important;border-radius:3px!important}
-/* S meter */
-#mm-signal-module{margin:8px 10px 10px;padding:9px;border:1px solid #294331;background:#060a07;border-radius:3px}.mm-sig-head{display:flex;justify-content:space-between;color:var(--mm-dim);font-size:9px;letter-spacing:1px;margin-bottom:7px}.mm-sig-value{color:var(--mm-green)}.mm-sig-track{height:10px;border:1px solid #2e4d38;background:repeating-linear-gradient(90deg,#0d1710 0 9%,#19291e 10%);overflow:hidden}.mm-sig-fill{height:100%;width:18%;background:linear-gradient(90deg,var(--mm-green2),var(--mm-amber) 72%,var(--mm-red));transition:width .18s}.mm-sig-scale{display:flex;justify-content:space-between;margin-top:5px;color:#6f8976;font-size:8px}
+/* Native S-meter, moved without cloning or replacing it. */
+#mm-signal-module{margin:8px 10px 10px;padding:9px;border:1px solid #294331;background:#060a07;border-radius:3px}.mm-sig-head{display:flex;justify-content:space-between;align-items:center;color:var(--mm-dim);font-size:9px;letter-spacing:1px;margin-bottom:7px}.mm-sig-head #openwebrx-smeter-db{position:static!important;float:none!important;width:auto!important;margin:0!important;color:var(--mm-green)!important}.mm-native-smeter{width:100%;min-width:0}.mm-native-smeter #openwebrx-smeter{position:relative!important;inset:auto!important;display:block!important;width:100%!important;height:12px!important;margin:0!important;border:1px solid #2e4d38!important;background:repeating-linear-gradient(90deg,#0d1710 0 9%,#19291e 10%)!important;overflow:hidden!important}.mm-native-smeter .openwebrx-smeter-bar{height:100%!important}.mm-sig-scale{display:flex;justify-content:space-between;margin-top:5px;color:#6f8976;font-size:8px}
 /* Remove empty UI kit surfaces even if cached */
 .uikit-panel,.uikit-modal,[data-panel-name="uikit"],[id*="uikit" i],.ui-kit-settings{display:none!important}
 *{scrollbar-width:thin;scrollbar-color:#34513c #080c09}::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:#080c09}::-webkit-scrollbar-thumb{background:#34513c}
@@ -55,6 +55,13 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 
 /* M4 CLEAN FIXES */
 :root{--mm-header:82px;--mm-side:390px}
+
+/* MM4.9 native header actions and adjustable RF spectrum */
+:root{--mm-rf-spectrum-height:96px}
+.webrx-top-container>.mm-top-settings{position:absolute!important;z-index:80!important;top:8px!important;right:12px!important;width:64px!important;height:64px!important;padding:7px 4px!important;display:block!important;visibility:visible!important;border:1px solid var(--mm-line)!important;border-radius:3px!important;background:#08120c!important;color:var(--mm-green)!important;text-align:center!important;font-size:9px!important;line-height:12px!important}
+.webrx-top-container>.mm-top-settings svg{width:27px!important;height:27px!important;fill:currentColor!important}
+#mm-spectrum-height-control{position:absolute;z-index:35;top:30px;right:5px;width:20px;height:var(--mm-rf-spectrum-height);min-height:60px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 2px;border:1px solid rgba(112,255,132,.45);border-radius:3px;background:rgba(3,10,5,.82);color:var(--mm-green);font:7px/1 "Roboto Mono",monospace;pointer-events:auto}
+#mm-spectrum-height-control input{width:12px!important;height:calc(100% - 12px)!important;min-height:38px;margin:0!important;padding:0!important;writing-mode:vertical-lr;direction:rtl;accent-color:var(--mm-green2)!important;cursor:ns-resize}
 .webrx-top-container{overflow:visible!important}
 .webrx-top-bar{padding-left:104px!important;min-width:0!important;overflow:visible!important}
 .webrx-rx-avatar{
@@ -185,14 +192,26 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
   width:100%!important;min-width:0!important;height:30px!important;line-height:22px!important
 }
 
-/* Scanner gets a readable full label without changing its original behaviour. */
-#openwebrx-panel-receiver .openwebrx-squelch-auto.mm-scanner-labeled{
+/* Separate scanner proxy; the native squelch/scanner control remains untouched. */
+#openwebrx-panel-receiver #mm-scanner-button{
   width:76px!important;min-width:76px!important;height:30px!important;
   display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  padding:0 6px!important
+  padding:0 6px!important;margin:0 6px!important;border:1px solid #5b615d!important;
+  border-radius:3px!important;background:linear-gradient(#565b58,#383c3a)!important;
+  color:#e0e3e1!important;cursor:pointer!important
 }
-#openwebrx-panel-receiver .openwebrx-squelch-auto.mm-scanner-labeled svg{display:none!important}
-#openwebrx-panel-receiver .openwebrx-squelch-auto.mm-scanner-labeled:after{content:"SCANNER";font-size:8px;font-weight:700;letter-spacing:.35px}
+#openwebrx-panel-receiver #mm-scanner-button:hover{border-color:#8b938e!important;background:linear-gradient(#636966,#414642)!important}
+#openwebrx-panel-receiver #mm-scanner-button.mm-active{border-color:#b8c0bb!important;background:#6b716d!important;box-shadow:0 0 8px rgba(210,218,213,.22)!important}
+
+/* Labels are visual overlays; native contents and click handlers stay intact. */
+#openwebrx-panel-receiver .mm-rec-control,
+#openwebrx-panel-receiver .mm-picture-control{position:relative!important;font-size:0!important}
+#openwebrx-panel-receiver .mm-rec-control>* ,
+#openwebrx-panel-receiver .mm-picture-control>*{visibility:hidden!important}
+#openwebrx-panel-receiver .mm-rec-control:after,
+#openwebrx-panel-receiver .mm-picture-control:after{font-size:9px!important;font-weight:700!important;letter-spacing:.4px!important}
+#openwebrx-panel-receiver .mm-rec-control:after{content:"REC";color:#ff8b87!important}
+#openwebrx-panel-receiver .mm-picture-control:after{content:"PICTURE";color:#c8dbcc!important}
 
 /* Keep only useful settings, with consistent dimensions. */
 .mm-opacity-row{display:grid!important;grid-template-columns:30px minmax(0,1fr)!important;gap:7px!important;align-items:center!important}
@@ -210,142 +229,52 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 @media(max-width:1180px){.mm-mode-keys{grid-template-columns:repeat(3,minmax(44px,1fr))!important}}
 @media(max-width:820px){.mm-mode-group{grid-template-columns:1fr!important}.mm-mode-label{height:auto!important}.mm-mode-keys{grid-template-columns:repeat(3,minmax(44px,1fr))!important}}
 
-/* ===== M4.33 receiver deck rebuild (based strictly on M43) ===== */
-body.mm-console-v433 .webrx-rx-avatar{
-  left:17px!important;top:13px!important;width:48px!important;height:48px!important;
-  object-fit:contain!important;object-position:center!important;padding:1px!important
-}
+/* MM4.6 live layout corrections */
+#openwebrx-section-modes + .openwebrx-section:not(.closed){height:auto!important;max-height:none!important;overflow:visible!important}
+#openwebrx-panel-receiver .openwebrx-modes{position:relative!important;display:block!important;box-sizing:border-box!important;width:100%!important;height:auto!important;max-height:none!important;margin:0!important}
+#openwebrx-panel-receiver .mm-mode-groups{width:100%!important;height:auto!important;min-width:0!important;flex:0 0 100%!important;margin:0!important}
+#openwebrx-section-controls{position:relative!important;clear:both!important}
 
-/* Use the same compact console typography everywhere in the receiver. */
-body.mm-console-v433 #openwebrx-panel-receiver,
-body.mm-console-v433 #openwebrx-panel-receiver select,
-body.mm-console-v433 #openwebrx-panel-receiver option,
-body.mm-console-v433 #openwebrx-panel-receiver input,
-body.mm-console-v433 #openwebrx-panel-receiver button,
-body.mm-console-v433 #openwebrx-panel-receiver .openwebrx-button{
-  font-family:"Roboto Mono",monospace!important
-}
-body.mm-console-v433 #openwebrx-sdr-profiles-listbox{
-  width:100%!important;height:30px!important;min-height:30px!important;
-  padding:0 28px 0 9px!important;color:#dce8df!important;
-  font-size:10px!important;font-weight:600!important;letter-spacing:.45px!important
-}
+#mm-main-column{grid-template-rows:minmax(260px,1fr) 0!important}
+#mm-main-column.mm-dock-active{grid-template-rows:minmax(260px,3fr) minmax(180px,2fr)!important}
+#mm-decoder-dock{width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;grid-auto-rows:minmax(0,1fr)!important;align-items:stretch!important;overflow:auto!important}
+#mm-decoder-dock.mm-single-panel{grid-template-columns:minmax(0,1fr)!important}
+#mm-decoder-dock .openwebrx-panel{width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;box-sizing:border-box!important}
+#mm-decoder-dock .openwebrx-panel.mm-dock-collapsed{display:none!important}
+#mm-decoder-dock .openwebrx-panel-inner,#mm-decoder-dock .nano,#mm-decoder-dock .nano-content{min-height:0!important;max-height:none!important}
 
-/* Native working S-meter, relocated below the frequency. */
-#mm-native-smeter{
-  margin:2px 10px 9px!important;padding:8px!important;
-  border:1px solid #294331!important;border-radius:3px!important;background:#060a07!important
-}
-.mm-module-title{
-  min-height:20px;display:flex;align-items:center;justify-content:space-between;
-  color:var(--mm-green);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase
-}
-.mm-native-smeter-value,#mm-native-smeter #openwebrx-smeter-db{
-  color:var(--mm-green)!important;font-size:9px!important;white-space:nowrap!important
-}
-.mm-native-smeter-body{width:100%;padding-top:4px}
-#mm-native-smeter #openwebrx-smeter{
-  display:block!important;width:100%!important;max-width:none!important;height:9px!important;
-  margin:0!important;border:1px solid #2e4d38!important;border-radius:2px!important;background:#0d1710!important
-}
-#mm-native-smeter .openwebrx-smeter-bar{height:100%!important}
-.mm-native-smeter-scale{
-  display:flex;justify-content:space-between;padding-top:4px;color:#6f8976;
-  font-size:7px;letter-spacing:.2px
-}
-/* The old bottom display line now keeps only UTC. */
-body.mm-console-v433 #openwebrx-clock-utc{display:block!important;width:100%!important;text-align:left!important}
+#openwebrx-frequency-container{height:auto!important;flex:0 0 auto!important;background:#07110b!important;border-bottom:1px solid var(--mm-green2)!important}
+.openwebrx-bandplan-container,#openwebrx-bookmarks-container,.openwebrx-spectrum-container,#openwebrx-scale-container{background-color:#07110b!important}
+#openwebrx-spectrum-canvas,#openwebrx-scale-canvas{filter:sepia(.75) saturate(1.8) hue-rotate(72deg) brightness(.72) contrast(1.2)!important}
+#webrx-canvas-background{top:auto!important;border-top:0!important}
 
-/* Hide only the original mode controls. They remain alive in the DOM. */
-body.mm-console-v433 #openwebrx-panel-receiver .openwebrx-modes>.openwebrx-modes-grid,
-body.mm-console-v433 #openwebrx-panel-receiver .openwebrx-modes>.openwebrx-panel-flex-line{
-  position:absolute!important;left:-10000px!important;top:auto!important;
-  width:1px!important;height:1px!important;overflow:hidden!important;
-  opacity:0!important;pointer-events:none!important
-}
-body.mm-console-v433 #openwebrx-panel-receiver .openwebrx-modes{
-  position:relative!important;padding:8px 10px 10px!important;overflow:visible!important
-}
-#mm-mode-deck{display:flex;flex-direction:column;gap:9px;width:100%}
-.mm-mode-section{display:block;width:100%;min-width:0}
-.mm-mode-title{
-  height:21px;display:flex;align-items:center;padding:0 2px;margin-bottom:5px;
-  color:var(--mm-green);font-size:9px;font-weight:700;letter-spacing:1.15px;text-transform:uppercase;
-  border-bottom:1px solid #1d3023
-}
-.mm-mode-grid{
-  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:5px!important;width:100%!important;min-width:0!important
-}
-.mm-mode-key{
-  width:100%!important;min-width:0!important;height:30px!important;min-height:30px!important;
-  margin:0!important;padding:0 4px!important;display:flex!important;align-items:center!important;
-  justify-content:center!important;border:1px solid #37533f!important;border-radius:3px!important;
-  background:linear-gradient(#18251c,#0d150f)!important;color:#c8dbcc!important;
-  font-family:"Roboto Mono",monospace!important;font-size:8px!important;font-weight:700!important;
-  line-height:1!important;letter-spacing:.15px!important;white-space:nowrap!important;
-  overflow:hidden!important;text-overflow:ellipsis!important;cursor:pointer!important
-}
-.mm-mode-key:hover{border-color:var(--mm-green2)!important;color:var(--mm-green)!important;background:#17251b!important}
-.mm-mode-key.mm-active{
-  border-color:var(--mm-green2)!important;background:var(--mm-green)!important;color:#071008!important;
-  box-shadow:0 0 9px rgba(145,255,157,.22)!important
-}
-.mm-scanner-button{
-  background:linear-gradient(#4b514d,#292e2b)!important;border-color:#727a75!important;
-  color:#f0f2f0!important;font-size:8px!important
-}
-.mm-scanner-button:hover{background:#5d665f!important;border-color:#a1aaa4!important;color:#fff!important}
-/* Hide the duplicate scanner icon in Controls; the working proxy is in DIGI MODES. */
-body.mm-console-v433 #openwebrx-panel-receiver .openwebrx-squelch-auto{display:none!important}
+#openwebrx-section-display + .openwebrx-section > .openwebrx-panel-line:nth-child(2){display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:5px!important;padding:8px 10px!important;align-items:center!important;overflow:visible!important}
+#openwebrx-section-display + .openwebrx-section > .openwebrx-panel-line:nth-child(2) > .openwebrx-button{width:100%!important;min-width:0!important;height:30px!important;margin:0!important;padding:3px!important}
+#openwebrx-section-display + .openwebrx-section > .openwebrx-panel-line:nth-child(2) > .openwebrx-button:has(.openwebrx-record-button){grid-column:span 2!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:5px!important;width:100%!important;height:30px!important;padding:0!important;margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#openwebrx-panel-receiver .mm-rec-control,#openwebrx-panel-receiver .mm-picture-control{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-width:0!important;height:30px!important;margin:0!important;padding:2px 4px!important;font-size:8px!important;font-weight:700!important;line-height:1!important;visibility:visible!important}
+#openwebrx-panel-receiver .mm-rec-control:after,#openwebrx-panel-receiver .mm-picture-control:after{content:none!important}
 
-/* Real-time audio spectrum: 0–20 kHz. */
-body.mm-console-v433 #mm-audio-module{
-  margin:8px 10px 10px!important;border:1px solid var(--mm-line)!important;
-  border-radius:3px!important;background:#050806!important;overflow:hidden!important
-}
-body.mm-console-v433 #mm-audio-module .mm-module-title{
-  height:28px;padding:0 8px;background:#101a13;border-bottom:1px solid var(--mm-line)
-}
-#mm-audio-state{color:var(--mm-dim);font-size:8px;font-weight:500;letter-spacing:.5px}
-body.mm-console-v433 #mm-audio-canvas{
-  display:block!important;width:100%!important;height:125px!important;background:#020403!important
-}
-body.mm-console-v433 #mm-audio-scale{
-  height:20px;display:flex;justify-content:space-between;padding:4px 8px 0;
-  border-top:1px solid #17251c;color:#6f8976;font-size:7px
-}
+#openwebrx-panel-receiver #fs-toggle-btn{position:static!important;inset:auto!important;float:none!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;width:42px!important;height:24px!important;margin:8px 10px 10px!important;padding:0 6px!important;color:#dce8df!important;background:#17201a!important;border:1px solid var(--mm-green2)!important;border-radius:3px!important;line-height:22px!important}
 
-/* Settings stay intact, with the same typography used by Modes. */
-body.mm-console-v433 #openwebrx-section-settings + .openwebrx-section,
-body.mm-console-v433 #openwebrx-section-settings + .openwebrx-section select,
-body.mm-console-v433 #openwebrx-section-settings + .openwebrx-section label{
-  font-family:"Roboto Mono",monospace!important;font-size:9px!important;letter-spacing:.15px!important
-}
+/* Extended DAB service monitor and reserved MOT slideshow area. */
+#openwebrx-panel-metadata-dab .dab-container{display:grid!important;grid-template-columns:minmax(260px,1.2fr) minmax(220px,.8fr)!important;gap:12px!important;width:100%!important;padding:10px!important;box-sizing:border-box!important}
+#openwebrx-panel-metadata-dab .dab-info-column{display:flex!important;flex-direction:column!important;gap:5px!important;min-width:0!important}
+#openwebrx-panel-metadata-dab .dab-programme-slot select{width:100%!important;max-width:none!important}
+#openwebrx-panel-metadata-dab .dab-technical-grid{display:grid!important;grid-template-columns:max-content minmax(0,1fr)!important;gap:4px 10px!important;margin-top:7px!important;padding-top:8px!important;border-top:1px solid #294b34!important;font-size:10px!important}
+#openwebrx-panel-metadata-dab .dab-technical-grid span{color:#789481!important;text-transform:uppercase!important;letter-spacing:.35px!important}
+#openwebrx-panel-metadata-dab .dab-technical-grid b{color:#c9ead0!important;font-weight:500!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+#openwebrx-panel-metadata-dab .dab-mot-column{display:flex!important;flex-direction:column!important;min-width:0!important;border:1px solid #2f593a!important;background:#061009!important}
+#openwebrx-panel-metadata-dab .dab-mot-title{padding:6px 8px!important;border-bottom:1px solid #2f593a!important;color:var(--mm-green)!important;font-size:9px!important;letter-spacing:.8px!important}
+#openwebrx-panel-metadata-dab .dab-mot-frame{position:relative!important;display:flex!important;align-items:center!important;justify-content:center!important;min-height:180px!important;overflow:hidden!important}
+#openwebrx-panel-metadata-dab .dab-mot-image{display:none;max-width:100%!important;max-height:260px!important;object-fit:contain!important}
+#openwebrx-panel-metadata-dab .dab-mot-status{color:#597160!important;font-size:10px!important;text-transform:uppercase!important;letter-spacing:.5px!important}
+@media(max-width:900px){#openwebrx-panel-metadata-dab .dab-container{grid-template-columns:1fr!important}}
 
-/* Display: never clip REC or PICTURE. */
-body.mm-console-v433 #openwebrx-section-display + .openwebrx-section>.openwebrx-panel-line:first-child{
-  display:flex!important;flex-wrap:wrap!important;gap:5px!important;align-items:center!important;
-  padding:8px 10px!important;overflow:visible!important
-}
-body.mm-console-v433 #openwebrx-section-display + .openwebrx-section>.openwebrx-panel-line:first-child>.openwebrx-button{
-  flex:1 1 38px!important;width:auto!important;min-width:38px!important;height:30px!important;
-  min-height:30px!important;margin:0!important;padding:3px!important;overflow:visible!important
-}
-body.mm-console-v433 #openwebrx-panel-receiver .mm-display-text-button{
-  flex:1 1 74px!important;min-width:74px!important;width:auto!important;height:30px!important;
-  display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  font-size:8px!important;font-weight:700!important;white-space:nowrap!important;overflow:visible!important
-}
-body.mm-console-v433 #openwebrx-panel-receiver .mm-picture-button{min-width:82px!important}
-
-/* Digital decoder panels must be fully usable instead of vertically clipped. */
-body.mm-console-v433 #mm-decoder-dock{max-height:48vh!important;overflow:auto!important}
-body.mm-console-v433 #mm-decoder-dock .openwebrx-panel,
-body.mm-console-v433 #mm-decoder-dock .openwebrx-meta-panel,
-body.mm-console-v433 #mm-decoder-dock .openwebrx-message-panel{
-  max-height:none!important;height:auto!important;min-height:180px!important;overflow:auto!important
-}
-
-@media(max-width:1180px){.mm-mode-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
-@media(max-width:820px){.mm-mode-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+/* MM4.8 responsive RF/waterfall and native section collapse. */
+#webrx-canvas-background,#webrx-canvas-container{width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}
+#webrx-canvas-container canvas{width:100%!important;max-width:100%!important}
+.openwebrx-spectrum-container.expanded{height:var(--mm-rf-spectrum-height)!important;max-height:none!important;opacity:1!important;border-bottom:1px solid var(--mm-green2)!important;background:#061009!important}
+#openwebrx-spectrum-canvas{display:block!important;width:100%!important;height:100%!important;filter:none!important}
+#openwebrx-panel-receiver>.openwebrx-section.closed{height:0!important;max-height:0!important;min-height:0!important;margin:0!important;padding:0!important;opacity:0!important;overflow:hidden!important;pointer-events:none!important}
+#openwebrx-panel-receiver>.openwebrx-section:not(.closed){height:auto!important;max-height:none!important;opacity:1!important;overflow:visible!important}
+#mm-spectrum-slot,.openwebrx-waterfall-container,#webrx-canvas-background{min-height:0!important}

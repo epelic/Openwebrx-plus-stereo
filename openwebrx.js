@@ -1053,6 +1053,9 @@ function on_ws_recv(evt) {
                         });
                         break;
                     case "metadata":
+                        if (json['value']['mode'] === 'DAB' && json['value']['audio_sample_rate']) {
+                            audioEngine.setHdInputRate(json['value']['audio_sample_rate']);
+                        }
                         $('.openwebrx-meta-panel').metaPanel().each(function(){
                             this.update(json['value']);
                         });

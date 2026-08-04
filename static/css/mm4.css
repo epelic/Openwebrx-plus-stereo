@@ -270,6 +270,8 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 #openwebrx-panel-metadata-dab .dab-logo-image{display:none;max-width:100%!important;max-height:220px!important;object-fit:contain!important;filter:drop-shadow(0 0 10px rgba(112,255,132,.16))}
 #openwebrx-panel-metadata-dab .dab-logo-status{color:#597160!important;font-size:10px!important;text-transform:uppercase!important;letter-spacing:.5px!important}
 #openwebrx-panel-metadata-dab .dab-logo-name{min-height:25px!important;padding:6px 8px!important;border-top:1px solid #203c28!important;color:#c9ead0!important;text-align:center!important;font-size:10px!important;letter-spacing:.35px!important}
+#openwebrx-panel-metadata-dab .dab-logo-reception{display:flex!important;flex-direction:column!important;gap:3px!important;padding:6px 8px 8px!important;border-top:1px solid #203c28!important;background:#050d08!important;color:#789481!important;text-align:center!important;font-size:9px!important;line-height:1.25!important;letter-spacing:.3px!important}
+#openwebrx-panel-metadata-dab .dab-logo-signal{color:#a9cdb1!important}
 @media(max-width:900px){#openwebrx-panel-metadata-dab .dab-container{grid-template-columns:1fr!important}}
 
 /* MM4.8 responsive RF/waterfall and native section collapse. */

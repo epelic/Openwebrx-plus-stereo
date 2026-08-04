@@ -69,11 +69,11 @@
   }
 
   function placeNativeSettings(){
-    var top=q('.webrx-top-container');
+    var buttons=q('.openwebrx-main-buttons');
     var settings=qa('a.button').find(function(a){return (a.textContent||'').trim()==='Settings'&&/settings(?:$|[?#])/i.test(a.getAttribute('href')||'')});
-    if(!top||!settings)return;
-    settings.classList.add('mm-top-settings');
-    if(settings.parentNode!==top)top.appendChild(settings);
+    if(!buttons||!settings)return;
+    settings.classList.remove('mm-top-settings');
+    if(settings.parentNode!==buttons)buttons.appendChild(settings);
   }
 
   function moveNativeSignalModule(){

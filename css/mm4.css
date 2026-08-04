@@ -60,10 +60,13 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 :root{--mm-rf-spectrum-height:96px}
 .webrx-top-container>.mm-top-settings{position:absolute!important;z-index:80!important;top:8px!important;right:12px!important;width:64px!important;height:64px!important;padding:7px 4px!important;display:block!important;visibility:visible!important;border:1px solid var(--mm-line)!important;border-radius:3px!important;background:#08120c!important;color:var(--mm-green)!important;text-align:center!important;font-size:9px!important;line-height:12px!important}
 .webrx-top-container>.mm-top-settings svg{width:27px!important;height:27px!important;fill:currentColor!important}
+.openwebrx-tune-button{display:none!important}
+.openwebrx-main-buttons{flex:0 1 auto!important;min-width:0!important}
+.openwebrx-main-buttons .button{box-sizing:border-box!important;width:64px!important;min-width:64px!important;flex:0 0 64px!important;padding-left:4px!important;padding-right:4px!important}
 #mm-spectrum-height-control{position:absolute;z-index:35;top:30px;right:5px;width:20px;height:var(--mm-rf-spectrum-height);min-height:60px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 2px;border:1px solid rgba(112,255,132,.45);border-radius:3px;background:rgba(3,10,5,.82);color:var(--mm-green);font:7px/1 "Roboto Mono",monospace;pointer-events:auto}
 #mm-spectrum-height-control input{width:12px!important;height:calc(100% - 12px)!important;min-height:38px;margin:0!important;padding:0!important;writing-mode:vertical-lr;direction:rtl;accent-color:var(--mm-green2)!important;cursor:ns-resize}
 .webrx-top-container{overflow:visible!important}
-.webrx-top-bar{padding-left:104px!important;min-width:0!important;overflow:visible!important}
+.webrx-top-bar{box-sizing:border-box!important;padding-left:104px!important;min-width:0!important;overflow:visible!important}
 .webrx-rx-avatar{
   left:14px!important;top:8px!important;width:66px!important;height:66px!important;
   padding:3px!important;object-fit:contain!important;object-position:center!important;

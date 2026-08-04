@@ -200,7 +200,9 @@ function mkenvelopes(visible_range) //called from mkscale
 }
 
 function waterfallWidth() {
-    return $('body').width();
+    var workspace = document.getElementById('mm-spectrum-slot');
+    var frequency = document.getElementById('openwebrx-frequency-container');
+    return (workspace && workspace.clientWidth) || (frequency && frequency.clientWidth) || $('body').width();
 }
 
 
@@ -746,7 +748,11 @@ function zoom_center_where_calc(screenposX) {
 function get_relative_x(evt) {
     var relativeX = evt.offsetX || evt.layerX;
 
-    if ($(evt.target).closest(canvas_container).length) return relativeX;
+    if ($(evt.target).closest(canvas_container).length) {
+        var rect = canvas_container.getBoundingClientRect();
+        if (rect.width > 0) return (evt.clientX - rect.left) * canvas_container.clientWidth / rect.width;
+        return relativeX;
+    }
 
     // Compensate for the frequency scale, as it is not resized by the browser.
     var relatives = $(evt.target).closest('#openwebrx-frequency-container');

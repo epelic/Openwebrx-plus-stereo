@@ -283,6 +283,13 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 #openwebrx-panel-metadata-dab .dab-vu-row>i>b{display:block!important;width:0;height:100%!important;background:linear-gradient(90deg,#286b3a 0%,#73ff84 78%,#e5d94d 92%,#e45b4d 100%)!important;transition:width 90ms linear!important}
 #openwebrx-panel-metadata-dab .dab-stereo-toggle{align-self:center!important;margin:5px 10px 12px!important;padding:5px 18px!important;border:1px solid #4f8d5c!important;background:#0a1710!important;color:#8fff9d!important;font:10px monospace!important;letter-spacing:.8px!important;cursor:pointer!important}
 #openwebrx-panel-metadata-dab .dab-stereo-toggle.active{border-color:#89938b!important;background:#232824!important;color:#d2d8d3!important}
+#openwebrx-panel-metadata-wfm{width:auto!important;min-width:280px!important;max-height:none!important;padding:0!important;border:1px solid #2f593a!important;background:#061009!important}
+#openwebrx-panel-metadata-wfm .rds-container{box-sizing:border-box!important;width:100%!important;padding:10px 12px!important;color:#a9cdb1!important;font-size:10px!important}
+#openwebrx-panel-metadata-wfm .rds-stationname{padding:10px 4px!important;color:#d7f7dd!important;font-size:17px!important;letter-spacing:.7px!important;border-top:1px solid #203c28!important;border-bottom:1px solid #203c28!important}
+#openwebrx-panel-metadata-wfm .rds-radiotext,#openwebrx-panel-metadata-wfm .rds-radiotext-plus{padding:8px 4px!important;color:#8fff9d!important;line-height:1.45!important}
+#openwebrx-panel-metadata-wfm .rds-vu{display:flex!important;align-items:center!important;gap:8px!important;padding:8px 4px!important;color:#789481!important;font-size:8px!important;clear:both!important}
+#openwebrx-panel-metadata-wfm .rds-vu>i{display:block!important;flex:1!important;height:7px!important;background:#101812!important;border:1px solid #294a32!important;overflow:hidden!important}
+#openwebrx-panel-metadata-wfm .rds-vu>i>b{display:block!important;width:0;height:100%!important;background:linear-gradient(90deg,#286b3a 0%,#73ff84 82%,#e5d94d 94%,#e45b4d 100%)!important;transition:width 90ms linear!important}
 @media(max-width:900px){#openwebrx-panel-metadata-dab .dab-container{grid-template-columns:1fr!important}}
 
 /* MM4.8 responsive RF/waterfall and native section collapse. */

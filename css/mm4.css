@@ -262,3 +262,12 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 #openwebrx-panel-metadata-dab .dab-mot-image{display:none;max-width:100%!important;max-height:260px!important;object-fit:contain!important}
 #openwebrx-panel-metadata-dab .dab-mot-status{color:#597160!important;font-size:10px!important;text-transform:uppercase!important;letter-spacing:.5px!important}
 @media(max-width:900px){#openwebrx-panel-metadata-dab .dab-container{grid-template-columns:1fr!important}}
+
+/* MM4.8 responsive RF/waterfall and native section collapse. */
+#webrx-canvas-background,#webrx-canvas-container{width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}
+#webrx-canvas-container canvas{width:100%!important;max-width:100%!important}
+.openwebrx-spectrum-container.expanded{height:clamp(72px,12vh,110px)!important;max-height:none!important;opacity:1!important;border-bottom:1px solid var(--mm-green2)!important;background:#061009!important}
+#openwebrx-spectrum-canvas{display:block!important;width:100%!important;height:100%!important;filter:none!important}
+#openwebrx-panel-receiver>.openwebrx-section.closed{height:0!important;max-height:0!important;min-height:0!important;margin:0!important;padding:0!important;opacity:0!important;overflow:hidden!important;pointer-events:none!important}
+#openwebrx-panel-receiver>.openwebrx-section:not(.closed){height:auto!important;max-height:none!important;opacity:1!important;overflow:visible!important}
+#mm-spectrum-slot,.openwebrx-waterfall-container,#webrx-canvas-background{min-height:0!important}

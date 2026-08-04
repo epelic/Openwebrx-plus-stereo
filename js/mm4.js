@@ -213,8 +213,18 @@
     qa('#openwebrx-panel-receiver #screenshot-btn,#openwebrx-panel-receiver [title*="icture" i],#openwebrx-panel-receiver [title*="creenshot" i]').forEach(function(e){e.classList.add('mm-picture-control');e.setAttribute('aria-label','Picture')});
   }
 
+  function ensureSpectrum(){
+    var container=q('.openwebrx-spectrum-container');
+    if(!container||container.dataset.mmOpened)return;
+    container.dataset.mmOpened='1';
+    if(!container.classList.contains('expanded')){
+      var toggle=q('#openwebrx-panel-receiver [title="Toggle spectrum display"]');
+      if(toggle)toggle.click();
+    }
+  }
+
   function clock(){var e=q('#mm-utc-clock');if(e)e.textContent=new Date().toISOString().slice(11,19)+' UTC'}
-  function applySmallFixes(){ensureReceiver();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls()}
+  function applySmallFixes(){ensureReceiver();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls();ensureSpectrum()}
   function init(){
     installAudioTap();retitle();document.body.classList.add('mm-console-v4');
     var tries=0,t=setInterval(function(){

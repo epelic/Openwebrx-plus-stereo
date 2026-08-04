@@ -45,10 +45,206 @@ body:before{content:"";position:fixed;inset:0;z-index:99999;pointer-events:none;
 select,input[type=text],input[type=number],input[type=password]{max-width:100%!important;background:#050806!important;border:1px solid #344d3b!important;color:var(--mm-green)!important;border-radius:2px!important;font-family:"Roboto Mono"!important}input[type=range]{accent-color:var(--mm-green2)!important}.openwebrx-modes .openwebrx-button{font-size:9px!important;font-weight:bold!important;letter-spacing:.5px!important}
 /* Decoder panels */
 .openwebrx-meta-panel,.openwebrx-message-panel{min-width:0!important;max-width:none!important;height:auto!important;max-height:32vh!important;overflow:auto!important}.openwebrx-meta-panel:before{content:"DIGITAL SIGNAL MONITOR"}#openwebrx-panel-metadata-dab{min-height:190px!important;background:linear-gradient(135deg,#101b14,#07100a)!important}#openwebrx-panel-metadata-dab:before{content:"DAB+ ENSEMBLE / SERVICE MONITOR";color:var(--mm-amber)!important}#openwebrx-panel-metadata-drm:before{content:"DRM DIGITAL RADIO MONITOR"}#openwebrx-panel-metadata-dmr:before{content:"DMR DUAL TIMESLOT MONITOR"}.openwebrx-dmr-timeslot-panel{background:#0b120d!important;border:1px solid #2b4432!important;margin:8px!important;border-radius:3px!important}
-/* S meter */
-#mm-signal-module{margin:8px 10px 10px;padding:9px;border:1px solid #294331;background:#060a07;border-radius:3px}.mm-sig-head{display:flex;justify-content:space-between;color:var(--mm-dim);font-size:9px;letter-spacing:1px;margin-bottom:7px}.mm-sig-value{color:var(--mm-green)}.mm-sig-track{height:10px;border:1px solid #2e4d38;background:repeating-linear-gradient(90deg,#0d1710 0 9%,#19291e 10%);overflow:hidden}.mm-sig-fill{height:100%;width:18%;background:linear-gradient(90deg,var(--mm-green2),var(--mm-amber) 72%,var(--mm-red));transition:width .18s}.mm-sig-scale{display:flex;justify-content:space-between;margin-top:5px;color:#6f8976;font-size:8px}
+/* Native S-meter, moved without cloning or replacing it. */
+#mm-signal-module{margin:8px 10px 10px;padding:9px;border:1px solid #294331;background:#060a07;border-radius:3px}.mm-sig-head{display:flex;justify-content:space-between;align-items:center;color:var(--mm-dim);font-size:9px;letter-spacing:1px;margin-bottom:7px}.mm-sig-head #openwebrx-smeter-db{position:static!important;float:none!important;width:auto!important;margin:0!important;color:var(--mm-green)!important}.mm-native-smeter{width:100%;min-width:0}.mm-native-smeter #openwebrx-smeter{position:relative!important;inset:auto!important;display:block!important;width:100%!important;height:12px!important;margin:0!important;border:1px solid #2e4d38!important;background:repeating-linear-gradient(90deg,#0d1710 0 9%,#19291e 10%)!important;overflow:hidden!important}.mm-native-smeter .openwebrx-smeter-bar{height:100%!important}.mm-sig-scale{display:flex;justify-content:space-between;margin-top:5px;color:#6f8976;font-size:8px}
 /* Remove empty UI kit surfaces even if cached */
 .uikit-panel,.uikit-modal,[data-panel-name="uikit"],[id*="uikit" i],.ui-kit-settings{display:none!important}
 *{scrollbar-width:thin;scrollbar-color:#34513c #080c09}::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:#080c09}::-webkit-scrollbar-thumb{background:#34513c}
 @media(max-width:1180px){:root{--mm-side:330px}.openwebrx-main-buttons .button{min-width:56px!important;font-size:0!important}.openwebrx-main-buttons svg{margin-top:8px!important}.webrx-rx-texts{min-width:220px!important}}
 @media(max-width:820px){:root{--mm-header:64px;--mm-side:100%}.webrx-top-container{height:64px!important}.webrx-top-bar{padding-left:72px!important}.webrx-rx-avatar{left:11px!important;top:10px!important;width:44px!important;height:44px!important}.webrx-rx-title{font-size:13px!important}.webrx-rx-desc{font-size:8px!important}.openwebrx-main-buttons{display:none!important}#mm-workspace{grid-template-columns:1fr;grid-template-rows:minmax(280px,1fr) auto;padding:7px;gap:7px}#mm-main-column{grid-row:1;grid-template-rows:minmax(280px,1fr) auto}#mm-sidebar{grid-row:2;max-height:44vh}#mm-sidebar-head{cursor:pointer}.openwebrx-meta-panel,.openwebrx-message-panel{max-height:28vh!important}#mm-decoder-dock{max-height:28vh;grid-template-columns:1fr}.openwebrx-waterfall-container{inset:22px 0 0 0!important}#mm-spectrum-slot:before{height:22px;padding:6px 8px}}
+
+/* M4 CLEAN FIXES */
+:root{--mm-header:82px;--mm-side:390px}
+.webrx-top-container{overflow:visible!important}
+.webrx-top-bar{padding-left:104px!important;min-width:0!important;overflow:visible!important}
+.webrx-rx-avatar{
+  left:14px!important;top:8px!important;width:66px!important;height:66px!important;
+  padding:3px!important;object-fit:contain!important;object-position:center!important;
+  border-radius:6px!important;filter:none!important;background:#050806!important;
+  overflow:visible!important
+}
+.webrx-rx-texts{display:block!important;min-width:280px!important;max-width:480px!important;overflow:visible!important}
+.webrx-rx-title{display:block!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important}
+.openwebrx-main-buttons{min-width:0!important;overflow-x:auto!important;overflow-y:hidden!important;flex:1 1 auto!important;justify-content:flex-end!important}
+.openwebrx-main-buttons .button{flex:0 0 70px!important;min-width:70px!important;max-width:70px!important;overflow:visible!important;white-space:nowrap!important}
+
+/* Receiver is always present and its contents can never be clipped */
+#openwebrx-panel-receiver{display:block!important;visibility:visible!important;overflow:visible!important;min-width:0!important}
+#openwebrx-panel-receiver .openwebrx-section{overflow:visible!important}
+#openwebrx-panel-receiver .openwebrx-panel-line{min-width:0!important;overflow:visible!important}
+
+/* Individual compact mode keys */
+#openwebrx-panel-receiver .openwebrx-modes{padding:8px 10px 10px!important}
+#openwebrx-panel-receiver .openwebrx-modes-grid{
+  display:grid!important;grid-template-columns:repeat(4,minmax(46px,1fr))!important;
+  gap:6px!important;margin:0!important;width:100%!important
+}
+#openwebrx-panel-receiver .openwebrx-modes-grid .openwebrx-demodulator-button{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  width:100%!important;min-width:0!important;min-height:30px!important;height:30px!important;
+  margin:0!important;padding:4px 5px!important;font-size:9px!important;line-height:1!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;flex:none!important
+}
+#openwebrx-panel-receiver .openwebrx-modes>.openwebrx-panel-line{
+  display:grid!important;grid-template-columns:54px minmax(0,1fr)!important;gap:6px!important;
+  padding:7px 0 0!important;width:100%!important
+}
+#openwebrx-panel-receiver .openwebrx-button-dig{width:54px!important;min-width:54px!important;height:30px!important;margin:0!important}
+#openwebrx-panel-receiver .openwebrx-secondary-demod-listbox{width:100%!important;min-width:0!important;height:30px!important;margin:0!important}
+
+/* Record and plugin picture/screenshot controls */
+#openwebrx-panel-receiver .openwebrx-record-button,
+#openwebrx-panel-receiver [title*="creenshot" i],
+#openwebrx-panel-receiver [title*="icture" i],
+.openwebrx-main-buttons [title*="creenshot" i],
+.openwebrx-main-buttons [title*="icture" i]{
+  position:relative!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:38px!important;min-width:38px!important;height:30px!important;min-height:30px!important;
+  padding:3px!important;margin:2px!important;overflow:visible!important;line-height:1!important;cursor:pointer!important
+}
+#openwebrx-panel-receiver .openwebrx-record-button{color:#ff8b87!important;font-weight:700!important}
+
+/* Completely suppress known floating tuning/plugin panels */
+#openwebrx-thumbtune,#thumbtune,#thumb-tune,#tune-precise-panel,#openwebrx-tune-precise,
+.thumbtune,.thumb-tune,.thumb-tune-panel,.openwebrx-thumbtune,.tune-precise-panel,
+.floating-tuning-panel,.floating-tuner,.openwebrx-floating-panel,
+[data-plugin="thumbtune"],[data-plugin="tune_precise"],[data-panel-name*="thumb" i]{display:none!important}
+
+/* Audio spectrum module */
+#mm-audio-module{margin:0 0 10px;border:1px solid var(--mm-line);border-radius:4px;background:#050806;overflow:hidden;flex:0 0 auto}
+#mm-audio-head{height:28px;display:flex;align-items:center;justify-content:space-between;padding:0 9px;background:#101a13;border-bottom:1px solid var(--mm-line);font-size:9px;letter-spacing:1px;color:var(--mm-green)}
+#mm-audio-state{color:var(--mm-dim);font-size:8px}
+#mm-audio-canvas{display:block;width:100%;height:112px;background:linear-gradient(#020403,#071008)}
+#mm-audio-scale{height:19px;display:flex;justify-content:space-between;padding:4px 8px 0;color:#6f8976;font-size:7px;border-top:1px solid #17251c}
+
+@media(max-width:1180px){:root{--mm-side:350px}.webrx-rx-texts{min-width:220px!important}.openwebrx-main-buttons{justify-content:flex-start!important}}
+@media(max-width:820px){:root{--mm-header:70px}.webrx-top-container{height:70px!important}.webrx-top-bar{padding-left:78px!important}.webrx-rx-avatar{left:8px!important;top:7px!important;width:56px!important;height:56px!important}.webrx-rx-texts{min-width:0!important;max-width:calc(100vw - 90px)!important}.webrx-rx-title{font-size:12px!important}.webrx-rx-desc{white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}#openwebrx-panel-receiver .openwebrx-modes-grid{grid-template-columns:repeat(3,minmax(44px,1fr))!important}}
+
+/* MM4.3 precision UI refinements */
+:root{--mm-control-height:30px}
+
+/* One typography system for all native and generated controls. */
+#openwebrx-panel-receiver select,
+#openwebrx-panel-receiver option,
+#openwebrx-panel-receiver input,
+#openwebrx-panel-receiver button,
+#openwebrx-panel-receiver .openwebrx-button,
+.mm-mode-key{
+  font-family:"Roboto Mono",monospace!important;
+  font-size:10px!important;
+  font-weight:600!important;
+  letter-spacing:.15px!important
+}
+#openwebrx-sdr-profiles-listbox,
+#openwebrx-tuning-step-listbox,
+#openwebrx-wf-themes-listbox{
+  height:var(--mm-control-height)!important;
+  line-height:var(--mm-control-height)!important;
+  padding:0 28px 0 9px!important
+}
+
+/* New compact mode keyboard. Native selects/buttons remain alive off-screen. */
+#openwebrx-panel-receiver .openwebrx-modes{padding:8px 10px 10px!important}
+#openwebrx-panel-receiver .openwebrx-modes>.mm-native-mode-control{
+  position:absolute!important;left:-10000px!important;top:auto!important;
+  width:1px!important;height:1px!important;overflow:hidden!important;
+  clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;
+  white-space:nowrap!important;opacity:0!important;pointer-events:none!important
+}
+.mm-mode-groups{display:flex!important;flex-direction:column!important;gap:8px!important;width:100%!important}
+.mm-mode-group{display:grid!important;grid-template-columns:58px minmax(0,1fr)!important;gap:7px!important;align-items:start!important}
+.mm-mode-label{height:30px;display:flex;align-items:center;color:var(--mm-dim);font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.mm-mode-keys{display:grid!important;grid-template-columns:repeat(4,minmax(46px,1fr))!important;gap:5px!important;min-width:0!important}
+.mm-mode-key{
+  height:30px!important;min-width:0!important;padding:0 5px!important;margin:0!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  border:1px solid #37533f!important;border-radius:3px!important;
+  background:linear-gradient(#18251c,#0d150f)!important;color:#c8dbcc!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  cursor:pointer!important;user-select:none!important
+}
+.mm-mode-key:hover{border-color:var(--mm-green2)!important;color:var(--mm-green)!important;background:#17251b!important}
+.mm-mode-key.mm-active{border-color:var(--mm-green2)!important;color:#071008!important;background:var(--mm-green)!important;box-shadow:0 0 10px rgba(145,255,157,.22)!important}
+.mm-mode-group.mm-empty{display:none!important}
+
+/* Controls and display rows wrap cleanly; no clipped controls. */
+#openwebrx-panel-receiver .openwebrx-section>.openwebrx-panel-line{
+  min-width:0!important;max-width:100%!important;overflow:visible!important
+}
+#openwebrx-section-display + .openwebrx-section>.openwebrx-panel-line:first-child{
+  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:6px!important;padding:8px 10px!important;align-items:center!important
+}
+#openwebrx-section-display + .openwebrx-section>.openwebrx-panel-line:first-child>.openwebrx-button{
+  width:100%!important;min-width:0!important;height:30px!important;min-height:30px!important;
+  margin:0!important;padding:3px!important;overflow:visible!important
+}
+#openwebrx-section-display + .openwebrx-section .openwebrx-record-button,
+#openwebrx-section-display + .openwebrx-section [title*="icture" i],
+#openwebrx-section-display + .openwebrx-section [title*="creenshot" i]{
+  width:100%!important;min-width:0!important;height:30px!important;line-height:22px!important
+}
+
+/* Separate scanner proxy; the native squelch/scanner control remains untouched. */
+#openwebrx-panel-receiver #mm-scanner-button{
+  width:76px!important;min-width:76px!important;height:30px!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  padding:0 6px!important;margin:0 6px!important;border:1px solid #5b615d!important;
+  border-radius:3px!important;background:linear-gradient(#565b58,#383c3a)!important;
+  color:#e0e3e1!important;cursor:pointer!important
+}
+#openwebrx-panel-receiver #mm-scanner-button:hover{border-color:#8b938e!important;background:linear-gradient(#636966,#414642)!important}
+#openwebrx-panel-receiver #mm-scanner-button.mm-active{border-color:#b8c0bb!important;background:#6b716d!important;box-shadow:0 0 8px rgba(210,218,213,.22)!important}
+
+/* Labels are visual overlays; native contents and click handlers stay intact. */
+#openwebrx-panel-receiver .mm-rec-control,
+#openwebrx-panel-receiver .mm-picture-control{position:relative!important;font-size:0!important}
+#openwebrx-panel-receiver .mm-rec-control>* ,
+#openwebrx-panel-receiver .mm-picture-control>*{visibility:hidden!important}
+#openwebrx-panel-receiver .mm-rec-control:after,
+#openwebrx-panel-receiver .mm-picture-control:after{font-size:9px!important;font-weight:700!important;letter-spacing:.4px!important}
+#openwebrx-panel-receiver .mm-rec-control:after{content:"REC";color:#ff8b87!important}
+#openwebrx-panel-receiver .mm-picture-control:after{content:"PICTURE";color:#c8dbcc!important}
+
+/* Keep only useful settings, with consistent dimensions. */
+.mm-opacity-row{display:grid!important;grid-template-columns:30px minmax(0,1fr)!important;gap:7px!important;align-items:center!important}
+#openwebrx-themes-listbox,#openwebrx-frame-checkbox{display:none!important}
+
+/* Audio analyzer lives inside the receiver deck, immediately below the S-meter. */
+#mm-audio-module{margin:0 10px 10px!important}
+#mm-audio-canvas{height:104px!important}
+
+/* Satellite plugin is intentionally unsupported in this station layout. */
+[data-plugin*="sat" i],[data-panel-name*="sat" i],
+[title*="sat finder" i],[title*="sat id" i],[title="Track" i],
+.sat-finder,.satfinder,.sat-id,.sat-track{display:none!important}
+
+@media(max-width:1180px){.mm-mode-keys{grid-template-columns:repeat(3,minmax(44px,1fr))!important}}
+@media(max-width:820px){.mm-mode-group{grid-template-columns:1fr!important}.mm-mode-label{height:auto!important}.mm-mode-keys{grid-template-columns:repeat(3,minmax(44px,1fr))!important}}
+
+/* MM4.6 live layout corrections */
+#openwebrx-section-modes + .openwebrx-section:not(.closed){height:auto!important;max-height:none!important;overflow:visible!important}
+#openwebrx-panel-receiver .openwebrx-modes{position:relative!important;display:block!important;box-sizing:border-box!important;width:100%!important;height:auto!important;max-height:none!important;margin:0!important}
+#openwebrx-panel-receiver .mm-mode-groups{width:100%!important;height:auto!important;min-width:0!important;flex:0 0 100%!important;margin:0!important}
+#openwebrx-section-controls{position:relative!important;clear:both!important}
+
+#mm-main-column{grid-template-rows:minmax(260px,1fr) 0!important}
+#mm-main-column.mm-dock-active{grid-template-rows:minmax(260px,3fr) minmax(180px,2fr)!important}
+#mm-decoder-dock{width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;grid-auto-rows:minmax(0,1fr)!important;align-items:stretch!important;overflow:auto!important}
+#mm-decoder-dock.mm-single-panel{grid-template-columns:minmax(0,1fr)!important}
+#mm-decoder-dock .openwebrx-panel{width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;box-sizing:border-box!important}
+#mm-decoder-dock .openwebrx-panel.mm-dock-collapsed{display:none!important}
+#mm-decoder-dock .openwebrx-panel-inner,#mm-decoder-dock .nano,#mm-decoder-dock .nano-content{min-height:0!important;max-height:none!important}
+
+#openwebrx-frequency-container{height:auto!important;flex:0 0 auto!important;background:#07110b!important;border-bottom:1px solid var(--mm-green2)!important}
+.openwebrx-bandplan-container,#openwebrx-bookmarks-container,.openwebrx-spectrum-container,#openwebrx-scale-container{background-color:#07110b!important}
+#openwebrx-spectrum-canvas,#openwebrx-scale-canvas{filter:sepia(.75) saturate(1.8) hue-rotate(72deg) brightness(.72) contrast(1.2)!important}
+#webrx-canvas-background{top:auto!important;border-top:0!important}
+
+#openwebrx-section-display + .openwebrx-section > .openwebrx-panel-line:nth-child(2){display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:5px!important;padding:8px 10px!important;align-items:center!important;overflow:visible!important}
+#openwebrx-section-display + .openwebrx-section > .openwebrx-panel-line:nth-child(2) > .openwebrx-button{width:100%!important;min-width:0!important;height:30px!important;margin:0!important;padding:3px!important}
+#openwebrx-section-display + .openwebrx-section > .openwebrx-panel-line:nth-child(2) > .openwebrx-button:has(.openwebrx-record-button){grid-column:span 2!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:5px!important;width:100%!important;height:30px!important;padding:0!important;margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#openwebrx-panel-receiver .mm-rec-control,#openwebrx-panel-receiver .mm-picture-control{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-width:0!important;height:30px!important;margin:0!important;padding:2px 4px!important;font-size:8px!important;font-weight:700!important;line-height:1!important;visibility:visible!important}
+#openwebrx-panel-receiver .mm-rec-control:after,#openwebrx-panel-receiver .mm-picture-control:after{content:none!important}
+
+#openwebrx-panel-receiver #fs-toggle-btn{position:static!important;inset:auto!important;float:none!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;width:42px!important;height:24px!important;margin:8px 10px 10px!important;padding:0 6px!important;color:#dce8df!important;background:#17201a!important;border:1px solid var(--mm-green2)!important;border-radius:3px!important;line-height:22px!important}

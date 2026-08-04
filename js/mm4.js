@@ -3,28 +3,232 @@
   function q(s,r){return (r||document).querySelector(s)}
   function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
   function make(tag,id,cls){var e=document.createElement(tag);if(id)e.id=id;if(cls)e.className=cls;return e}
-  function retitle(){document.title='Max Mountain Station | Tactical SDR Console';var t=q('.webrx-rx-title');if(t)t.textContent='MAX MOUNTAIN STATION';}
+
+  function retitle(){
+    document.title='Max Mountain Station | Tactical SDR Console';
+    var t=q('.webrx-rx-title'); if(t)t.textContent="MAX'S MOUNTAINS STATION VHF - UHF";
+  }
+
   function buildWorkspace(){
-    if(q('#mm-workspace'))return;
+    if(q('#mm-workspace'))return true;
     var page=q('#webrx-page-container'), waterfall=q('.openwebrx-waterfall-container');
     var left=q('#openwebrx-panels-container-left'), right=q('#openwebrx-panels-container-right');
-    if(!page||!waterfall||!left||!right)return;
+    if(!page||!waterfall||!left||!right)return false;
     var ws=make('main','mm-workspace'), main=make('section','mm-main-column'), spec=make('section','mm-spectrum-slot');
     var dock=make('section','mm-decoder-dock'), side=make('aside','mm-sidebar');
     var sh=make('div','mm-sidebar-head');sh.innerHTML='<span>RX CONTROL DECK</span><span id="mm-utc-clock">--:--:-- UTC</span>';
     var scroll=make('div','mm-sidebar-scroll');
     page.appendChild(ws);ws.appendChild(main);ws.appendChild(side);main.appendChild(spec);main.appendChild(dock);side.appendChild(sh);side.appendChild(scroll);
     spec.appendChild(waterfall);dock.appendChild(left);scroll.appendChild(right);
-    sh.addEventListener('click',function(){if(innerWidth<=820)side.classList.toggle('mm-collapsed')});
     updateDock();
-    new MutationObserver(updateDock).observe(left,{attributes:true,subtree:true,attributeFilter:['style','class']});
+    new MutationObserver(updateDock).observe(left,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class']});
+    return true;
   }
-  function visible(el){var s=getComputedStyle(el);return s.display!=='none'&&s.visibility!=='hidden'&&el.offsetParent!==null}
-  function updateDock(){var d=q('#mm-decoder-dock'),l=q('#openwebrx-panels-container-left');if(!d||!l)return;var any=qa(':scope > .openwebrx-panel',l).some(visible);d.classList.toggle('mm-empty',!any)}
-  function addSignalModule(){var p=q('#openwebrx-panel-receiver');if(!p||q('#mm-signal-module'))return;var m=make('div','mm-signal-module');m.innerHTML='<div class="mm-sig-head"><span>RF SIGNAL LEVEL</span><span class="mm-sig-value">S -- / -- dB</span></div><div class="mm-sig-track"><div class="mm-sig-fill"></div></div><div class="mm-sig-scale"><span>S1</span><span>S3</span><span>S5</span><span>S7</span><span>S9</span><span>+40</span></div>';var f=q('.frequencies-container',p);if(f&&f.nextSibling)p.insertBefore(m,f.nextSibling);else p.appendChild(m);setInterval(function(){var text='';qa('.smeter-value,.s-meter-value,[data-smeter],.openwebrx-smeter-value').some(function(e){text=(e.textContent||'').trim();return !!text});var value=-105,mt=text.match(/-?\d+(?:\.\d+)?/);if(mt)value=parseFloat(mt[0]);var fill=q('.mm-sig-fill',m),val=q('.mm-sig-value',m);if(fill)fill.style.width=Math.max(3,Math.min(100,(value+120)/.7))+'%';if(val)val.textContent=text||'S -- / -- dB'},500)}
-  function removeUIKit(){qa('.uikit-panel,.uikit-modal,[data-panel-name="uikit"],[id*="uikit" i],.ui-kit-settings').forEach(function(e){e.remove()});qa('*').filter(function(e){return /^UI Kit Settings$/i.test((e.textContent||'').trim())}).forEach(function(e){var p=e.closest('.openwebrx-panel,.uikit-panel')||e;p.remove()})}
+
+  function panelOpen(el){
+    var s=el.style,t=s.transform||'';
+    if(s.display==='none'||s.visibility==='hidden'||t.indexOf('rotateX(90deg)')!==-1)return false;
+    if((el.id==='openwebrx-panel-log'||el.id==='openwebrx-panel-status')&&t.indexOf('rotateX(0deg)')===-1)return false;
+    return true;
+  }
+  function updateDock(){
+    var d=q('#mm-decoder-dock'),l=q('#openwebrx-panels-container-left'),main=q('#mm-main-column');
+    if(!d||!l)return;
+    var panels=qa(':scope > .openwebrx-panel',l);
+    panels.forEach(function(el){el.classList.toggle('mm-dock-collapsed',!panelOpen(el))});
+    var visiblePanels=panels.filter(panelOpen),any=visiblePanels.length>0;
+    d.classList.toggle('mm-empty',!any);
+    d.classList.toggle('mm-single-panel',visiblePanels.length===1);
+    if(main)main.classList.toggle('mm-dock-active',any);
+  }
+
+  function ensureReceiver(){
+    var p=q('#openwebrx-panel-receiver');
+    if(!p)return;
+    p.style.display='block';p.style.visibility='visible';
+    var right=q('#openwebrx-panels-container-right');
+    if(right && p.parentNode!==right)right.insertBefore(p,right.firstChild);
+  }
+
+  function moveNativeSignalModule(){
+    var receiver=q('#openwebrx-panel-receiver');
+    var meter=q('#openwebrx-smeter'),db=q('#openwebrx-smeter-db');
+    if(!receiver||!meter||!db)return false;
+    var module=q('#mm-signal-module');
+    if(!module){
+      module=make('section','mm-signal-module');
+      module.innerHTML='<div class="mm-sig-head"><span>RF SIGNAL LEVEL</span></div><div class="mm-native-smeter"></div><div class="mm-sig-scale"><span>S1</span><span>S3</span><span>S5</span><span>S7</span><span>S9</span><span>+40</span></div>';
+      var profile=q('#openwebrx-sdr-profiles-listbox',receiver);
+      var profileRow=profile&&profile.parentElement;
+      if(profileRow&&profileRow.nextSibling)receiver.insertBefore(module,profileRow.nextSibling);else receiver.appendChild(module);
+    }
+    var nativeSlot=q('.mm-native-smeter',module);
+    if(meter.parentNode!==nativeSlot)nativeSlot.appendChild(meter);
+    if(db.parentNode!==q('.mm-sig-head',module))q('.mm-sig-head',module).appendChild(db);
+    return true;
+  }
+
+  function installAudioTap(){
+    if(window.__mmAudioTapInstalled)return;
+    window.__mmAudioTapInstalled=true;
+    window.__mmAudioSources=[];
+    if(!window.AudioNode||!AudioNode.prototype.connect)return;
+    var nativeConnect=AudioNode.prototype.connect;
+    AudioNode.prototype.connect=function(destination){
+      var result=nativeConnect.apply(this,arguments);
+      try{
+        if(this.context&&destination===this.context.destination){
+          if(window.__mmAudioSources.indexOf(this)<0)window.__mmAudioSources.push(this);
+          window.dispatchEvent(new Event('mm-audio-source'));
+        }
+      }catch(e){}
+      return result;
+    };
+  }
+
+  function addAudioAnalyzer(){
+    var receiver=q('#openwebrx-panel-receiver');if(!receiver||q('#mm-audio-module'))return;
+    var box=make('section','mm-audio-module');
+    box.innerHTML='<div id="mm-audio-head"><span>AUDIO SPECTRUM ANALYZER</span><span id="mm-audio-state">WAITING AUDIO</span></div><canvas id="mm-audio-canvas" width="700" height="208"></canvas><div id="mm-audio-scale"><span>0</span><span>5 kHz</span><span>10 kHz</span><span>15 kHz</span><span>20 kHz</span></div>';
+    var signal=q('#mm-signal-module');
+    if(signal&&signal.nextSibling)receiver.insertBefore(box,signal.nextSibling);else receiver.appendChild(box);
+    var canvas=q('#mm-audio-canvas'),ctx=canvas.getContext('2d'),analyser=null,data=null,connectedNode=null,silentGain=null;
+    function connect(){
+      if(analyser)return true;
+      try{
+        var sources=window.__mmAudioSources||[],node=sources[sources.length-1];
+        if(!node||!node.context)return false;
+        analyser=node.context.createAnalyser();
+        analyser.fftSize=2048;analyser.smoothingTimeConstant=.72;analyser.minDecibels=-105;analyser.maxDecibels=-15;
+        silentGain=node.context.createGain();silentGain.gain.value=0;
+        node.connect(analyser);analyser.connect(silentGain);silentGain.connect(node.context.destination);
+        connectedNode=node;data=new Uint8Array(analyser.frequencyBinCount);return true;
+      }catch(e){analyser=null;data=null;connectedNode=null}
+      return false;
+    }
+    function draw(){
+      requestAnimationFrame(draw);
+      var w=canvas.width,h=canvas.height,state=q('#mm-audio-state');
+      ctx.fillStyle='#020403';ctx.fillRect(0,0,w,h);
+      ctx.strokeStyle='rgba(66,217,104,.12)';ctx.lineWidth=1;
+      for(var gx=0;gx<=8;gx++){var x=gx*w/8;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}
+      for(var gy=0;gy<=4;gy++){var y=gy*h/4;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+      if(!connect()){if(state)state.textContent='WAITING AUDIO';return}
+      try{analyser.getByteFrequencyData(data)}catch(e){analyser=null;data=null;connectedNode=null;return}
+      if(state)state.textContent=connectedNode.context.state==='running'?'LIVE':'CLICK AUDIO';
+      ctx.beginPath();
+      var hzPerBin=connectedNode.context.sampleRate/analyser.fftSize;
+      var bins=Math.max(2,Math.min(data.length,Math.floor(20000/hzPerBin)+1));
+      for(var i=0;i<bins;i++){var xx=i/(bins-1)*w,yy=h-(data[i]/255)*(h-8)-4;if(i===0)ctx.moveTo(xx,yy);else ctx.lineTo(xx,yy)}
+      ctx.strokeStyle='#91ff9d';ctx.lineWidth=2;ctx.shadowColor='rgba(145,255,157,.45)';ctx.shadowBlur=5;ctx.stroke();ctx.shadowBlur=0;
+    }
+    draw();
+  }
+
+  function validOptions(select){
+    return qa('option',select).filter(function(o){
+      var v=(o.value||'').trim(),t=(o.textContent||'').trim();
+      return !o.disabled && t && v!=='' && t!=='-';
+    });
+  }
+
+  function triggerSelect(select,value){
+    if(!select)return;
+    select.value=value;
+    select.dispatchEvent(new Event('change',{bubbles:true}));
+  }
+
+  function nativeModeButton(host,value){
+    return qa('.openwebrx-demodulator-button[data-modulation]',host).find(function(b){return String(b.dataset.modulation)===String(value)});
+  }
+
+  function buildModeButtons(){
+    var host=q('#openwebrx-panel-receiver .openwebrx-modes');if(!host)return;
+    var selects=qa('select',host).filter(function(s){return !s.classList.contains('mm-mode-proxy')});if(!selects.length)return;
+    var signature=selects.map(function(s){return validOptions(s).map(function(o){return o.value+'='+o.textContent}).join('|')}).join('||');
+    var groups=q('.mm-mode-groups',host);
+    if(groups&&groups.dataset.signature===signature){syncModeButtons();return}
+    if(groups)groups.remove();
+    qa(':scope > *',host).forEach(function(e){if(!e.classList.contains('mm-mode-groups'))e.classList.add('mm-native-mode-control')});
+    groups=make('div',null,'mm-mode-groups');groups.dataset.signature=signature;
+    selects.slice(0,2).forEach(function(select,index){
+      var group=make('div',null,'mm-mode-group'),label=make('div',null,'mm-mode-label'),keys=make('div',null,'mm-mode-keys');
+      label.textContent=index===0?'ANALOG':'DIGITAL';
+      var opts=validOptions(select);
+      if(!opts.length)group.classList.add('mm-empty');
+      opts.forEach(function(opt){
+        var b=make('button',null,'mm-mode-key');b.type='button';b.textContent=(opt.textContent||opt.value).trim();b.dataset.value=opt.value;b.dataset.mmSelect=String(index);
+        b.addEventListener('click',function(){
+          var nativeButton=index===0&&nativeModeButton(host,opt.value);
+          if(nativeButton)nativeButton.click();
+          else if(String(select.value)!==String(opt.value))triggerSelect(select,opt.value);
+          setTimeout(syncModeButtons,25);
+        });
+        keys.appendChild(b);
+      });
+      group.appendChild(label);group.appendChild(keys);groups.appendChild(group);
+      select.addEventListener('change',syncModeButtons);
+    });
+    if(!host.__mmModeObserver){
+      host.__mmModeObserver=new MutationObserver(syncModeButtons);
+      host.__mmModeObserver.observe(host,{attributes:true,subtree:true,attributeFilter:['class','selected']});
+    }
+    host.appendChild(groups);syncModeButtons();
+  }
+
+  function syncModeButtons(){
+    var host=q('#openwebrx-panel-receiver .openwebrx-modes');if(!host)return;
+    var selects=qa('select',host).filter(function(s){return !s.classList.contains('mm-mode-proxy')});
+    qa('.mm-mode-key',host).forEach(function(b){
+      var index=parseInt(b.dataset.mmSelect,10),s=selects[index];
+      var nativeButton=index===0&&nativeModeButton(host,b.dataset.value);
+      var active=!!(nativeButton&&nativeButton.classList.contains('highlighted'))||!!s&&String(s.value)===String(b.dataset.value);
+      b.classList.toggle('mm-active',active);
+    });
+  }
+
+  function addScannerButton(){
+    var nativeScanner=q('#openwebrx-panel-receiver .openwebrx-squelch-auto');
+    if(!nativeScanner||q('#mm-scanner-button'))return;
+    var button=make('button','mm-scanner-button','mm-scanner-button');
+    button.type='button';button.textContent='SCANNER';button.title='Start/stop native scanner';
+    button.addEventListener('click',function(){
+      nativeScanner.dispatchEvent(new MouseEvent('contextmenu',{bubbles:true,cancelable:true,view:window,button:2,buttons:2}));
+      setTimeout(syncScannerButton,25);
+    });
+    nativeScanner.parentElement.insertBefore(button,nativeScanner.nextSibling);
+    syncScannerButton();
+  }
+
+  function syncScannerButton(){
+    var nativeScanner=q('#openwebrx-panel-receiver .openwebrx-squelch-auto'),button=q('#mm-scanner-button');
+    if(!nativeScanner||!button)return;
+    var scannerIcon=q('svg.scanner',nativeScanner);
+    var active=nativeScanner.classList.contains('scanner')||nativeScanner.classList.contains('running')||!!(scannerIcon&&getComputedStyle(scannerIcon).display!=='none');
+    button.classList.toggle('mm-active',active);
+  }
+
+  function polishControls(){
+    qa('#openwebrx-panel-receiver .openwebrx-record-button').forEach(function(e){e.classList.add('mm-rec-control');e.setAttribute('aria-label','Record audio')});
+    qa('#openwebrx-panel-receiver #screenshot-btn,#openwebrx-panel-receiver [title*="icture" i],#openwebrx-panel-receiver [title*="creenshot" i]').forEach(function(e){e.classList.add('mm-picture-control');e.setAttribute('aria-label','Picture')});
+  }
+
   function clock(){var e=q('#mm-utc-clock');if(e)e.textContent=new Date().toISOString().slice(11,19)+' UTC'}
-  function resize(){window.dispatchEvent(new Event('resize'))}
-  function init(){retitle();buildWorkspace();addSignalModule();removeUIKit();clock();setInterval(clock,1000);setInterval(removeUIKit,2500);document.body.classList.add('mm-console-v4');setTimeout(resize,150);setTimeout(resize,900)}
+  function applySmallFixes(){ensureReceiver();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls()}
+  function init(){
+    installAudioTap();retitle();document.body.classList.add('mm-console-v4');
+    var tries=0,t=setInterval(function(){
+      tries++;
+      if(buildWorkspace()||tries>50){
+        clearInterval(t);ensureReceiver();moveNativeSignalModule();addAudioAnalyzer();applySmallFixes();
+      }
+    },100);
+    clock();setInterval(clock,1000);setInterval(function(){retitle();applySmallFixes()},1500);
+    var pending=false;
+    new MutationObserver(function(list){
+      var added=list.some(function(m){return m.addedNodes&&m.addedNodes.length});
+      if(added&&!pending){pending=true;setTimeout(function(){pending=false;applySmallFixes()},80)}
+    }).observe(document.body,{childList:true,subtree:true});
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();

@@ -12,7 +12,7 @@ Features:
 - DAB+ stereo playback with dynamic support for 32 and 48 kHz;
 - mitigation of brief DAB audio stream dropouts.
 
-The csdr modification required for the DAB pipeline is located in 
+The csdr modification required for the DAB pipeline is located in
 backend/csdr/module/toolbox.py.
 
 The repository does not include receiver configurations,

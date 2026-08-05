@@ -37,12 +37,12 @@
         <link rel="stylesheet" type="text/css" href="static/css/openwebrx.css" />
         <link rel="stylesheet" type="text/css" href="static/css/shortcuts.css" />
         <link rel="stylesheet" type="text/css" href="static/css/themes.css" />
-        <link rel="stylesheet" type="text/css" href="static/css/mm4.css?v=90" />
+        <link rel="stylesheet" type="text/css" href="static/css/mm4.css?v=91" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, minimum-scale=0.9, shrink-to-fit=no, user-scalable=no, interactive-widget=overlays-content" />
         <meta name="theme-color" content="#222" />
         <script src="static/plugins.js"></script>
-        <script defer src="static/js/mm4.js?v=90"></script>
+        <script defer src="static/js/mm4.js?v=91"></script>
     </head>
     <body onload="openwebrx_init();">
 
@@ -298,6 +298,9 @@
                                 <svg viewBox="0 0 80 80"><use xlink:href="static/gfx/svg-defs.svg#waterfall-default"></use></svg>
                             </div>
                             <input title="Waterfall maximum level" id="openwebrx-waterfall-color-max" class="openwebrx-panel-slider" type="range" min="-200" max="100" value="50" step="1" onchange="Waterfall.updateColors(1);">
+                        </div>
+                        <div class="openwebrx-panel-line mm-propagation-row">
+                            <button type="button" id="mm-propagation-button" onclick="openPropagationMap();">PROPAGATION</button>
                         </div>
                     </div>
                     <div id="openwebrx-section-settings" class="openwebrx-section-divider" onclick="UI.toggleSection(this);">&blacktriangle;&nbsp;Settings</div>

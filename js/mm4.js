@@ -1,5 +1,9 @@
 (function(){
   'use strict';
+  window.openPropagationMap=function(){
+    var mapWindow=window.open('https://hf.dxview.org/perspective/JN45SR','openwebrx-propagation','popup=yes,width=1200,height=800,resizable=yes,scrollbars=yes');
+    if(mapWindow)mapWindow.focus();
+  };
   function q(s,r){return (r||document).querySelector(s)}
   function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
   function make(tag,id,cls){var e=document.createElement(tag);if(id)e.id=id;if(cls)e.className=cls;return e}

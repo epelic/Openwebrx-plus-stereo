@@ -210,6 +210,9 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 }
 #openwebrx-panel-receiver #mm-scanner-button:hover{border-color:#8b938e!important;background:linear-gradient(#636966,#414642)!important}
 #openwebrx-panel-receiver #mm-scanner-button.mm-active{border-color:#b8c0bb!important;background:#6b716d!important;box-shadow:0 0 8px rgba(210,218,213,.22)!important}
+#openwebrx-panel-receiver .mm-propagation-row{display:flex!important;padding-top:5px!important}
+#openwebrx-panel-receiver #mm-propagation-button{width:100%!important;min-height:28px!important;border:1px solid #315b3b!important;border-radius:3px!important;background:#0b1710!important;color:#8fff9d!important;font:700 10px monospace!important;letter-spacing:.8px!important;cursor:pointer!important}
+#openwebrx-panel-receiver #mm-propagation-button:hover{border-color:#72ff8b!important;background:#102318!important;color:#caffd2!important}
 #openwebrx-panel-receiver .mm-filter-host{position:relative!important}
 #openwebrx-panel-receiver #mm-filter-bandwidth{position:relative!important;display:inline-flex!important;flex:0 0 auto!important;margin:0 4px!important}
 #openwebrx-panel-receiver #mm-filter-bandwidth>button{height:30px!important;padding:0 8px!important;border:1px solid #37533f!important;border-radius:3px!important;background:linear-gradient(#18251c,#0d150f)!important;color:#c8dbcc!important;font-size:8px!important;letter-spacing:.4px!important;white-space:nowrap!important;cursor:pointer!important}

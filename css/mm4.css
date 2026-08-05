@@ -218,6 +218,9 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 #openwebrx-panel-receiver #mm-filter-bandwidth input{width:100%!important;min-width:0!important;margin:0!important}
 #openwebrx-panel-receiver #mm-filter-bandwidth b{font-size:9px!important;font-weight:600!important;color:var(--mm-green)!important;text-align:right!important;white-space:nowrap!important}
 #openwebrx-panel-receiver #mm-filter-bandwidth.mm-disabled{opacity:.42!important}
+#openwebrx-panel-receiver #mm-waterfall-range-row{display:grid!important;grid-template-columns:30px minmax(72px,1fr) 30px minmax(72px,1fr)!important;gap:6px!important;align-items:center!important;width:100%!important;padding-top:5px!important;padding-bottom:5px!important}
+#openwebrx-panel-receiver #mm-waterfall-range-row>.openwebrx-button{width:30px!important;min-width:30px!important;height:30px!important;margin:0!important}
+#openwebrx-panel-receiver #mm-waterfall-range-row>.openwebrx-panel-slider{width:100%!important;min-width:0!important;margin:0!important}
 
 /* Labels are visual overlays; native contents and click handlers stay intact. */
 #openwebrx-panel-receiver .mm-rec-control,

@@ -234,6 +234,16 @@
     syncScannerButton();
   }
 
+  function arrangeWaterfallRangeControls(){
+    if(q('#mm-waterfall-range-row'))return;
+    var auto=q('#openwebrx-waterfall-colors-auto'),min=q('#openwebrx-waterfall-color-min');
+    var reset=q('#openwebrx-waterfall-colors-default'),max=q('#openwebrx-waterfall-color-max');
+    if(!auto||!min||!reset||!max)return;
+    var source=reset.closest('.openwebrx-panel-line'),section=source&&source.parentElement;if(!section)return;
+    var row=make('div','mm-waterfall-range-row','openwebrx-panel-line');
+    section.insertBefore(row,source);row.appendChild(auto);row.appendChild(min);row.appendChild(reset);row.appendChild(max);
+  }
+
   function addFilterBandwidthControl(){
     var volume=q('#openwebrx-panel-volume');if(!volume||q('#mm-filter-bandwidth'))return;
     var nativeLine=volume.closest('.openwebrx-panel-line');if(!nativeLine)return;
@@ -308,7 +318,7 @@
   }
 
   function clock(){var e=q('#mm-utc-clock');if(e)e.textContent=new Date().toISOString().slice(11,19)+' UTC'}
-  function applySmallFixes(){addFilterBandwidthControl();syncFilterBandwidthControl();addInterfaceFooter();ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
+  function applySmallFixes(){addFilterBandwidthControl();syncFilterBandwidthControl();addInterfaceFooter();ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();arrangeWaterfallRangeControls();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
   function init(){
     installAudioTap();retitle();document.body.classList.add('mm-console-v4');
     setTimeout(addFilterBandwidthControl,0);

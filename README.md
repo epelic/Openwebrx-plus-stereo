@@ -16,6 +16,9 @@ Main Features:
 - Scanner.
 - Tastes of chocolate.
 
+- <img width="1900" height="924" alt="image" src="https://github.com/user-attachments/assets/1c096fd2-7e23-408a-868d-c5e54d334f7d" />
+
+
 The csdr modification required for the DAB pipeline is located in
 backend/csdr/module/toolbox.py.
 
@@ -68,6 +71,9 @@ Contiene:
 - Deviazione FM visualizzata;
 - Scanner.
 - Sa di cioccolata.
+
+<img width="1900" height="924" alt="image" src="https://github.com/user-attachments/assets/9c32c153-8116-4687-8c07-20ede3349aa8" />
+
 
 La modifica csdr necessaria alla pipeline DAB si trova in
 `backend/csdr/module/toolbox.py`.

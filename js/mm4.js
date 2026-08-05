@@ -317,21 +317,11 @@
     qa('#openwebrx-panel-receiver #screenshot-btn,#openwebrx-panel-receiver [title*="icture" i],#openwebrx-panel-receiver [title*="creenshot" i]').forEach(function(e){e.classList.add('mm-picture-control');e.setAttribute('aria-label','Picture')});
   }
 
-  function addRecordingIndicator(){
-    var slot=q('#mm-spectrum-slot');
-    if(!slot||q('#mm-recording-indicator'))return;
-    var indicator=make('div','mm-recording-indicator');
-    indicator.setAttribute('role','status');
-    indicator.setAttribute('aria-live','polite');
-    indicator.innerHTML='<i></i><span>RECORDING</span>';
-    slot.appendChild(indicator);
-  }
-
-  function syncRecordingIndicator(){
-    var indicator=q('#mm-recording-indicator');
-    if(!indicator)return;
+  function syncRecordingButton(){
     var recording=typeof audioEngine!=='undefined'&&audioEngine&&audioEngine.recording===true;
-    indicator.classList.toggle('mm-active',recording);
+    qa('#openwebrx-panel-receiver .openwebrx-record-button').forEach(function(button){
+      button.classList.toggle('mm-recording-active',recording);
+    });
   }
 
   function ensureSpectrum(){
@@ -358,7 +348,7 @@
   }
 
   function clock(){var e=q('#mm-utc-clock');if(e)e.textContent=new Date().toISOString().slice(11,19)+' UTC'}
-  function applySmallFixes(){placeControlsBeforeModes();addFilterBandwidthControl();syncFilterBandwidthControl();addInterfaceFooter();ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();arrangeWaterfallRangeControls();polishControls();ensureSpectrum();addSpectrumHeightControl();addRecordingIndicator();syncRecordingIndicator()}
+  function applySmallFixes(){placeControlsBeforeModes();addFilterBandwidthControl();syncFilterBandwidthControl();addInterfaceFooter();ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();arrangeWaterfallRangeControls();polishControls();ensureSpectrum();addSpectrumHeightControl();syncRecordingButton()}
   function init(){
     installAudioTap();retitle();document.body.classList.add('mm-console-v4');
     setTimeout(addFilterBandwidthControl,0);
@@ -368,7 +358,7 @@
         clearInterval(t);ensureReceiver();moveNativeSignalModule();addAudioAnalyzer();applySmallFixes();
       }
     },100);
-    clock();setInterval(clock,1000);setInterval(function(){retitle();applySmallFixes()},1500);setInterval(syncRecordingIndicator,150);
+    clock();setInterval(clock,1000);setInterval(function(){retitle();applySmallFixes()},1500);setInterval(syncRecordingButton,150);
     var pending=false;
     new MutationObserver(function(list){
       var added=list.some(function(m){return m.addedNodes&&m.addedNodes.length});

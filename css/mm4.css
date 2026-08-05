@@ -24,6 +24,10 @@ body:before{content:"";position:fixed;inset:0;z-index:99999;pointer-events:none;
 #mm-main-column{min-width:0;min-height:0;display:grid;grid-template-rows:minmax(320px,1fr) auto;gap:var(--mm-gap);overflow:hidden}
 #mm-spectrum-slot{position:relative;min-width:0;min-height:0;overflow:hidden;border:1px solid var(--mm-line);border-radius:4px;background:#020403;box-shadow:0 16px 40px rgba(0,0,0,.42)}
 #mm-spectrum-slot:before{content:"LIVE RF SPECTRUM / WATERFALL";position:absolute;z-index:16;top:0;left:0;right:0;height:25px;padding:7px 10px;background:linear-gradient(90deg,#132218,#0a100c);border-bottom:1px solid var(--mm-line);color:var(--mm-green);font-size:9px;letter-spacing:1.4px;pointer-events:none}
+#mm-recording-indicator{position:absolute;z-index:44;top:33px;left:50%;display:none;align-items:center;gap:7px;transform:translateX(-50%);padding:5px 11px;border:1px solid #ff625f;border-radius:3px;background:rgba(45,4,4,.88);color:#ffaaa7;font:700 11px/1 "Roboto Mono",monospace;letter-spacing:1.4px;pointer-events:none;box-shadow:0 0 14px rgba(255,98,95,.28)}
+#mm-recording-indicator.mm-active{display:flex}
+#mm-recording-indicator i{display:block;width:8px;height:8px;border-radius:50%;background:#ff625f;box-shadow:0 0 7px #ff625f;animation:mm-recording-pulse 1s steps(2,end) infinite}
+@keyframes mm-recording-pulse{50%{opacity:.28}}
 .openwebrx-waterfall-container{position:absolute!important;inset:25px 0 0 0!important;width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;margin:0!important;border:0!important;border-radius:0!important;background:#000!important;overflow:hidden!important}
 #openwebrx-frequency-container{top:0!important;height:38%!important;border-bottom:1px solid var(--mm-line)!important}#webrx-canvas-background{top:38%!important;bottom:0!important;margin:0!important;background:#000!important}#webrx-canvas-container{filter:saturate(.88) contrast(1.06)}
 /* Decoder dock is part of normal flow, never an overlay */

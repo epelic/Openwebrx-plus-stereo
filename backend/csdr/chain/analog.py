@@ -6,6 +6,9 @@ from pycsdr.types import Format, AgcProfile
 from csdr.chain.toolbox import RdsDemodulator
 from typing import Optional
 from owrx.feature import FeatureDetector
+from threading import Event, Thread
+import pickle
+import time
 
 
 class Am(BaseDemodulatorChain):
@@ -47,11 +50,15 @@ class WFm(BaseDemodulatorChain, FixedIfSampleRateChain, DeemphasisTauChain, HdAu
         self.sampleRate = sampleRate
         self.tau = tau
         self.rdsRbds = rdsRbds
+        self.fmDemod = FmDemod()
         self.limit = Limit()
+        # Tap the discriminator output before limiting, de-emphasis and stereo decoding.
+        # FmDemod returns phase delta / pi, so 1.0 equals half the IF sample rate.
+        self.deviationTapBuffer = Buffer(Format.FLOAT)
         # this buffer is used to tap into the raw audio stream for redsea RDS decoding
         self.metaTapBuffer = Buffer(Format.FLOAT)
         workers = [
-            FmDemod(),
+            self.fmDemod,
             self.limit,
             StereoFractionalDecimator(
                 Format.FLOAT, 200000.0, 200000.0 / self.sampleRate,
@@ -60,12 +67,53 @@ class WFm(BaseDemodulatorChain, FixedIfSampleRateChain, DeemphasisTauChain, HdAu
         ]
         self.metaChain = None
         self.metaWriter = None
+        self.deviationReader = None
+        self.deviationThread = None
+        self.deviationStop = Event()
         super().__init__(workers)
 
     def _connect(self, w1, w2, buffer: Optional[Buffer] = None) -> None:
-        if w1 is self.limit:
+        if w1 is self.fmDemod:
+            buffer = self.deviationTapBuffer
+        elif w1 is self.limit:
             buffer = self.metaTapBuffer
         super()._connect(w1, w2, buffer)
+
+    def _measureDeviation(self) -> None:
+        peak = 0.0
+        nextReport = time.monotonic() + 0.25
+        while not self.deviationStop.is_set():
+            data = self.deviationReader.read()
+            if data is None:
+                break
+            samples = memoryview(data).cast("f")
+            if len(samples):
+                peak = max(peak, max(abs(sample) for sample in samples))
+            now = time.monotonic()
+            if now >= nextReport:
+                writer = self.metaWriter
+                if writer is not None:
+                    deviation = min(100.0, peak * self.getFixedIfSampleRate() / 2000.0)
+                    writer.write(pickle.dumps({"mode": "WFM", "deviation": deviation}))
+                peak = 0.0
+                nextReport = now + 0.25
+
+    def _startDeviationMeter(self) -> None:
+        if self.deviationThread is not None:
+            return
+        self.deviationStop.clear()
+        self.deviationReader = self.deviationTapBuffer.getReader()
+        self.deviationThread = Thread(target=self._measureDeviation, daemon=True)
+        self.deviationThread.start()
+
+    def _stopDeviationMeter(self) -> None:
+        self.deviationStop.set()
+        if self.deviationReader is not None:
+            self.deviationReader.stop()
+        if self.deviationThread is not None:
+            self.deviationThread.join(timeout=1)
+        self.deviationReader = None
+        self.deviationThread = None
 
     def getFixedIfSampleRate(self):
         return 200000
@@ -96,8 +144,10 @@ class WFm(BaseDemodulatorChain, FixedIfSampleRateChain, DeemphasisTauChain, HdAu
             self.metaChain.setReader(self.metaTapBuffer.getReader())
         self.metaWriter = writer
         self.metaChain.setWriter(self.metaWriter)
+        self._startDeviationMeter()
 
     def stop(self):
+        self._stopDeviationMeter()
         super().stop()
         if self.metaChain is not None:
             self.metaChain.stop()

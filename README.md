@@ -1,16 +1,19 @@
-# OpenWebRX+ Stereo
+# OpenWebRX+ Tactical Interface
 
 Customization of OpenWebRX+ for Max Mountain Station.
 
-Features:
+Main Features:
 
-- responsive receiver interface;
-- mode controls synchronized with native controls;
-- integrated S-meter and audio spectrum;
-- green-line RF spectrum and adaptive waterfall;
-- extended DAB data panel;
+- Responsive receiver interface;
+- Integrated S-meter and audio spectrum;
+- Extended DAB data info panel;
 - DAB+ stereo playback with dynamic support for 32 and 48 kHz;
-- mitigation of brief DAB audio stream dropouts.
+- Stereo recording at 192 KHz Mp3, 48 KHz
+- AM Bandwidth up to 15 KHz
+- FM stereo and bandwidth adjust.
+- Stereo separation adjust.
+- FM deviation showed.
+- Scanner.
 
 The csdr modification required for the DAB pipeline is located in
 backend/csdr/module/toolbox.py.
@@ -54,12 +57,15 @@ Personalizzazione di OpenWebRX+ per Max Mountain Station.
 Contiene:
 
 - interfaccia ricevitore responsive;
-- controlli modo sincronizzati con i controlli nativi;
 - S-meter e spettro audio integrati;
-- RF spectrum a linea verde e waterfall adattiva;
-- pannello dati DAB esteso;
-- riproduzione DAB+ stereo con supporto dinamico a 32 e 48 kHz;
-- mitigazione delle interruzioni brevi del flusso audio DAB.
+- Pannello dati DAB esteso;
+- Riproduzione stereo DAB+ con supporto dinamico per 32 e 48 kHz;
+- Registrazione stereo a 192 kHz, MP3 a 48 kHz;
+- Larghezza di banda AM fino a 15 kHz;
+- FM stereo e regolazione della larghezza di banda;
+- Regolazione della separazione stereo;
+- Deviazione FM visualizzata;
+- Scanner.
 
 La modifica csdr necessaria alla pipeline DAB si trova in
 `backend/csdr/module/toolbox.py`.

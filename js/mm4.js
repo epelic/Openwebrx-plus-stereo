@@ -265,11 +265,11 @@
   function clock(){var e=q('#mm-utc-clock');if(e)e.textContent=new Date().toISOString().slice(11,19)+' UTC'}
   function applySmallFixes(){ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
   function init(){
-    installAudioTap();retitle();document.body.classList.add('mm-console-v4');
+    retitle();document.body.classList.add('mm-console-v4');
     var tries=0,t=setInterval(function(){
       tries++;
       if(buildWorkspace()||tries>50){
-        clearInterval(t);ensureReceiver();moveNativeSignalModule();addAudioAnalyzer();applySmallFixes();
+        clearInterval(t);ensureReceiver();moveNativeSignalModule();applySmallFixes();
       }
     },100);
     clock();setInterval(clock,1000);setInterval(function(){retitle();applySmallFixes()},1500);

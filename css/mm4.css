@@ -311,7 +311,11 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 #openwebrx-panel-metadata-wfm .rds-mpx-readout{display:flex!important;justify-content:space-between!important;align-items:center!important;gap:18px!important;margin:10px 4px 5px!important;color:#b8ddc0!important;font:12px/1.4 monospace!important;letter-spacing:.2px!important}
 #openwebrx-panel-metadata-wfm .rds-deviation{margin-left:auto!important;white-space:nowrap!important}
 #openwebrx-panel-metadata-wfm .rds-mpx-spectrum-wrap{margin:8px 4px 4px!important;color:#789481!important;font:9px/1.3 monospace!important;letter-spacing:.4px!important}
-#openwebrx-panel-metadata-wfm .rds-mpx-spectrum{display:block!important;box-sizing:border-box!important;width:100%!important;height:92px!important;margin-top:4px!important;border:1px solid #294a32!important;background:#061009!important}
+#openwebrx-panel-metadata-wfm .rds-mpx-spectrum{display:block!important;box-sizing:border-box!important;width:100%!important;height:76px!important;margin-top:4px!important;border:1px solid #294a32!important;background:#061009!important}
+#openwebrx-panel-metadata-wfm .rds-mpx-scale{position:relative!important;height:13px!important;color:#789481!important;font:9px/13px monospace!important;white-space:nowrap!important}
+#openwebrx-panel-metadata-wfm .rds-mpx-scale>span{position:absolute!important;transform:translateX(-50%)!important}
+#openwebrx-panel-metadata-wfm .rds-mpx-scale>span:first-child{transform:none!important}
+#openwebrx-panel-metadata-wfm .rds-mpx-scale>span:last-child{transform:none!important}
 #openwebrx-panel-metadata-wfm .fm-width{display:grid!important;grid-template-columns:auto 1fr 35px!important;align-items:center!important;gap:9px!important;margin:10px 4px 5px!important;color:#92b99b!important;font:9px monospace!important}
 #openwebrx-panel-metadata-wfm .fm-width input{width:100%!important;min-width:80px!important;accent-color:#65d977!important}
 #openwebrx-panel-metadata-wfm .fm-width-value{color:#c0e8c8!important;text-align:right!important;font-size:10px!important}

@@ -20,13 +20,10 @@
   };
   window.openWebcam=function(){
     var host=q('#openwebrx-panels-container-left'),panel=q('#mm-webcam-panel'),button=q('#mm-webcam-button');
-    if(!host)return;
+    if(!host||!panel)return;
     if(panel&&panel.style.display!=='none'){window.closeWebcam();return}
-    if(!panel){
-      panel=make('section','mm-webcam-panel','openwebrx-panel');
-      panel.setAttribute('data-panel-name','WEBCAM · MAX MOUNTAIN STATION');
-      panel.innerHTML='<button type="button" class="mm-webcam-close" title="Close webcam" onclick="closeWebcam();">×</button><div class="mm-webcam-frame"><img id="mm-webcam-image" alt="Max Mountain Station webcam"><span id="mm-webcam-status">LOADING…</span></div>';
-      host.appendChild(panel);
+    if(!panel.dataset.mmWebcamBound){
+      panel.dataset.mmWebcamBound='1';
       var image=q('#mm-webcam-image',panel),status=q('#mm-webcam-status',panel);
       image.onload=function(){status.textContent='UPDATED · '+new Date().toLocaleTimeString()};
       image.onerror=function(){status.textContent='IMAGE UNAVAILABLE · RETRY IN 60 SEC'};
@@ -259,19 +256,6 @@
     });
   }
 
-  function addScannerButton(){
-    var nativeScanner=q('#openwebrx-panel-receiver .openwebrx-squelch-auto');
-    if(!nativeScanner||q('#mm-scanner-button'))return;
-    var button=make('button','mm-scanner-button','mm-scanner-button');
-    button.type='button';button.textContent='SCANNER';button.title='Start/stop native scanner';
-    button.addEventListener('click',function(){
-      nativeScanner.dispatchEvent(new MouseEvent('contextmenu',{bubbles:true,cancelable:true,view:window,button:2,buttons:2}));
-      setTimeout(syncScannerButton,25);
-    });
-    nativeScanner.parentElement.insertBefore(button,nativeScanner.nextSibling);
-    syncScannerButton();
-  }
-
   function arrangeWaterfallRangeControls(){
     if(q('#mm-waterfall-range-row'))return;
     var auto=q('#openwebrx-waterfall-colors-auto'),min=q('#openwebrx-waterfall-color-min');
@@ -328,14 +312,6 @@
 
   function syncFilterBandwidthControl(){var row=q('#mm-filter-bandwidth');if(row&&row.__mmSync)row.__mmSync()}
 
-  function syncScannerButton(){
-    var nativeScanner=q('#openwebrx-panel-receiver .openwebrx-squelch-auto'),button=q('#mm-scanner-button');
-    if(!nativeScanner||!button)return;
-    var scannerIcon=q('svg.scanner',nativeScanner);
-    var active=nativeScanner.classList.contains('scanner')||nativeScanner.classList.contains('running')||!!(scannerIcon&&getComputedStyle(scannerIcon).display!=='none');
-    button.classList.toggle('mm-active',active);
-  }
-
   function polishControls(){
     qa('#openwebrx-panel-receiver .openwebrx-record-button').forEach(function(e){e.classList.add('mm-rec-control');e.setAttribute('aria-label','Record audio')});
     qa('#openwebrx-panel-receiver #screenshot-btn,#openwebrx-panel-receiver [title*="icture" i],#openwebrx-panel-receiver [title*="creenshot" i]').forEach(function(e){e.classList.add('mm-picture-control');e.setAttribute('aria-label','Picture')});
@@ -365,7 +341,7 @@
   }
 
   function clock(){var e=q('#mm-utc-clock');if(e)e.textContent=new Date().toISOString().slice(11,19)+' UTC'}
-  function applySmallFixes(){placeControlsBeforeModes();addFilterBandwidthControl();syncFilterBandwidthControl();addInterfaceFooter();ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();arrangeWaterfallRangeControls();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
+  function applySmallFixes(){placeControlsBeforeModes();addFilterBandwidthControl();syncFilterBandwidthControl();addInterfaceFooter();ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();arrangeWaterfallRangeControls();polishControls();ensureSpectrum();addSpectrumHeightControl()}
   function init(){
     installAudioTap();retitle();document.body.classList.add('mm-console-v4');
     setTimeout(addFilterBandwidthControl,0);

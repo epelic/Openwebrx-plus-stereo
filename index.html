@@ -37,12 +37,12 @@
         <link rel="stylesheet" type="text/css" href="static/css/openwebrx.css" />
         <link rel="stylesheet" type="text/css" href="static/css/shortcuts.css" />
         <link rel="stylesheet" type="text/css" href="static/css/themes.css" />
-        <link rel="stylesheet" type="text/css" href="static/css/mm4.css?v=93" />
+        <link rel="stylesheet" type="text/css" href="static/css/mm4.css?v=94" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, minimum-scale=0.9, shrink-to-fit=no, user-scalable=no, interactive-widget=overlays-content" />
         <meta name="theme-color" content="#222" />
         <script src="static/plugins.js"></script>
-        <script defer src="static/js/mm4.js?v=93"></script>
+        <script defer src="static/js/mm4.js?v=94"></script>
     </head>
     <body onload="openwebrx_init();">
 
@@ -192,6 +192,13 @@
                 <div class="openwebrx-panel openwebrx-meta-panel" id="openwebrx-panel-metadata-hdr" style="display: none;" data-panel-name="metadata-hdr"></div>
                 <div class="openwebrx-panel openwebrx-meta-panel" id="openwebrx-panel-metadata-dab" style="display: none;" data-panel-name="metadata-dab"></div>
                 <div class="openwebrx-panel openwebrx-meta-panel" id="openwebrx-panel-metadata-drm" style="display: none;" data-panel-name="metadata-drm"></div>
+                <div class="openwebrx-panel" id="mm-webcam-panel" data-panel-name="WEBCAM · MAX MOUNTAIN STATION" style="display: none;">
+                    <button type="button" class="mm-webcam-close" title="Close webcam" onclick="closeWebcam();">×</button>
+                    <div class="mm-webcam-frame">
+                        <img id="mm-webcam-image" alt="Max Mountain Station webcam">
+                        <span id="mm-webcam-status">LOADING…</span>
+                    </div>
+                </div>
                 <div class="openwebrx-panel" id="openwebrx-panel-log" data-panel-name="debug" style="width: 92%; max-width: 619px;">
                     <div style="position: relative; height: 100%">
                         <div class="openwebrx-panel-inner nano" id="openwebrx-log-scroll">

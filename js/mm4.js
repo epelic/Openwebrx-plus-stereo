@@ -21,7 +21,7 @@
   window.openWebcam=function(){
     var host=q('#openwebrx-panels-container-left'),panel=q('#mm-webcam-panel'),button=q('#mm-webcam-button');
     if(!host||!panel)return;
-    if(panel&&panel.style.display!=='none'){window.closeWebcam();return}
+    if(panel.style.display==='block'){window.closeWebcam();return}
     if(!panel.dataset.mmWebcamBound){
       panel.dataset.mmWebcamBound='1';
       var image=q('#mm-webcam-image',panel),status=q('#mm-webcam-status',panel);
@@ -77,7 +77,7 @@
   function updateDock(){
     var d=q('#mm-decoder-dock'),l=q('#openwebrx-panels-container-left'),main=q('#mm-main-column');
     if(!d||!l)return;
-    var panels=qa(':scope > .openwebrx-panel',l);
+    var panels=qa(':scope > .openwebrx-panel, :scope > .mm-dock-panel',l);
     panels.forEach(function(el){el.classList.toggle('mm-dock-collapsed',!panelOpen(el))});
     var visiblePanels=panels.filter(panelOpen),any=visiblePanels.length>0;
     d.classList.toggle('mm-empty',!any);

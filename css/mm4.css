@@ -72,6 +72,7 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 .webrx-top-bar{box-sizing:border-box!important;padding-left:104px!important;min-width:0!important;overflow:visible!important}
 .webrx-rx-avatar{
   left:14px!important;top:8px!important;width:66px!important;height:66px!important;
+  box-sizing:border-box!important;margin:0!important;
   padding:3px!important;object-fit:contain!important;object-position:center!important;
   border-radius:6px!important;filter:none!important;background:#050806!important;
   overflow:visible!important

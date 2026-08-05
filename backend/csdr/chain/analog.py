@@ -93,7 +93,7 @@ class WFm(BaseDemodulatorChain, FixedIfSampleRateChain, DeemphasisTauChain, HdAu
             if now >= nextReport:
                 writer = self.metaWriter
                 if writer is not None:
-                    deviation = min(100.0, peak * self.getFixedIfSampleRate() / 2000.0)
+                    deviation = min(75.0, peak * self.getFixedIfSampleRate() / 2000.0)
                     writer.write(pickle.dumps({"mode": "WFM", "deviation": deviation}))
                 peak = 0.0
                 nextReport = now + 0.25

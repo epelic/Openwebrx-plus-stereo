@@ -9,7 +9,7 @@ Main Features:
 - Extended DAB data info panel;
 - DAB+ stereo playback with dynamic support for 32 and 48 kHz;
 - Stereo recording at 192 KHz Mp3, 48 KHz
-- AM Bandwidth up to 15 KHz
+- AM Bandwidth up to 15+15 KHz
 - FM stereo and bandwidth adjust.
 - Stereo separation adjust.
 - FM deviation showed.
@@ -61,7 +61,7 @@ Contiene:
 - Pannello dati DAB esteso;
 - Riproduzione stereo DAB+ con supporto dinamico per 32 e 48 kHz;
 - Registrazione stereo a 192 kHz, MP3 a 48 kHz;
-- Larghezza di banda AM fino a 15 kHz;
+- Larghezza di banda AM fino a 15+15 kHz;
 - FM stereo e regolazione della larghezza di banda;
 - Regolazione della separazione stereo;
 - Deviazione FM visualizzata;

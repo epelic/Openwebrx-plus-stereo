@@ -301,6 +301,7 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 #openwebrx-panel-metadata-dab .dab-stereo-toggle{align-self:center!important;margin:5px 10px 12px!important;padding:5px 18px!important;border:1px solid #4f8d5c!important;background:#0a1710!important;color:#8fff9d!important;font:10px monospace!important;letter-spacing:.8px!important;cursor:pointer!important}
 #openwebrx-panel-metadata-dab .dab-stereo-toggle.active{border-color:#89938b!important;background:#232824!important;color:#d2d8d3!important}
 #openwebrx-panel-metadata-wfm{width:auto!important;min-width:280px!important;max-height:none!important;padding:0!important;border:1px solid #2f593a!important;background:#061009!important}
+#openwebrx-panel-metadata-wfm:before{display:none!important;content:none!important}
 #openwebrx-panel-metadata-wfm .rds-container{box-sizing:border-box!important;width:100%!important;padding:12px 14px!important;color:#a9cdb1!important;font-size:12px!important}
 #openwebrx-panel-metadata-wfm .rds-stationname{padding:12px 4px!important;color:#d7f7dd!important;font-size:20px!important;letter-spacing:.8px!important;border-top:1px solid #203c28!important;border-bottom:1px solid #203c28!important}
 #openwebrx-panel-metadata-wfm .rds-radiotext,#openwebrx-panel-metadata-wfm .rds-radiotext-plus{padding:10px 4px!important;color:#8fff9d!important;font-size:13px!important;line-height:1.55!important}

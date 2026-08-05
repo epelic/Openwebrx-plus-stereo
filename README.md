@@ -13,6 +13,7 @@ Main Features:
 - FM stereo and bandwidth adjust.
 - Stereo separation adjust.
 - FM deviation showed.
+- MPX Spectrum.
 - Scanner.
 - Tastes of chocolate.
 
@@ -64,15 +65,16 @@ Personalizzazione di OpenWebRX+ per Max Mountain Station.
 
 Contiene:
 
-- interfaccia ricevitore responsive;
-- S-meter e spettro audio integrati;
-- Pannello dati DAB esteso;
-- Riproduzione stereo DAB+ con supporto dinamico per 32 e 48 kHz;
-- Registrazione stereo a 192 kHz, MP3 a 48 kHz;
-- Larghezza di banda AM fino a 15+15 kHz;
-- FM stereo e regolazione della larghezza di banda;
-- Regolazione della separazione stereo;
-- Deviazione FM visualizzata;
+- interfaccia ricevitore responsive.
+- S-meter e spettro audio integrati.
+- Pannello dati DAB esteso.
+- Riproduzione stereo DAB+ con supporto dinamico per 32 e 48 kHz.
+- Registrazione stereo a 192 kHz, MP3 a 48 kHz.
+- Larghezza di banda AM fino a 15+15 kHz.
+- FM stereo e regolazione della larghezza di banda.
+- Regolazione della separazione stereo.
+- Deviazione FM visualizzata.
+- Spettro MPX.
 - Scanner.
 - Sa di cioccolata.
 

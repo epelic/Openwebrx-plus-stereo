@@ -15,6 +15,8 @@ Main Features:
 - FM deviation showed.
 - MPX Spectrum.
 - Scanner.
+- VHF Propagation page.
+- Webcam live from here!
 - Tastes of chocolate.
 
 <img width="1920" height="1080" alt="2" src="https://github.com/user-attachments/assets/c73d0af7-6af1-4d3e-bae3-ee52acedf791" />
@@ -81,6 +83,8 @@ Contiene:
 - Deviazione FM visualizzata.
 - Spettro MPX.
 - Scanner.
+- Propagazione VHF inclusa.
+- Webcam da qui!
 - Sa di cioccolata.
 
 <img width="1920" height="1080" alt="2" src="https://github.com/user-attachments/assets/ae93574f-249c-4368-be32-11f5c4373944" />

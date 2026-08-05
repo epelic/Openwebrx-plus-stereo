@@ -305,6 +305,10 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 #openwebrx-scale-container{position:relative!important;z-index:32!important;pointer-events:auto!important}
 #openwebrx-scale-canvas{position:relative!important;z-index:33!important;pointer-events:auto!important;cursor:ew-resize!important}
 #mm-audio-module{display:none!important}
+#openwebrx-bookmarks-container .bookmark{box-sizing:border-box!important;width:max-content!important;max-width:none!important;max-height:none!important;padding:2px 7px!important;border:1px solid #163d20!important;border-radius:4px!important;background:#78ff8d!important;color:#020703!important;font-size:clamp(8px,.65vw,11px)!important;font-weight:700!important;line-height:13px!important;white-space:nowrap!important}
+#openwebrx-bookmarks-container .bookmark .bookmark-content{overflow:visible!important;text-overflow:clip!important;color:#020703!important}
+#openwebrx-bookmarks-container .bookmark:after,#openwebrx-bookmarks-container .bookmark[data-source=local]:after,#openwebrx-bookmarks-container .bookmark[data-source=dial_frequencies]:after{border-top-color:#78ff8d!important}
+#openwebrx-bookmarks-container .bookmark[data-source=local],#openwebrx-bookmarks-container .bookmark[data-source=dial_frequencies]{background:#78ff8d!important;color:#020703!important}
 @media(max-width:900px){#openwebrx-panel-metadata-dab .dab-container{grid-template-columns:1fr!important}}
 
 /* MM4.8 responsive RF/waterfall and native section collapse. */

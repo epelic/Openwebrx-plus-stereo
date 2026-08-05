@@ -235,6 +235,8 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 #openwebrx-panel-receiver .mm-rec-control.mm-recording-active:after{color:#fff!important;text-shadow:0 0 5px #ff625f!important}
 @keyframes mm-rec-button-pulse{50%{background:#140505;border-color:#853b3a;box-shadow:none}}
 #openwebrx-panel-receiver .mm-picture-control:after{content:"PICTURE";color:#c8dbcc!important}
+#openwebrx-panel-receiver .mm-scanner-control{width:72px!important;min-width:72px!important;padding:0 6px!important;font-size:9px!important;font-weight:700!important;letter-spacing:.3px!important}
+#openwebrx-clock-utc{display:none!important}
 
 /* Keep only useful settings, with consistent dimensions. */
 .mm-opacity-row{display:grid!important;grid-template-columns:30px minmax(0,1fr)!important;gap:7px!important;align-items:center!important}
@@ -281,6 +283,7 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 
 /* Extended DAB service monitor and online station logo area. */
 #openwebrx-panel-metadata-dab .dab-container{display:grid!important;grid-template-columns:minmax(0,1.2fr) minmax(140px,.8fr)!important;gap:10px!important;width:100%!important;padding:10px!important;box-sizing:border-box!important}
+#openwebrx-panel-metadata-dab:before{display:none!important;content:none!important}
 #openwebrx-panel-metadata-dab .dab-info-column{display:flex!important;flex-direction:column!important;gap:5px!important;min-width:0!important}
 #openwebrx-panel-metadata-dab .dab-programme-slot select{width:100%!important;max-width:none!important}
 #openwebrx-panel-metadata-dab .dab-technical-grid{display:grid!important;grid-template-columns:max-content minmax(0,1fr)!important;gap:4px 10px!important;margin-top:7px!important;padding-top:8px!important;border-top:1px solid #294b34!important;font-size:10px!important}

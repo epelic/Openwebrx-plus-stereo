@@ -315,6 +315,7 @@
   function polishControls(){
     qa('#openwebrx-panel-receiver .openwebrx-record-button').forEach(function(e){e.classList.add('mm-rec-control');e.setAttribute('aria-label','Record audio')});
     qa('#openwebrx-panel-receiver #screenshot-btn,#openwebrx-panel-receiver [title*="icture" i],#openwebrx-panel-receiver [title*="creenshot" i]').forEach(function(e){e.classList.add('mm-picture-control');e.setAttribute('aria-label','Picture')});
+    qa('#openwebrx-panel-receiver [title="Open Scanner Controls"]').forEach(function(e){e.classList.add('mm-scanner-control');e.textContent='SCANNER'});
   }
 
   function syncRecordingButton(){

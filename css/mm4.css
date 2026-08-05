@@ -308,7 +308,8 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 @media(max-width:900px){#openwebrx-panel-metadata-dab .dab-container{grid-template-columns:1fr!important}}
 
 /* MM4.8 responsive RF/waterfall and native section collapse. */
-#webrx-canvas-background,#webrx-canvas-container{width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}
+#webrx-canvas-background{width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}
+#webrx-canvas-container{min-width:0!important;max-width:none!important;overflow:visible!important}
 .openwebrx-spectrum-container{position:relative!important;z-index:20!important;background:#061009!important}
 .openwebrx-spectrum-container.expanded{height:var(--mm-rf-spectrum-height)!important;max-height:none!important;opacity:1!important;border-bottom:1px solid var(--mm-green2)!important;background:#061009!important}
 #openwebrx-spectrum-canvas{position:relative!important;z-index:21!important;display:block!important;width:100%!important;height:100%!important;filter:none!important;background:#061009!important}

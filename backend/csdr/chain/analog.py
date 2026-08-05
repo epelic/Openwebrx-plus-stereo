@@ -9,6 +9,7 @@ from owrx.feature import FeatureDetector
 from threading import Event, Thread
 import pickle
 import time
+import math
 
 
 class Am(BaseDemodulatorChain):
@@ -70,6 +71,12 @@ class WFm(BaseDemodulatorChain, FixedIfSampleRateChain, DeemphasisTauChain, HdAu
         self.deviationReader = None
         self.deviationThread = None
         self.deviationStop = Event()
+        self.mpxFftSize = 1024
+        self.mpxWindow = [
+            0.5 - 0.5 * math.cos(2 * math.pi * index / (self.mpxFftSize - 1))
+            for index in range(self.mpxFftSize)
+        ]
+        self.mpxWindowSum = sum(self.mpxWindow)
         super().__init__(workers)
 
     def _connect(self, w1, w2, buffer: Optional[Buffer] = None) -> None:
@@ -79,8 +86,43 @@ class WFm(BaseDemodulatorChain, FixedIfSampleRateChain, DeemphasisTauChain, HdAu
             buffer = self.metaTapBuffer
         super()._connect(w1, w2, buffer)
 
+    def _mpxSpectrum(self, samples) -> list:
+        size = self.mpxFftSize
+        values = [complex(samples[index] * self.mpxWindow[index], 0.0) for index in range(size)]
+        target = 0
+        for index in range(1, size):
+            bit = size >> 1
+            while target & bit:
+                target ^= bit
+                bit >>= 1
+            target ^= bit
+            if index < target:
+                values[index], values[target] = values[target], values[index]
+        length = 2
+        while length <= size:
+            angle = -2.0 * math.pi / length
+            step = complex(math.cos(angle), math.sin(angle))
+            half = length >> 1
+            for start in range(0, size, length):
+                rotation = 1.0 + 0.0j
+                for offset in range(half):
+                    even = values[start + offset]
+                    odd = values[start + offset + half] * rotation
+                    values[start + offset] = even + odd
+                    values[start + offset + half] = even - odd
+                    rotation *= step
+            length <<= 1
+        spectrum = []
+        for frequency in range(0, 92001, 500):
+            fftBin = min(size // 2, round(frequency * size / self.getFixedIfSampleRate()))
+            amplitude = max(abs(values[fftBin]) * 2.0 / self.mpxWindowSum, 1e-6)
+            db = 20.0 * math.log10(amplitude)
+            spectrum.append(round(max(0.0, min(100.0, (db + 80.0) * 1.25))))
+        return spectrum
+
     def _measureDeviation(self) -> None:
         magnitudes = []
+        fftSamples = None
         nextReport = time.monotonic() + 0.25
         while not self.deviationStop.is_set():
             data = self.deviationReader.read()
@@ -91,6 +133,8 @@ class WFm(BaseDemodulatorChain, FixedIfSampleRateChain, DeemphasisTauChain, HdAu
                 # Subsample the MPX stream; the 99.5th percentile rejects isolated
                 # discriminator phase jumps that would pin an absolute peak meter.
                 magnitudes.extend(abs(samples[index]) for index in range(0, len(samples), 8))
+                if len(samples) >= self.mpxFftSize:
+                    fftSamples = [samples[index] for index in range(len(samples) - self.mpxFftSize, len(samples))]
             now = time.monotonic()
             if now >= nextReport:
                 writer = self.metaWriter
@@ -98,7 +142,10 @@ class WFm(BaseDemodulatorChain, FixedIfSampleRateChain, DeemphasisTauChain, HdAu
                     magnitudes.sort()
                     robustPeak = magnitudes[int((len(magnitudes) - 1) * 0.995)]
                     deviation = min(75.0, robustPeak * self.getFixedIfSampleRate() / 2000.0)
-                    writer.write(pickle.dumps({"mode": "WFM", "deviation": deviation}))
+                    metadata = {"mode": "WFM", "deviation": deviation}
+                    if fftSamples is not None:
+                        metadata["mpxSpectrum"] = self._mpxSpectrum(fftSamples)
+                    writer.write(pickle.dumps(metadata))
                 magnitudes.clear()
                 nextReport = now + 0.25
 

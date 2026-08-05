@@ -60,6 +60,10 @@ The backup path is printed at the end of the installation. This customization
 tracks the OpenWebRX+ package layout used by the Max Mountain Station; review
 the diff and keep a system backup when installing on a different release.
 
+If you like it , why don't offer me a beer? 
+
+https://paypal.me/steelwood?locale.x=it_IT&country.x=IT
+
 # OpenWebRX+ Tactical Interface
 
 Personalizzazione di OpenWebRX+ per Max Mountain Station.
@@ -116,6 +120,9 @@ Per installare soltanto l'interfaccia, senza modificare la pipeline DAB:
 curl -fsSL https://raw.githubusercontent.com/epelic/Openwebrx-plus-stereo/main/install.sh | sudo bash -s -- --no-backend --yes
 ```
 
+Se ti piace, offrimi una birra!
+
+https://paypal.me/steelwood?locale.x=it_IT&country.x=IT
 Al termine viene mostrato il percorso del backup. La personalizzazione segue
 la struttura del pacchetto OpenWebRX+ usato da Max Mountain Station: su una
 release differente è consigliabile controllare il diff e conservare anche un

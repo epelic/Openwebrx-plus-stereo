@@ -14,6 +14,7 @@ Main Features:
 - Stereo separation adjust.
 - FM deviation showed.
 - Scanner.
+- Tastes of chocolate.
 
 The csdr modification required for the DAB pipeline is located in
 backend/csdr/module/toolbox.py.
@@ -66,6 +67,7 @@ Contiene:
 - Regolazione della separazione stereo;
 - Deviazione FM visualizzata;
 - Scanner.
+- Sa di cioccolata.
 
 La modifica csdr necessaria alla pipeline DAB si trova in
 `backend/csdr/module/toolbox.py`.

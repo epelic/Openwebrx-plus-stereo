@@ -80,7 +80,7 @@ class WFm(BaseDemodulatorChain, FixedIfSampleRateChain, DeemphasisTauChain, HdAu
         super()._connect(w1, w2, buffer)
 
     def _measureDeviation(self) -> None:
-        peak = 0.0
+        magnitudes = []
         nextReport = time.monotonic() + 0.25
         while not self.deviationStop.is_set():
             data = self.deviationReader.read()
@@ -88,14 +88,18 @@ class WFm(BaseDemodulatorChain, FixedIfSampleRateChain, DeemphasisTauChain, HdAu
                 break
             samples = memoryview(data).cast("f")
             if len(samples):
-                peak = max(peak, max(abs(sample) for sample in samples))
+                # Subsample the MPX stream; the 99.5th percentile rejects isolated
+                # discriminator phase jumps that would pin an absolute peak meter.
+                magnitudes.extend(abs(samples[index]) for index in range(0, len(samples), 8))
             now = time.monotonic()
             if now >= nextReport:
                 writer = self.metaWriter
-                if writer is not None:
-                    deviation = min(75.0, peak * self.getFixedIfSampleRate() / 2000.0)
+                if writer is not None and magnitudes:
+                    magnitudes.sort()
+                    robustPeak = magnitudes[int((len(magnitudes) - 1) * 0.995)]
+                    deviation = min(75.0, robustPeak * self.getFixedIfSampleRate() / 2000.0)
                     writer.write(pickle.dumps({"mode": "WFM", "deviation": deviation}))
-                peak = 0.0
+                magnitudes.clear()
                 nextReport = now + 0.25
 
     def _startDeviationMeter(self) -> None:

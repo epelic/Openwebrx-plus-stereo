@@ -16,7 +16,10 @@ Main Features:
 - Scanner.
 - Tastes of chocolate.
 
-- <img width="1900" height="924" alt="image" src="https://github.com/user-attachments/assets/1c096fd2-7e23-408a-868d-c5e54d334f7d" />
+<img width="1913" height="1079" alt="image" src="https://github.com/user-attachments/assets/a8c66a3c-3d7c-4535-bc5d-893de49335b1" />
+
+<img width="729" height="327" alt="image" src="https://github.com/user-attachments/assets/1c9f8cc4-9e7c-40f9-80a2-09fcc0ac99ee" />
+
 
 
 The csdr modification required for the DAB pipeline is located in
@@ -72,7 +75,9 @@ Contiene:
 - Scanner.
 - Sa di cioccolata.
 
-<img width="1900" height="924" alt="image" src="https://github.com/user-attachments/assets/9c32c153-8116-4687-8c07-20ede3349aa8" />
+<img width="1913" height="1079" alt="image" src="https://github.com/user-attachments/assets/a8d025ad-516e-4bfc-a340-bd8f0a4323cc" />
+
+<img width="729" height="327" alt="image" src="https://github.com/user-attachments/assets/3c51b88c-97ae-42ac-b583-1e0d271369c8" />
 
 
 La modifica csdr necessaria alla pipeline DAB si trova in

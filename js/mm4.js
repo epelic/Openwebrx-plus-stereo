@@ -236,11 +236,14 @@
 
   function addFilterBandwidthControl(){
     var volume=q('#openwebrx-panel-volume');if(!volume||q('#mm-filter-bandwidth'))return;
-    var nativeLine=volume.closest('.openwebrx-panel-line');if(!nativeLine||!nativeLine.parentElement)return;
-    var row=make('label','mm-filter-bandwidth','openwebrx-panel-line');
-    row.innerHTML='<span>FILTER BW</span><input type="range" min="0" max="30" step="0.5" value="9" aria-label="Filter bandwidth"><b>9.0 kHz</b>';
-    nativeLine.parentElement.insertBefore(row,nativeLine.nextSibling);
-    var slider=q('input',row),value=q('b',row);
+    var nativeLine=volume.closest('.openwebrx-panel-line');if(!nativeLine)return;
+    nativeLine.classList.add('mm-filter-host');
+    var row=make('div','mm-filter-bandwidth');
+    row.innerHTML='<button type="button" aria-expanded="false">FILTER BW</button><span class="mm-filter-popover"><input type="range" min="0" max="30" step="0.5" value="9" aria-label="Filter bandwidth"><b>9.0 kHz</b></span>';
+    nativeLine.insertBefore(row,volume.nextSibling);
+    var button=q('button',row),slider=q('input',row),value=q('b',row);
+    button.addEventListener('click',function(e){e.stopPropagation();var open=row.classList.toggle('mm-open');button.setAttribute('aria-expanded',open?'true':'false')});
+    document.addEventListener('click',function(e){if(!row.contains(e.target)){row.classList.remove('mm-open');button.setAttribute('aria-expanded','false')}});
     function supported(d){return d&&['am','sam','fm','data','usb','lsb','usbd','lsbd'].indexOf(d.get_modulation())>=0&&!d.get_secondary_demod()}
     function apply(){
       var d=typeof UI!=='undefined'&&UI.getDemodulator?UI.getDemodulator():null;

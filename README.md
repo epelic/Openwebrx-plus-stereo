@@ -16,7 +16,8 @@ Main Features:
 - Scanner.
 - Tastes of chocolate.
 
-<img width="1913" height="1079" alt="image" src="https://github.com/user-attachments/assets/a8c66a3c-3d7c-4535-bc5d-893de49335b1" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/b2bec5f4-5697-4630-9f73-4ea8ff45d398" />
+
 
 <img width="729" height="327" alt="image" src="https://github.com/user-attachments/assets/1c9f8cc4-9e7c-40f9-80a2-09fcc0ac99ee" />
 
@@ -75,7 +76,7 @@ Contiene:
 - Scanner.
 - Sa di cioccolata.
 
-<img width="1913" height="1079" alt="image" src="https://github.com/user-attachments/assets/a8d025ad-516e-4bfc-a340-bd8f0a4323cc" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/f3aabc62-91e7-4c05-9c53-038bf3676ae7" />
 
 <img width="729" height="327" alt="image" src="https://github.com/user-attachments/assets/3c51b88c-97ae-42ac-b583-1e0d271369c8" />
 

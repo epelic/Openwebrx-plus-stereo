@@ -51,7 +51,7 @@ The backup path is printed at the end of the installation. This customization
 tracks the OpenWebRX+ package layout used by the Max Mountain Station; review
 the diff and keep a system backup when installing on a different release.
 
-# OpenWebRX+ Stereo
+# OpenWebRX+ Tactical Interface
 
 Personalizzazione di OpenWebRX+ per Max Mountain Station.
 

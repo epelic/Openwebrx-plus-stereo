@@ -1,7 +1,7 @@
 (function(){
   'use strict';
   window.openPropagationMap=function(){
-    var mapWindow=window.open('https://hf.dxview.org/perspective/JN45SR','openwebrx-propagation','popup=yes,width=1200,height=800,resizable=yes,scrollbars=yes');
+    var mapWindow=window.open('https://vhf.dxview.org/map?center=47.19,10.12,6.3','openwebrx-propagation','popup=yes,width=1200,height=800,resizable=yes,scrollbars=yes');
     if(mapWindow)mapWindow.focus();
   };
   function q(s,r){return (r||document).querySelector(s)}

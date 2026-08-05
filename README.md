@@ -120,10 +120,11 @@ Per installare soltanto l'interfaccia, senza modificare la pipeline DAB:
 curl -fsSL https://raw.githubusercontent.com/epelic/Openwebrx-plus-stereo/main/install.sh | sudo bash -s -- --no-backend --yes
 ```
 
-Se ti piace, offrimi una birra!
-
-https://paypal.me/steelwood?locale.x=it_IT&country.x=IT
 Al termine viene mostrato il percorso del backup. La personalizzazione segue
 la struttura del pacchetto OpenWebRX+ usato da Max Mountain Station: su una
 release differente è consigliabile controllare il diff e conservare anche un
 backup completo del sistema.
+
+Se ti piace, offrimi una birra!
+
+https://paypal.me/steelwood?locale.x=it_IT&country.x=IT

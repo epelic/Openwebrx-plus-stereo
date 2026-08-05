@@ -244,6 +244,15 @@
     section.insertBefore(row,source);row.appendChild(auto);row.appendChild(min);row.appendChild(reset);row.appendChild(max);
   }
 
+  function placeControlsBeforeModes(){
+    var controls=q('#openwebrx-section-controls'),modes=q('#openwebrx-section-modes');
+    if(!controls||!modes||controls.parentElement!==modes.parentElement)return;
+    var controlsBody=controls.nextElementSibling;
+    if(controls.compareDocumentPosition(modes)&Node.DOCUMENT_POSITION_FOLLOWING)return;
+    modes.parentElement.insertBefore(controls,modes);
+    if(controlsBody)modes.parentElement.insertBefore(controlsBody,modes);
+  }
+
   function addFilterBandwidthControl(){
     var volume=q('#openwebrx-panel-volume');if(!volume||q('#mm-filter-bandwidth'))return;
     var nativeLine=volume.closest('.openwebrx-panel-line');if(!nativeLine)return;
@@ -318,7 +327,7 @@
   }
 
   function clock(){var e=q('#mm-utc-clock');if(e)e.textContent=new Date().toISOString().slice(11,19)+' UTC'}
-  function applySmallFixes(){addFilterBandwidthControl();syncFilterBandwidthControl();addInterfaceFooter();ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();arrangeWaterfallRangeControls();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
+  function applySmallFixes(){placeControlsBeforeModes();addFilterBandwidthControl();syncFilterBandwidthControl();addInterfaceFooter();ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();arrangeWaterfallRangeControls();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
   function init(){
     installAudioTap();retitle();document.body.classList.add('mm-console-v4');
     setTimeout(addFilterBandwidthControl,0);

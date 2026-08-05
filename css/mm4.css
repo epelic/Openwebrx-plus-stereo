@@ -210,9 +210,16 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 }
 #openwebrx-panel-receiver #mm-scanner-button:hover{border-color:#8b938e!important;background:linear-gradient(#636966,#414642)!important}
 #openwebrx-panel-receiver #mm-scanner-button.mm-active{border-color:#b8c0bb!important;background:#6b716d!important;box-shadow:0 0 8px rgba(210,218,213,.22)!important}
-#openwebrx-panel-receiver .mm-propagation-row{display:flex!important;padding-top:5px!important}
-#openwebrx-panel-receiver #mm-propagation-button{width:100%!important;min-height:28px!important;border:1px solid #315b3b!important;border-radius:3px!important;background:#0b1710!important;color:#8fff9d!important;font:700 10px monospace!important;letter-spacing:.8px!important;cursor:pointer!important}
-#openwebrx-panel-receiver #mm-propagation-button:hover{border-color:#72ff8b!important;background:#102318!important;color:#caffd2!important}
+#openwebrx-panel-receiver .mm-propagation-row{display:flex!important;gap:6px!important;padding-top:5px!important}
+#openwebrx-panel-receiver #mm-propagation-button,#openwebrx-panel-receiver #mm-webcam-button{flex:1 1 0!important;width:50%!important;min-width:0!important;min-height:28px!important;border:1px solid #315b3b!important;border-radius:3px!important;background:#0b1710!important;color:#8fff9d!important;font:700 10px monospace!important;letter-spacing:.8px!important;cursor:pointer!important}
+#openwebrx-panel-receiver #mm-propagation-button:hover,#openwebrx-panel-receiver #mm-webcam-button:hover{border-color:#72ff8b!important;background:#102318!important;color:#caffd2!important}
+#openwebrx-panel-receiver #mm-webcam-button.mm-active{border-color:#72ff8b!important;background:#17301f!important;color:#d4ffda!important;box-shadow:0 0 7px rgba(114,255,139,.18)!important}
+#mm-webcam-panel{position:relative!important;min-width:0!important;min-height:210px!important;height:min(34vh,330px)!important;overflow:hidden!important;background:#020905!important}
+#mm-webcam-panel:before{content:attr(data-panel-name)!important}
+#mm-webcam-panel .mm-webcam-close{position:absolute!important;z-index:3!important;top:3px!important;right:6px!important;width:20px!important;height:19px!important;padding:0!important;border:1px solid #315b3b!important;border-radius:2px!important;background:#09130d!important;color:#8fff9d!important;font:16px/16px monospace!important;cursor:pointer!important}
+#mm-webcam-panel .mm-webcam-frame{position:absolute!important;inset:26px 0 0!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#000!important}
+#mm-webcam-panel #mm-webcam-image{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important}
+#mm-webcam-panel #mm-webcam-status{position:absolute!important;left:7px!important;bottom:5px!important;padding:2px 5px!important;background:rgba(2,9,5,.78)!important;color:#8fff9d!important;font:8px monospace!important}
 #openwebrx-panel-receiver .mm-filter-host{position:relative!important}
 #openwebrx-panel-receiver #mm-filter-bandwidth{position:relative!important;display:inline-flex!important;flex:0 0 auto!important;margin:0 4px!important}
 #openwebrx-panel-receiver #mm-filter-bandwidth>button{height:30px!important;padding:0 8px!important;border:1px solid #37533f!important;border-radius:3px!important;background:linear-gradient(#18251c,#0d150f)!important;color:#c8dbcc!important;font-size:8px!important;letter-spacing:.4px!important;white-space:nowrap!important;cursor:pointer!important}

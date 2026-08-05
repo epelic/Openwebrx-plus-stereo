@@ -4,6 +4,40 @@
     var mapWindow=window.open('https://vhf.dxview.org/map?center=47.19,10.12,6.3','openwebrx-propagation','popup=yes,width=1200,height=800,resizable=yes,scrollbars=yes');
     if(mapWindow)mapWindow.focus();
   };
+  var webcamTimer=null;
+  function refreshWebcam(){
+    var image=q('#mm-webcam-image'),status=q('#mm-webcam-status');
+    if(!image)return;
+    if(status)status.textContent='UPDATING…';
+    image.src='https://www.freewaves.it/camimagnacam.jpg?t='+Date.now();
+  }
+  window.closeWebcam=function(){
+    var panel=q('#mm-webcam-panel'),button=q('#mm-webcam-button');
+    if(panel)panel.style.display='none';
+    if(button)button.classList.remove('mm-active');
+    if(webcamTimer){clearInterval(webcamTimer);webcamTimer=null}
+    updateDock();
+  };
+  window.openWebcam=function(){
+    var host=q('#openwebrx-panels-container-left'),panel=q('#mm-webcam-panel'),button=q('#mm-webcam-button');
+    if(!host)return;
+    if(panel&&panel.style.display!=='none'){window.closeWebcam();return}
+    if(!panel){
+      panel=make('section','mm-webcam-panel','openwebrx-panel');
+      panel.setAttribute('data-panel-name','WEBCAM · MAX MOUNTAIN STATION');
+      panel.innerHTML='<button type="button" class="mm-webcam-close" title="Close webcam" onclick="closeWebcam();">×</button><div class="mm-webcam-frame"><img id="mm-webcam-image" alt="Max Mountain Station webcam"><span id="mm-webcam-status">LOADING…</span></div>';
+      host.appendChild(panel);
+      var image=q('#mm-webcam-image',panel),status=q('#mm-webcam-status',panel);
+      image.onload=function(){status.textContent='UPDATED · '+new Date().toLocaleTimeString()};
+      image.onerror=function(){status.textContent='IMAGE UNAVAILABLE · RETRY IN 60 SEC'};
+    }
+    panel.style.display='block';
+    if(button)button.classList.add('mm-active');
+    refreshWebcam();
+    if(webcamTimer)clearInterval(webcamTimer);
+    webcamTimer=setInterval(refreshWebcam,60000);
+    updateDock();
+  };
   function q(s,r){return (r||document).querySelector(s)}
   function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
   function make(tag,id,cls){var e=document.createElement(tag);if(id)e.id=id;if(cls)e.className=cls;return e}

@@ -21,7 +21,7 @@ Main Features:
 
 <img width="1920" height="1080" alt="2" src="https://github.com/user-attachments/assets/c73d0af7-6af1-4d3e-bae3-ee52acedf791" />
 
-
+<img width="1898" height="926" alt="image" src="https://github.com/user-attachments/assets/8848fa44-4b3b-462e-aa19-1793749f1336" />
 
 <img width="729" height="327" alt="image" src="https://github.com/user-attachments/assets/1c9f8cc4-9e7c-40f9-80a2-09fcc0ac99ee" />
 
@@ -89,6 +89,7 @@ Contiene:
 
 <img width="1920" height="1080" alt="2" src="https://github.com/user-attachments/assets/ae93574f-249c-4368-be32-11f5c4373944" />
 
+<img width="1898" height="926" alt="image" src="https://github.com/user-attachments/assets/14af16ab-6e3a-437a-9830-16782ecb9efd" />
 
 <img width="729" height="327" alt="image" src="https://github.com/user-attachments/assets/3c51b88c-97ae-42ac-b583-1e0d271369c8" />
 

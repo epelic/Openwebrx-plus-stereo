@@ -226,6 +226,40 @@
     syncScannerButton();
   }
 
+  function addFilterBandwidthControl(){
+    var volume=q('#openwebrx-panel-volume');if(!volume||q('#mm-filter-bandwidth'))return;
+    var nativeLine=volume.closest('.openwebrx-panel-line');if(!nativeLine||!nativeLine.parentElement)return;
+    var row=make('label','mm-filter-bandwidth','openwebrx-panel-line');
+    row.innerHTML='<span>FILTER BW</span><input type="range" min="0" max="30" step="0.5" value="9" aria-label="Filter bandwidth"><b>9.0 kHz</b>';
+    nativeLine.parentElement.insertBefore(row,nativeLine.nextSibling);
+    var slider=q('input',row),value=q('b',row);
+    function supported(d){return d&&['am','sam','fm','data','usb','lsb','usbd','lsbd'].indexOf(d.get_modulation())>=0&&!d.get_secondary_demod()}
+    function apply(){
+      var d=typeof UI!=='undefined'&&UI.getDemodulator?UI.getDemodulator():null;
+      if(!supported(d))return sync();
+      var khz=Math.max(0,Math.min(30,parseFloat(slider.value)||0));
+      var width=Math.max(100,Math.round(khz*1000)),center=(d.low_cut+d.high_cut)/2;
+      if(!isFinite(center))center=0;
+      var half=width/2,low=center-half,high=center+half;
+      if(low<d.filter.limits.low){high+=d.filter.limits.low-low;low=d.filter.limits.low}
+      if(high>d.filter.limits.high){low-=high-d.filter.limits.high;high=d.filter.limits.high}
+      d.setBandpass({low_cut:low,high_cut:high});
+      if(UI.saveBandpass)UI.saveBandpass(d.get_modulation(),low,high);
+      value.textContent=(width/1000).toFixed(1)+' kHz';
+    }
+    function sync(){
+      var d=typeof UI!=='undefined'&&UI.getDemodulator?UI.getDemodulator():null,ok=supported(d);
+      slider.disabled=!ok;row.classList.toggle('mm-disabled',!ok);
+      if(!ok){value.textContent='N/A';return}
+      var width=Math.max(100,Math.min(30000,(d.high_cut||0)-(d.low_cut||0)));
+      slider.value=String(width/1000);value.textContent=(width/1000).toFixed(1)+' kHz';
+    }
+    slider.addEventListener('input',apply);slider.addEventListener('change',apply);
+    row.__mmSync=sync;sync();
+  }
+
+  function syncFilterBandwidthControl(){var row=q('#mm-filter-bandwidth');if(row&&row.__mmSync)row.__mmSync()}
+
   function syncScannerButton(){
     var nativeScanner=q('#openwebrx-panel-receiver .openwebrx-squelch-auto'),button=q('#mm-scanner-button');
     if(!nativeScanner||!button)return;
@@ -263,9 +297,10 @@
   }
 
   function clock(){var e=q('#mm-utc-clock');if(e)e.textContent=new Date().toISOString().slice(11,19)+' UTC'}
-  function applySmallFixes(){ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
+  function applySmallFixes(){addFilterBandwidthControl();syncFilterBandwidthControl();ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
   function init(){
     installAudioTap();retitle();document.body.classList.add('mm-console-v4');
+    setTimeout(addFilterBandwidthControl,0);
     var tries=0,t=setInterval(function(){
       tries++;
       if(buildWorkspace()||tries>50){

@@ -209,6 +209,10 @@ select,input[type=text],input[type=number],input[type=password]{max-width:100%!i
 }
 #openwebrx-panel-receiver #mm-scanner-button:hover{border-color:#8b938e!important;background:linear-gradient(#636966,#414642)!important}
 #openwebrx-panel-receiver #mm-scanner-button.mm-active{border-color:#b8c0bb!important;background:#6b716d!important;box-shadow:0 0 8px rgba(210,218,213,.22)!important}
+#openwebrx-panel-receiver #mm-filter-bandwidth{display:grid!important;grid-template-columns:62px minmax(0,1fr) 58px!important;gap:7px!important;align-items:center!important;width:100%!important;padding:4px 0!important;color:var(--mm-dim)!important;font-size:8px!important;letter-spacing:.7px!important}
+#openwebrx-panel-receiver #mm-filter-bandwidth input{width:100%!important;min-width:0!important;margin:0!important}
+#openwebrx-panel-receiver #mm-filter-bandwidth b{font-size:9px!important;font-weight:600!important;color:var(--mm-green)!important;text-align:right!important;white-space:nowrap!important}
+#openwebrx-panel-receiver #mm-filter-bandwidth.mm-disabled{opacity:.42!important}
 
 /* Labels are visual overlays; native contents and click handlers stay intact. */
 #openwebrx-panel-receiver .mm-rec-control,

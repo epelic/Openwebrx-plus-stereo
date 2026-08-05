@@ -9,6 +9,14 @@
     var t=q('.webrx-rx-title'); if(t)t.textContent="MAX'S MOUNTAINS STATION VHF - UHF";
   }
 
+  function addInterfaceFooter(){
+    if(q('#mm-interface-footer'))return;
+    var page=q('#webrx-page-container');if(!page)return;
+    var footer=make('footer','mm-interface-footer');
+    footer.innerHTML='<span>MAX\'S MOUNTAIN STATION — INTERFACE v1.0.0</span><span class="mm-footer-separator">•</span><a href="https://www.freewaves.it/" target="_blank" rel="noopener noreferrer">www.freewaves.it</a><span class="mm-footer-separator">•</span><span>ALL RIGHTS RESERVED © 2026</span>';
+    page.appendChild(footer);
+  }
+
   function buildWorkspace(){
     if(q('#mm-workspace'))return true;
     var page=q('#webrx-page-container'), waterfall=q('.openwebrx-waterfall-container');
@@ -18,7 +26,7 @@
     var dock=make('section','mm-decoder-dock'), side=make('aside','mm-sidebar');
     var sh=make('div','mm-sidebar-head');sh.innerHTML='<span>RX CONTROL DECK</span><span id="mm-utc-clock">--:--:-- UTC</span>';
     var scroll=make('div','mm-sidebar-scroll');
-    page.appendChild(ws);ws.appendChild(main);ws.appendChild(side);main.appendChild(spec);main.appendChild(dock);side.appendChild(sh);side.appendChild(scroll);
+    page.appendChild(ws);ws.appendChild(main);ws.appendChild(side);main.appendChild(spec);main.appendChild(dock);side.appendChild(sh);side.appendChild(scroll);addInterfaceFooter();
     spec.appendChild(waterfall);dock.appendChild(left);scroll.appendChild(right);
     updateDock();
     new MutationObserver(updateDock).observe(left,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class']});
@@ -263,7 +271,7 @@
   }
 
   function clock(){var e=q('#mm-utc-clock');if(e)e.textContent=new Date().toISOString().slice(11,19)+' UTC'}
-  function applySmallFixes(){ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
+  function applySmallFixes(){addInterfaceFooter();ensureReceiver();placeNativeSettings();moveNativeSignalModule();buildModeButtons();addScannerButton();syncScannerButton();polishControls();ensureSpectrum();addSpectrumHeightControl()}
   function init(){
     retitle();document.body.classList.add('mm-console-v4');
     var tries=0,t=setInterval(function(){

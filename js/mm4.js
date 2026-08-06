@@ -280,12 +280,15 @@
     var nativeLine=volume.closest('.openwebrx-panel-line');if(!nativeLine)return;
     nativeLine.classList.add('mm-filter-host');
     var row=make('div','mm-filter-bandwidth');
-    row.innerHTML='<button type="button" aria-expanded="false">FILTER BW</button><span class="mm-filter-popover"><input type="range" min="0" max="30" step="0.5" value="9" aria-label="Filter bandwidth"><b>9.0 kHz</b></span>';
+    row.innerHTML='<button type="button" aria-expanded="false">FILTER BW</button><span class="mm-filter-popover"><span class="mm-filter-width"><input data-role="width" type="range" min="0" max="30" step="0.5" value="9" aria-label="Filter bandwidth"><b>9.0 kHz</b></span><span class="mm-filter-edges"><label>LOW<input data-role="low" type="range" step="0.1" aria-label="Low filter edge"><b>--</b></label><label>HIGH<input data-role="high" type="range" step="0.1" aria-label="High filter edge"><b>--</b></label></span></span>';
     nativeLine.insertBefore(row,volume.nextSibling);
-    var button=q('button',row),slider=q('input',row),value=q('b',row);
+    var button=q('button',row),slider=q('[data-role="width"]',row),value=q('.mm-filter-width b',row);
+    var lowSlider=q('[data-role="low"]',row),highSlider=q('[data-role="high"]',row),lowValue=lowSlider.nextElementSibling,highValue=highSlider.nextElementSibling;
     button.addEventListener('click',function(e){e.stopPropagation();var open=row.classList.toggle('mm-open');button.setAttribute('aria-expanded',open?'true':'false')});
     document.addEventListener('click',function(e){if(!row.contains(e.target)){row.classList.remove('mm-open');button.setAttribute('aria-expanded','false')}});
     function supported(d){return d&&['am','sam','fm','nfm','data','usb','lsb','usbd','lsbd'].indexOf(d.get_modulation())>=0&&!d.get_secondary_demod()}
+    function sideband(d){return d&&['usb','lsb','usbd','lsbd'].indexOf(d.get_modulation())>=0}
+    function save(d,low,high){d.setBandpass({low_cut:low,high_cut:high});if(UI.saveBandpass)UI.saveBandpass(d.get_modulation(),low,high)}
     function apply(){
       var d=typeof UI!=='undefined'&&UI.getDemodulator?UI.getDemodulator():null;
       if(!supported(d))return sync();
@@ -295,18 +298,30 @@
       var half=width/2,low=center-half,high=center+half;
       if(low<d.filter.limits.low){high+=d.filter.limits.low-low;low=d.filter.limits.low}
       if(high>d.filter.limits.high){low-=high-d.filter.limits.high;high=d.filter.limits.high}
-      d.setBandpass({low_cut:low,high_cut:high});
-      if(UI.saveBandpass)UI.saveBandpass(d.get_modulation(),low,high);
+      save(d,low,high);
       value.textContent=(width/1000).toFixed(1)+' kHz';
+    }
+    function applyEdge(which){
+      var d=typeof UI!=='undefined'&&UI.getDemodulator?UI.getDemodulator():null;if(!supported(d)||!sideband(d))return sync();
+      var low=Math.round((parseFloat(lowSlider.value)||0)*1000),high=Math.round((parseFloat(highSlider.value)||0)*1000);
+      if(which==='low')low=Math.min(low,high-100);else high=Math.max(high,low+100);
+      low=Math.max(d.filter.limits.low,low);high=Math.min(d.filter.limits.high,high);save(d,low,high);sync();
     }
     function sync(){
       var d=typeof UI!=='undefined'&&UI.getDemodulator?UI.getDemodulator():null,ok=supported(d);
-      slider.disabled=!ok;row.classList.toggle('mm-disabled',!ok);
+      var edges=ok&&sideband(d);slider.disabled=!ok;lowSlider.disabled=!edges;highSlider.disabled=!edges;row.classList.toggle('mm-disabled',!ok);row.classList.toggle('mm-sideband',edges);
       if(!ok){value.textContent='N/A';return}
+      if(edges){
+        lowSlider.min=highSlider.min=String(d.filter.limits.low/1000);lowSlider.max=highSlider.max=String(d.filter.limits.high/1000);
+        lowSlider.value=String(d.low_cut/1000);highSlider.value=String(d.high_cut/1000);
+        lowValue.textContent=(d.low_cut/1000).toFixed(1)+' kHz';highValue.textContent=(d.high_cut/1000).toFixed(1)+' kHz';return;
+      }
       var width=Math.max(100,Math.min(30000,(d.high_cut||0)-(d.low_cut||0)));
       slider.value=String(width/1000);value.textContent=(width/1000).toFixed(1)+' kHz';
     }
     slider.addEventListener('input',apply);slider.addEventListener('change',apply);
+    lowSlider.addEventListener('input',function(){applyEdge('low')});lowSlider.addEventListener('change',function(){applyEdge('low')});
+    highSlider.addEventListener('input',function(){applyEdge('high')});highSlider.addEventListener('change',function(){applyEdge('high')});
     row.__mmSync=sync;sync();
   }
 

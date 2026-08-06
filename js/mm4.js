@@ -48,7 +48,7 @@
     if(q('#mm-interface-footer'))return;
     var page=q('#webrx-page-container');if(!page)return;
     var footer=make('footer','mm-interface-footer');
-    footer.innerHTML='<span>MAX\'S MOUNTAIN STATION — TACTICAL INTERFACE v1.0.0</span><span class="mm-footer-separator">•</span><a href="https://www.freewaves.it/" target="_blank" rel="noopener noreferrer">www.freewaves.it</a><span class="mm-footer-separator">•</span><span>ALL RIGHTS RESERVED © 2026</span>';
+    footer.innerHTML='<span>MAX\'S MOUNTAIN STATION — TACTICAL INTERFACE v1.1.0</span><span class="mm-footer-separator">•</span><a href="https://www.freewaves.it/" target="_blank" rel="noopener noreferrer">www.freewaves.it</a><span class="mm-footer-separator">•</span><span>ALL RIGHTS RESERVED © 2026</span>';
     page.appendChild(footer);
   }
 
@@ -285,7 +285,7 @@
     var button=q('button',row),slider=q('input',row),value=q('b',row);
     button.addEventListener('click',function(e){e.stopPropagation();var open=row.classList.toggle('mm-open');button.setAttribute('aria-expanded',open?'true':'false')});
     document.addEventListener('click',function(e){if(!row.contains(e.target)){row.classList.remove('mm-open');button.setAttribute('aria-expanded','false')}});
-    function supported(d){return d&&['am','sam','fm','data','usb','lsb','usbd','lsbd'].indexOf(d.get_modulation())>=0&&!d.get_secondary_demod()}
+    function supported(d){return d&&['am','sam','fm','nfm','data','usb','lsb','usbd','lsbd'].indexOf(d.get_modulation())>=0&&!d.get_secondary_demod()}
     function apply(){
       var d=typeof UI!=='undefined'&&UI.getDemodulator?UI.getDemodulator():null;
       if(!supported(d))return sync();

@@ -35,6 +35,11 @@ credentials, or installation-specific data.
 
 Check it here: http://maxmountainstation.ddns.net:8073/
 
+TO DO LIST:
+
+- Opus stream at 128 Kbs stereo instead than ADPCM
+- Resolve the clipping issue on DAB audio when converted by Dablin.
+
 ## Automatic installation on Raspberry Pi
 
 This installer is intended for an existing, working Debian/Raspberry Pi OS

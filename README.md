@@ -1,6 +1,6 @@
 # OpenWebRX+ Tactical Interface
 
-Customization of OpenWebRX+ for Max Mountain Station.
+Customization of OpenWebRX+ for Max Mountain Station but available for all!
 
 Main Features:
 
@@ -77,7 +77,7 @@ https://paypal.me/steelwood?locale.x=it_IT&country.x=IT
 
 # OpenWebRX+ Tactical Interface
 
-Personalizzazione di OpenWebRX+ per Max Mountain Station.
+Personalizzazione di OpenWebRX+ per Max Mountain Station ma disponibile per tutti!
 
 Contiene:
 

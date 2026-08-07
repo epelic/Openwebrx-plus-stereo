@@ -35,9 +35,9 @@ credentials, or installation-specific data.
 
 You must install the main program before to proceed to install this interface
 
-https://fms.komkon.org/OWRX/
+Download it here: https://fms.komkon.org/OWRX/
 
-Check it here: http://maxmountainstation.ddns.net:8073/
+Check the new interface live here: http://maxmountainstation.ddns.net:8073/
 
 TO DO LIST:
 
@@ -109,7 +109,10 @@ La modifica csdr necessaria alla pipeline DAB si trova in
 Il repository non include configurazioni del ricevitore, credenziali o dati
 specifici dell'installazione.
 
-Qui in funzione: http://maxmountainstation.ddns.net:8073/
+Devi scaricare openwebrx+ e installarla prima di applicare questa modifica!
+Scaricalo qui: https://fms.komkon.org/OWRX/
+
+Qui la nuova interfaccia in funzione: http://maxmountainstation.ddns.net:8073/
 
 ## Installazione automatica su Raspberry Pi
 

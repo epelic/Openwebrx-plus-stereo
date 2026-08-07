@@ -33,6 +33,10 @@ backend/csdr/module/toolbox.py.
 The repository does not include receiver configurations,
 credentials, or installation-specific data.
 
+You must install the main program before to proceed to install this interface
+
+https://fms.komkon.org/OWRX/
+
 Check it here: http://maxmountainstation.ddns.net:8073/
 
 TO DO LIST:
